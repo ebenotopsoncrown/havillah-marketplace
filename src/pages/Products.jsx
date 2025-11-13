@@ -1,0 +1,165 @@
+import React, { useState } from "react";
+import { base44 } from "@/api/base44Client";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Plus, Search, AlertTriangle } from "lucide-react";
+
+import ProductsTable from "../components/products/ProductsTable";
+import ProductFormModal from "../components/products/ProductFormModal";
+import StockAdjustmentModal from "../components/products/StockAdjustmentModal";
+
+export default function Products() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showForm, setShowForm] = useState(false);
+  const [showStockAdjust, setShowStockAdjust] = useState(false);
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [adjustingProduct, setAdjustingProduct] = useState(null);
+  const queryClient = useQueryClient();
+
+  const { data: products = [], isLoading } = useQuery({
+    queryKey: ['products'],
+    queryFn: () => base44.entities.Product.list(),
+  });
+
+  const { data: categories = [] } = useQuery({
+    queryKey: ['categories'],
+    queryFn: () => base44.entities.Category.list(),
+  });
+
+  const createProductMutation = useMutation({
+    mutationFn: (data) => base44.entities.Product.create(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      setShowForm(false);
+      setEditingProduct(null);
+    },
+  });
+
+  const updateProductMutation = useMutation({
+    mutationFn: ({ id, data }) => base44.entities.Product.update(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      setShowForm(false);
+      setEditingProduct(null);
+    },
+  });
+
+  const adjustStockMutation = useMutation({
+    mutationFn: async (data) => {
+      await base44.entities.StockAdjustment.create(data.adjustment);
+      await base44.entities.Product.update(data.productId, {
+        stock_quantity: data.newQuantity
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      setShowStockAdjust(false);
+      setAdjustingProduct(null);
+    },
+  });
+
+  const filteredProducts = products.filter(product =>
+    searchTerm === "" ||
+    product.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    product.sku?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    product.barcode?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleSaveProduct = (data) => {
+    if (editingProduct) {
+      updateProductMutation.mutate({ id: editingProduct.id, data });
+    } else {
+      createProductMutation.mutate(data);
+    }
+  };
+
+  const handleEdit = (product) => {
+    setEditingProduct(product);
+    setShowForm(true);
+  };
+
+  const handleAdjustStock = (product) => {
+    setAdjustingProduct(product);
+    setShowStockAdjust(true);
+  };
+
+  const lowStockCount = products.filter(p => p.stock_quantity <= (p.reorder_level || 10)).length;
+
+  return (
+    <div className="p-6 lg:p-8 bg-gray-50 min-h-screen">
+      <div className="max-w-[1800px] mx-auto space-y-6">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Product Management</h1>
+            <p className="text-gray-600">Manage your product catalog and inventory</p>
+          </div>
+          <Button
+            onClick={() => {
+              setEditingProduct(null);
+              setShowForm(true);
+            }}
+            className="bg-gradient-to-r from-indigo-600 to-indigo-700"
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            Add New Product
+          </Button>
+        </div>
+
+        {lowStockCount > 0 && (
+          <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 flex items-center gap-3">
+            <AlertTriangle className="w-5 h-5 text-orange-600" />
+            <p className="text-orange-900">
+              <strong>{lowStockCount}</strong> product{lowStockCount !== 1 ? 's' : ''} running low on stock
+            </p>
+          </div>
+        )}
+
+        <div className="bg-white rounded-xl shadow-lg border border-gray-200">
+          <div className="p-6 border-b border-gray-200">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Input
+                placeholder="Search products by name, SKU, or barcode..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 h-12"
+              />
+            </div>
+          </div>
+
+          <ProductsTable
+            products={filteredProducts}
+            isLoading={isLoading}
+            onEdit={handleEdit}
+            onAdjustStock={handleAdjustStock}
+            categories={categories}
+          />
+        </div>
+      </div>
+
+      <ProductFormModal
+        open={showForm}
+        onClose={() => {
+          setShowForm(false);
+          setEditingProduct(null);
+        }}
+        product={editingProduct}
+        categories={categories}
+        onSave={handleSaveProduct}
+        processing={createProductMutation.isPending || updateProductMutation.isPending}
+      />
+
+      <StockAdjustmentModal
+        open={showStockAdjust}
+        onClose={() => {
+          setShowStockAdjust(false);
+          setAdjustingProduct(null);
+        }}
+        product={adjustingProduct}
+        onSave={(data) => adjustStockMutation.mutate(data)}
+        processing={adjustStockMutation.isPending}
+      />
+    </div>
+  );
+}
