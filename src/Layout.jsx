@@ -12,7 +12,8 @@ import {
   BarChart3,
   Settings,
   Store,
-  Receipt
+  Receipt,
+  HardDrive
 } from "lucide-react";
 import {
   Sidebar,
@@ -138,10 +139,21 @@ export default function Layout({ children, currentPageName }) {
 
             <SidebarGroup className="mt-6">
               <SidebarGroupLabel className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3 py-2">
-                Public Pages
+                Resources
               </SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <Link 
+                        to={createPageUrl("HardwareGuide")} 
+                        className="flex items-center gap-3 px-3 py-2.5 hover:bg-purple-50 hover:text-purple-700 transition-colors duration-200 rounded-lg"
+                      >
+                        <HardDrive className="w-5 h-5" />
+                        <span>Hardware Guide</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild>
                       <Link 
