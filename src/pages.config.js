@@ -2,6 +2,11 @@ import Dashboard from './pages/Dashboard';
 import POS from './pages/POS';
 import Products from './pages/Products';
 import OnlineStore from './pages/OnlineStore';
+import Sales from './pages/Sales';
+import Orders from './pages/Orders';
+import Customers from './pages/Customers';
+import Suppliers from './pages/Suppliers';
+import Reports from './pages/Reports';
 import Layout from './Layout.jsx';
 
 
@@ -10,6 +15,11 @@ export const PAGES = {
     "POS": POS,
     "Products": Products,
     "OnlineStore": OnlineStore,
+    "Sales": Sales,
+    "Orders": Orders,
+    "Customers": Customers,
+    "Suppliers": Suppliers,
+    "Reports": Reports,
 }
 
 export const pagesConfig = {
