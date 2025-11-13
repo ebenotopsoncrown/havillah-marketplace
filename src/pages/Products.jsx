@@ -3,16 +3,18 @@ import { base44 } from "@/api/base44Client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Plus, Search, AlertTriangle } from "lucide-react";
+import { Plus, Search, AlertTriangle, Upload } from "lucide-react";
 
 import ProductsTable from "../components/products/ProductsTable";
 import ProductFormModal from "../components/products/ProductFormModal";
 import StockAdjustmentModal from "../components/products/StockAdjustmentModal";
+import BulkImportModal from "../components/products/BulkImportModal";
 
 export default function Products() {
   const [searchTerm, setSearchTerm] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [showStockAdjust, setShowStockAdjust] = useState(false);
+  const [showBulkImport, setShowBulkImport] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [adjustingProduct, setAdjustingProduct] = useState(null);
   const queryClient = useQueryClient();
@@ -84,6 +86,11 @@ export default function Products() {
     setShowStockAdjust(true);
   };
 
+  const handleBulkImportComplete = () => {
+    queryClient.invalidateQueries({ queryKey: ['products'] });
+    setShowBulkImport(false);
+  };
+
   const lowStockCount = products.filter(p => p.stock_quantity <= (p.reorder_level || 10)).length;
 
   return (
@@ -94,16 +101,26 @@ export default function Products() {
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Product Management</h1>
             <p className="text-gray-600">Manage your product catalog and inventory</p>
           </div>
-          <Button
-            onClick={() => {
-              setEditingProduct(null);
-              setShowForm(true);
-            }}
-            className="bg-gradient-to-r from-indigo-600 to-indigo-700"
-          >
-            <Plus className="w-4 h-4 mr-2" />
-            Add New Product
-          </Button>
+          <div className="flex gap-3">
+            <Button
+              onClick={() => setShowBulkImport(true)}
+              variant="outline"
+              className="border-indigo-200 text-indigo-700 hover:bg-indigo-50"
+            >
+              <Upload className="w-4 h-4 mr-2" />
+              Bulk Import
+            </Button>
+            <Button
+              onClick={() => {
+                setEditingProduct(null);
+                setShowForm(true);
+              }}
+              className="bg-gradient-to-r from-indigo-600 to-indigo-700"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Add Product
+            </Button>
+          </div>
         </div>
 
         {lowStockCount > 0 && (
@@ -159,6 +176,13 @@ export default function Products() {
         product={adjustingProduct}
         onSave={(data) => adjustStockMutation.mutate(data)}
         processing={adjustStockMutation.isPending}
+      />
+
+      <BulkImportModal
+        open={showBulkImport}
+        onClose={() => setShowBulkImport(false)}
+        categories={categories}
+        onComplete={handleBulkImportComplete}
       />
     </div>
   );

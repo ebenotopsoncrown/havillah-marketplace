@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { base44 } from "@/api/base44Client";
 import {
   Dialog,
   DialogContent,
@@ -18,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { Upload, X, Image as ImageIcon } from "lucide-react";
 
 export default function ProductFormModal({ open, onClose, product, categories, onSave, processing }) {
   const [formData, setFormData] = useState({
@@ -36,11 +38,16 @@ export default function ProductFormModal({ open, onClose, product, categories, o
     unit_type: "piece",
     is_active: true,
     expiry_tracking: false,
+    image_url: "",
   });
+
+  const [uploading, setUploading] = useState(false);
+  const [imagePreview, setImagePreview] = useState("");
 
   useEffect(() => {
     if (product) {
       setFormData(product);
+      setImagePreview(product.image_url || "");
     } else {
       setFormData({
         sku: "",
@@ -58,9 +65,32 @@ export default function ProductFormModal({ open, onClose, product, categories, o
         unit_type: "piece",
         is_active: true,
         expiry_tracking: false,
+        image_url: "",
       });
+      setImagePreview("");
     }
   }, [product, open]);
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const { file_url } = await base44.integrations.Core.UploadFile({ file });
+      setFormData({ ...formData, image_url: file_url });
+      setImagePreview(file_url);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      alert("Failed to upload image. Please try again.");
+    }
+    setUploading(false);
+  };
+
+  const handleRemoveImage = () => {
+    setFormData({ ...formData, image_url: "" });
+    setImagePreview("");
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -76,7 +106,7 @@ export default function ProductFormModal({ open, onClose, product, categories, o
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl">
             {product ? "Edit Product" : "Add New Product"}
@@ -84,6 +114,51 @@ export default function ProductFormModal({ open, onClose, product, categories, o
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Product Image Upload */}
+          <div className="space-y-2">
+            <Label>Product Image</Label>
+            {imagePreview ? (
+              <div className="relative w-full h-64 bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-200">
+                <img src={imagePreview} alt="Product" className="w-full h-full object-contain" />
+                <button
+                  type="button"
+                  onClick={handleRemoveImage}
+                  className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-600"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            ) : (
+              <div className="w-full h-64 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300 flex flex-col items-center justify-center">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                  id="image-upload"
+                  disabled={uploading}
+                />
+                <label
+                  htmlFor="image-upload"
+                  className="cursor-pointer flex flex-col items-center"
+                >
+                  {uploading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mb-3" />
+                      <p className="text-gray-600">Uploading...</p>
+                    </>
+                  ) : (
+                    <>
+                      <ImageIcon className="w-12 h-12 text-gray-400 mb-3" />
+                      <p className="text-gray-600 font-medium">Click to upload product image</p>
+                      <p className="text-sm text-gray-500 mt-1">PNG, JPG up to 10MB</p>
+                    </>
+                  )}
+                </label>
+              </div>
+            )}
+          </div>
+
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="sku">SKU *</Label>
@@ -155,7 +230,7 @@ export default function ProductFormModal({ open, onClose, product, categories, o
 
           <div className="grid grid-cols-3 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="retail_price">Retail Price *</Label>
+              <Label htmlFor="retail_price">Retail Price (£) *</Label>
               <Input
                 id="retail_price"
                 type="number"
@@ -166,7 +241,7 @@ export default function ProductFormModal({ open, onClose, product, categories, o
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="wholesale_price">Wholesale Price</Label>
+              <Label htmlFor="wholesale_price">Wholesale Price (£)</Label>
               <Input
                 id="wholesale_price"
                 type="number"
@@ -176,7 +251,7 @@ export default function ProductFormModal({ open, onClose, product, categories, o
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="cost_price">Cost Price</Label>
+              <Label htmlFor="cost_price">Cost Price (£)</Label>
               <Input
                 id="cost_price"
                 type="number"
@@ -234,10 +309,10 @@ export default function ProductFormModal({ open, onClose, product, categories, o
           </div>
 
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={onClose} disabled={processing}>
+            <Button type="button" variant="outline" onClick={onClose} disabled={processing || uploading}>
               Cancel
             </Button>
-            <Button type="submit" disabled={processing} className="bg-gradient-to-r from-indigo-600 to-indigo-700">
+            <Button type="submit" disabled={processing || uploading} className="bg-gradient-to-r from-indigo-600 to-indigo-700">
               {processing ? "Saving..." : product ? "Update Product" : "Create Product"}
             </Button>
           </DialogFooter>
