@@ -47,7 +47,6 @@ export default function ReceiveInventoryModal({ open, onClose, purchaseOrder, pr
 
   const receiveInventoryMutation = useMutation({
     mutationFn: async (data) => {
-      // Update each PO item with received quantity
       for (const itemId in data.receivedQuantities) {
         const item = currentPOItems.find(i => i.id === itemId);
         if (item) {
@@ -55,7 +54,6 @@ export default function ReceiveInventoryModal({ open, onClose, purchaseOrder, pr
             quantity_received: data.receivedQuantities[itemId]
           });
 
-          // Update product stock
           const product = products.find(p => p.id === item.product_id);
           if (product) {
             const newStock = (product.stock_quantity || 0) + data.receivedQuantities[itemId];
@@ -66,7 +64,6 @@ export default function ReceiveInventoryModal({ open, onClose, purchaseOrder, pr
         }
       }
 
-      // Update PO status
       await base44.entities.PurchaseOrder.update(data.poId, {
         status: "received",
         received_date: new Date().toISOString().split('T')[0]
@@ -120,7 +117,6 @@ export default function ReceiveInventoryModal({ open, onClose, purchaseOrder, pr
         </DialogHeader>
 
         <div className="space-y-6">
-          {/* PO Info */}
           <div className="bg-gray-50 rounded-lg p-4 grid grid-cols-3 gap-4">
             <div>
               <p className="text-sm text-gray-600">Supplier</p>
@@ -136,7 +132,6 @@ export default function ReceiveInventoryModal({ open, onClose, purchaseOrder, pr
             </div>
           </div>
 
-          {/* Items to Receive */}
           <div>
             <Label className="text-lg mb-3 block">Items to Receive</Label>
             <div className="border rounded-lg overflow-hidden">
