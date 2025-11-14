@@ -15,7 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Receipt, Package, FileText, CreditCard } from "lucide-react";
+import { Receipt, Package, FileText, CreditCard, ShoppingBag } from "lucide-react";
 
 export default function TransactionDrilldownModal({ open, onClose, title, transactions, type }) {
   if (!transactions || transactions.length === 0) {
@@ -41,6 +41,8 @@ export default function TransactionDrilldownModal({ open, onClose, title, transa
         return <FileText className="w-5 h-5 text-red-600" />;
       case 'inventory':
         return <Package className="w-5 h-5 text-blue-600" />;
+      case 'orders':
+        return <ShoppingBag className="w-5 h-5 text-purple-600" />;
       case 'payments':
         return <CreditCard className="w-5 h-5 text-purple-600" />;
       default:
@@ -55,6 +57,8 @@ export default function TransactionDrilldownModal({ open, onClose, title, transa
       return transactions.reduce((sum, t) => sum + (t.amount || 0), 0);
     } else if (type === 'inventory') {
       return transactions.reduce((sum, t) => sum + ((t.stock_quantity || 0) * (t.cost_price || 0)), 0);
+    } else if (type === 'orders') {
+      return transactions.reduce((sum, t) => sum + (t.total_amount || 0), 0);
     }
     return 0;
   };
@@ -123,6 +127,46 @@ export default function TransactionDrilldownModal({ open, onClose, title, transa
                     </TableCell>
                     <TableCell className="text-right font-semibold">
                       £{(sale.total_amount || 0).toFixed(2)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
+
+          {type === 'orders' && (
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-gray-50">
+                  <TableHead>Order Number</TableHead>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Customer</TableHead>
+                  <TableHead>Delivery Type</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead className="text-right">Amount</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {transactions.map((order) => (
+                  <TableRow key={order.id} className="hover:bg-gray-50">
+                    <TableCell className="font-mono text-sm">{order.order_number}</TableCell>
+                    <TableCell>{formatDate(order.order_date || order.created_date)}</TableCell>
+                    <TableCell>{order.customer_name}</TableCell>
+                    <TableCell>
+                      <Badge variant="outline">{order.delivery_type}</Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Badge className={
+                        order.status === 'delivered' ? 'bg-green-100 text-green-700' :
+                        order.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
+                        order.status === 'cancelled' ? 'bg-red-100 text-red-700' :
+                        'bg-blue-100 text-blue-700'
+                      }>
+                        {order.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right font-semibold">
+                      £{(order.total_amount || 0).toFixed(2)}
                     </TableCell>
                   </TableRow>
                 ))}

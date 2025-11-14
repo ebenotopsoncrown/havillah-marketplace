@@ -1,26 +1,53 @@
-import React from 'react';
-import { Card } from "@/components/ui/card";
-import { ArrowUpRight } from "lucide-react";
+import React, { useState } from 'react';
+import { Card, CardContent } from "@/components/ui/card";
+import { MousePointer } from "lucide-react";
+import TransactionDrilldownModal from "../reports/TransactionDrilldownModal";
 
-export default function StatsCard({ title, value, icon: Icon, trend, bgColor }) {
+export default function StatsCard({ title, value, icon: Icon, trend, bgColor, transactions, transactionType, onClick }) {
+  const [showDrilldown, setShowDrilldown] = useState(false);
+
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    } else if (transactions) {
+      setShowDrilldown(true);
+    }
+  };
+
   return (
-    <Card className="relative overflow-hidden bg-white border-none shadow-lg hover:shadow-xl transition-shadow duration-300">
-      <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${bgColor} opacity-10 rounded-full transform translate-x-16 -translate-y-16`} />
-      <div className="p-6 relative z-10">
-        <div className="flex justify-between items-start mb-4">
-          <div className={`p-3 rounded-xl bg-gradient-to-br ${bgColor} shadow-lg`}>
-            <Icon className="w-6 h-6 text-white" />
-          </div>
-          {trend && (
-            <div className="flex items-center gap-1 text-green-600 text-sm font-medium">
-              <ArrowUpRight className="w-4 h-4" />
-              {trend}
+    <>
+      <Card 
+        className="overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group" 
+        onClick={handleClick}
+      >
+        <CardContent className="p-0">
+          <div className={`bg-gradient-to-r ${bgColor} p-6 text-white relative`}>
+            <div className="flex items-center justify-between">
+              <div className="w-12 h-12 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                <Icon className="w-6 h-6" />
+              </div>
+              <MousePointer className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
-          )}
-        </div>
-        <p className="text-sm font-medium text-gray-600 mb-1">{title}</p>
-        <p className="text-3xl font-bold text-gray-900">{value}</p>
-      </div>
-    </Card>
+            <div className="mt-4">
+              <p className="text-sm font-medium opacity-90">{title}</p>
+              <p className="text-3xl font-bold mt-1">{value}</p>
+              {trend && (
+                <p className="text-sm mt-2 opacity-80">{trend}</p>
+              )}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {transactions && transactionType && (
+        <TransactionDrilldownModal
+          open={showDrilldown}
+          onClose={() => setShowDrilldown(false)}
+          title={`${title} - Transactions`}
+          transactions={transactions}
+          type={transactionType}
+        />
+      )}
+    </>
   );
 }
