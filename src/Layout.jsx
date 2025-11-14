@@ -13,7 +13,9 @@ import {
   Settings,
   Store,
   Receipt,
-  HardDrive
+  HardDrive,
+  ClipboardList,
+  Banknote
 } from "lucide-react";
 import {
   Sidebar,
@@ -60,6 +62,16 @@ const navigationItems = [
     title: "Delivery",
     url: createPageUrl("Delivery"),
     icon: TruckIcon,
+  },
+  {
+    title: "Purchases",
+    url: createPageUrl("Purchases"),
+    icon: ClipboardList,
+  },
+  {
+    title: "Expenses",
+    url: createPageUrl("Expenses"),
+    icon: Banknote,
   },
   {
     title: "Customers",
