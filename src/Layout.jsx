@@ -15,7 +15,8 @@ import {
   Receipt,
   HardDrive,
   ClipboardList,
-  Banknote
+  Banknote,
+  BookOpen
 } from "lucide-react";
 import {
   Sidebar,
@@ -155,6 +156,17 @@ export default function Layout({ children, currentPageName }) {
               </SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <Link 
+                        to={createPageUrl("SystemDocumentation")} 
+                        className="flex items-center gap-3 px-3 py-2.5 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 rounded-lg"
+                      >
+                        <BookOpen className="w-5 h-5" />
+                        <span>System Documentation</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild>
                       <Link 
