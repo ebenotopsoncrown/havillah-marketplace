@@ -13,6 +13,7 @@ import HardwareGuide from './pages/HardwareGuide';
 import Purchases from './pages/Purchases';
 import Expenses from './pages/Expenses';
 import SystemDocumentation from './pages/SystemDocumentation';
+import AppSettings from './pages/AppSettings';
 import Layout from './Layout.jsx';
 
 
@@ -32,6 +33,7 @@ export const PAGES = {
     "Purchases": Purchases,
     "Expenses": Expenses,
     "SystemDocumentation": SystemDocumentation,
+    "AppSettings": AppSettings,
 }
 
 export const pagesConfig = {

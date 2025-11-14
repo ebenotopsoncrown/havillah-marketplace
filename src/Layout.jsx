@@ -16,7 +16,9 @@ import {
   HardDrive,
   ClipboardList,
   Banknote,
-  BookOpen
+  BookOpen,
+  UserPlus,
+  Shield
 } from "lucide-react";
 import {
   Sidebar,
@@ -32,6 +34,12 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { ChevronDown } from "lucide-react";
 
 const navigationItems = [
   {
@@ -93,6 +101,7 @@ const navigationItems = [
 
 export default function Layout({ children, currentPageName }) {
   const location = useLocation();
+  const [settingsOpen, setSettingsOpen] = React.useState(false);
   
   // Don't show sidebar for CustomerStore page - it's public-facing
   const isCustomerStore = currentPageName === "CustomerStore";
@@ -150,34 +159,60 @@ export default function Layout({ children, currentPageName }) {
               </SidebarGroupContent>
             </SidebarGroup>
 
+            {/* Settings Section with Collapsible Menu */}
             <SidebarGroup className="mt-6">
               <SidebarGroupLabel className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3 py-2">
-                Resources
+                System
               </SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
-                      <Link 
-                        to={createPageUrl("SystemDocumentation")} 
-                        className="flex items-center gap-3 px-3 py-2.5 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 rounded-lg"
-                      >
-                        <BookOpen className="w-5 h-5" />
-                        <span>System Documentation</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
-                      <Link 
-                        to={createPageUrl("HardwareGuide")} 
-                        className="flex items-center gap-3 px-3 py-2.5 hover:bg-purple-50 hover:text-purple-700 transition-colors duration-200 rounded-lg"
-                      >
-                        <HardDrive className="w-5 h-5" />
-                        <span>Hardware Guide</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
+                  <Collapsible open={settingsOpen} onOpenChange={setSettingsOpen}>
+                    <SidebarMenuItem>
+                      <CollapsibleTrigger asChild>
+                        <SidebarMenuButton className="w-full hover:bg-gray-100 transition-colors duration-200 rounded-lg mb-1">
+                          <div className="flex items-center justify-between w-full px-3 py-2.5">
+                            <div className="flex items-center gap-3">
+                              <Settings className="w-5 h-5" />
+                              <span>Settings</span>
+                            </div>
+                            <ChevronDown className={`w-4 h-4 transition-transform ${settingsOpen ? 'rotate-180' : ''}`} />
+                          </div>
+                        </SidebarMenuButton>
+                      </CollapsibleTrigger>
+                      <CollapsibleContent>
+                        <div className="ml-4 mt-1 space-y-1">
+                          <SidebarMenuButton asChild>
+                            <Link 
+                              to={createPageUrl("AppSettings")} 
+                              className="flex items-center gap-3 px-3 py-2 hover:bg-purple-50 hover:text-purple-700 transition-colors duration-200 rounded-lg text-sm"
+                            >
+                              <UserPlus className="w-4 h-4" />
+                              <span>User Management</span>
+                            </Link>
+                          </SidebarMenuButton>
+                          <SidebarMenuButton asChild>
+                            <Link 
+                              to={createPageUrl("SystemDocumentation")} 
+                              className="flex items-center gap-3 px-3 py-2 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 rounded-lg text-sm"
+                            >
+                              <BookOpen className="w-4 h-4" />
+                              <span>Documentation</span>
+                            </Link>
+                          </SidebarMenuButton>
+                          <SidebarMenuButton asChild>
+                            <Link 
+                              to={createPageUrl("HardwareGuide")} 
+                              className="flex items-center gap-3 px-3 py-2 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200 rounded-lg text-sm"
+                            >
+                              <HardDrive className="w-4 h-4" />
+                              <span>Hardware Setup</span>
+                            </Link>
+                          </SidebarMenuButton>
+                        </div>
+                      </CollapsibleContent>
+                    </SidebarMenuItem>
+                  </Collapsible>
+
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild>
                       <Link 
@@ -186,7 +221,7 @@ export default function Layout({ children, currentPageName }) {
                         target="_blank"
                       >
                         <Store className="w-5 h-5" />
-                        <span>View Online Store</span>
+                        <span>Online Store</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
