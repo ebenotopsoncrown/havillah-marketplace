@@ -9,14 +9,17 @@ import ProductsTable from "../components/products/ProductsTable";
 import ProductFormModal from "../components/products/ProductFormModal";
 import StockAdjustmentModal from "../components/products/StockAdjustmentModal";
 import BulkImportModal from "../components/products/BulkImportModal";
+import BarcodeGenerator from "../components/products/BarcodeGenerator";
 
 export default function Products() {
   const [searchTerm, setSearchTerm] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [showStockAdjust, setShowStockAdjust] = useState(false);
   const [showBulkImport, setShowBulkImport] = useState(false);
+  const [showBarcodeGen, setShowBarcodeGen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [adjustingProduct, setAdjustingProduct] = useState(null);
+  const [barcodeProduct, setBarcodeProduct] = useState(null);
   const queryClient = useQueryClient();
 
   const { data: products = [], isLoading } = useQuery({
@@ -44,6 +47,8 @@ export default function Products() {
       queryClient.invalidateQueries({ queryKey: ['products'] });
       setShowForm(false);
       setEditingProduct(null);
+      setShowBarcodeGen(false);
+      setBarcodeProduct(null);
     },
   });
 
@@ -86,12 +91,27 @@ export default function Products() {
     setShowStockAdjust(true);
   };
 
+  const handleGenerateBarcode = (product) => {
+    setBarcodeProduct(product);
+    setShowBarcodeGen(true);
+  };
+
+  const handleSaveBarcode = async (barcodeValue) => {
+    if (barcodeProduct) {
+      await updateProductMutation.mutateAsync({
+        id: barcodeProduct.id,
+        data: { ...barcodeProduct, barcode: barcodeValue }
+      });
+    }
+  };
+
   const handleBulkImportComplete = () => {
     queryClient.invalidateQueries({ queryKey: ['products'] });
     setShowBulkImport(false);
   };
 
   const lowStockCount = products.filter(p => p.stock_quantity <= (p.reorder_level || 10)).length;
+  const noBarcodeCount = products.filter(p => !p.barcode).length;
 
   return (
     <div className="p-6 lg:p-8 bg-gray-50 min-h-screen">
@@ -123,12 +143,24 @@ export default function Products() {
           </div>
         </div>
 
-        {lowStockCount > 0 && (
-          <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 flex items-center gap-3">
-            <AlertTriangle className="w-5 h-5 text-orange-600" />
-            <p className="text-orange-900">
-              <strong>{lowStockCount}</strong> product{lowStockCount !== 1 ? 's' : ''} running low on stock
-            </p>
+        {(lowStockCount > 0 || noBarcodeCount > 0) && (
+          <div className="flex gap-4">
+            {lowStockCount > 0 && (
+              <div className="flex-1 bg-orange-50 border border-orange-200 rounded-lg p-4 flex items-center gap-3">
+                <AlertTriangle className="w-5 h-5 text-orange-600" />
+                <p className="text-orange-900">
+                  <strong>{lowStockCount}</strong> product{lowStockCount !== 1 ? 's' : ''} running low on stock
+                </p>
+              </div>
+            )}
+            {noBarcodeCount > 0 && (
+              <div className="flex-1 bg-purple-50 border border-purple-200 rounded-lg p-4 flex items-center gap-3">
+                <AlertTriangle className="w-5 h-5 text-purple-600" />
+                <p className="text-purple-900">
+                  <strong>{noBarcodeCount}</strong> product{noBarcodeCount !== 1 ? 's' : ''} without barcode
+                </p>
+              </div>
+            )}
           </div>
         )}
 
@@ -150,6 +182,7 @@ export default function Products() {
             isLoading={isLoading}
             onEdit={handleEdit}
             onAdjustStock={handleAdjustStock}
+            onGenerateBarcode={handleGenerateBarcode}
             categories={categories}
           />
         </div>
@@ -183,6 +216,16 @@ export default function Products() {
         onClose={() => setShowBulkImport(false)}
         categories={categories}
         onComplete={handleBulkImportComplete}
+      />
+
+      <BarcodeGenerator
+        open={showBarcodeGen}
+        onClose={() => {
+          setShowBarcodeGen(false);
+          setBarcodeProduct(null);
+        }}
+        product={barcodeProduct}
+        onSave={handleSaveBarcode}
       />
     </div>
   );
