@@ -14,6 +14,9 @@ import Purchases from './pages/Purchases';
 import Expenses from './pages/Expenses';
 import SystemDocumentation from './pages/SystemDocumentation';
 import AppSettings from './pages/AppSettings';
+import Home from './pages/Home';
+import StaffPortal from './pages/StaffPortal';
+import AccessControlGuide from './pages/AccessControlGuide';
 import Layout from './Layout.jsx';
 
 
@@ -34,6 +37,9 @@ export const PAGES = {
     "Expenses": Expenses,
     "SystemDocumentation": SystemDocumentation,
     "AppSettings": AppSettings,
+    "Home": Home,
+    "StaffPortal": StaffPortal,
+    "AccessControlGuide": AccessControlGuide,
 }
 
 export const pagesConfig = {

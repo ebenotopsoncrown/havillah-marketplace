@@ -18,7 +18,8 @@ import {
   Banknote,
   BookOpen,
   UserPlus,
-  Shield
+  Shield,
+  Globe
 } from "lucide-react";
 import {
   Sidebar,
@@ -103,10 +104,11 @@ export default function Layout({ children, currentPageName }) {
   const location = useLocation();
   const [settingsOpen, setSettingsOpen] = React.useState(false);
   
-  // Don't show sidebar for CustomerStore page - it's public-facing
-  const isCustomerStore = currentPageName === "CustomerStore";
+  // Pages without sidebar (public-facing)
+  const publicPages = ["CustomerStore", "Home", "StaffPortal"];
+  const isPublicPage = publicPages.includes(currentPageName);
   
-  if (isCustomerStore) {
+  if (isPublicPage) {
     return <>{children}</>;
   }
 
@@ -192,6 +194,15 @@ export default function Layout({ children, currentPageName }) {
                           </SidebarMenuButton>
                           <SidebarMenuButton asChild>
                             <Link 
+                              to={createPageUrl("AccessControlGuide")} 
+                              className="flex items-center gap-3 px-3 py-2 hover:bg-orange-50 hover:text-orange-700 transition-colors duration-200 rounded-lg text-sm"
+                            >
+                              <Globe className="w-4 h-4" />
+                              <span>Access Control</span>
+                            </Link>
+                          </SidebarMenuButton>
+                          <SidebarMenuButton asChild>
+                            <Link 
                               to={createPageUrl("SystemDocumentation")} 
                               className="flex items-center gap-3 px-3 py-2 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 rounded-lg text-sm"
                             >
@@ -216,12 +227,12 @@ export default function Layout({ children, currentPageName }) {
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild>
                       <Link 
-                        to={createPageUrl("CustomerStore")} 
+                        to={createPageUrl("Home")} 
                         className="flex items-center gap-3 px-3 py-2.5 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 rounded-lg"
                         target="_blank"
                       >
                         <Store className="w-5 h-5" />
-                        <span>Online Store</span>
+                        <span>View Storefront</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
