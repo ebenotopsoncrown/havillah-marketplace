@@ -78,7 +78,7 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
       <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl flex items-center gap-2">
-            <ShoppingCart className="w-6 h-6" />
+            <Store className="w-6 h-6" />
             Secure Checkout
           </DialogTitle>
         </DialogHeader>

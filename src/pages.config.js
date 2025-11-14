@@ -10,6 +10,8 @@ import Reports from './pages/Reports';
 import CustomerStore from './pages/CustomerStore';
 import Delivery from './pages/Delivery';
 import HardwareGuide from './pages/HardwareGuide';
+import Purchases from './pages/Purchases';
+import Expenses from './pages/Expenses';
 import Layout from './Layout.jsx';
 
 
@@ -26,6 +28,8 @@ export const PAGES = {
     "CustomerStore": CustomerStore,
     "Delivery": Delivery,
     "HardwareGuide": HardwareGuide,
+    "Purchases": Purchases,
+    "Expenses": Expenses,
 }
 
 export const pagesConfig = {
