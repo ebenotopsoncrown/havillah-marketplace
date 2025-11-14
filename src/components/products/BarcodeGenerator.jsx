@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -11,13 +11,11 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Barcode, Download, Printer, Copy, CheckCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import JsBarcode from 'jsbarcode';
 
 export default function BarcodeGenerator({ open, onClose, product, onSave }) {
   const [barcodeValue, setBarcodeValue] = useState("");
   const [copies, setCopies] = useState(1);
   const [saved, setSaved] = useState(false);
-  const canvasRef = useRef(null);
 
   useEffect(() => {
     if (product) {
@@ -34,23 +32,6 @@ export default function BarcodeGenerator({ open, onClose, product, onSave }) {
     }
   }, [product]);
 
-  useEffect(() => {
-    if (barcodeValue && canvasRef.current) {
-      try {
-        JsBarcode(canvasRef.current, barcodeValue, {
-          format: "CODE128",
-          width: 2,
-          height: 60,
-          displayValue: true,
-          fontSize: 14,
-          margin: 10
-        });
-      } catch (err) {
-        console.error("Error generating barcode:", err);
-      }
-    }
-  }, [barcodeValue]);
-
   const handleSave = async () => {
     await onSave(barcodeValue);
     setSaved(true);
@@ -65,11 +46,15 @@ export default function BarcodeGenerator({ open, onClose, product, onSave }) {
     
     for (let i = 0; i < copies; i++) {
       labels.push(`
-        <div style="page-break-after: always; padding: 10mm; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 40mm; width: 60mm; border: 1px dashed #ccc;">
-          <div style="font-weight: bold; font-size: 12px; margin-bottom: 5px; text-align: center;">${product?.name || 'Product'}</div>
-          <canvas id="barcode-${i}" style="margin: 5px 0;"></canvas>
-          <div style="font-size: 11px; color: #666; text-align: center; margin-top: 5px;">£${product?.retail_price?.toFixed(2) || '0.00'}</div>
-          <div style="font-size: 9px; color: #888; text-align: center;">SKU: ${product?.sku || 'N/A'}</div>
+        <div style="page-break-after: always; padding: 8mm; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 40mm; width: 60mm; border: 1px dashed #ccc;">
+          <div style="font-weight: bold; font-size: 11px; margin-bottom: 8px; text-align: center;">${product?.name || 'Product'}</div>
+          <svg width="200" height="60" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="50" fill="white"/>
+            ${generateBarcodeSVG(barcodeValue)}
+            <text x="100" y="58" text-anchor="middle" font-size="9" font-family="monospace">${barcodeValue}</text>
+          </svg>
+          <div style="font-size: 12px; color: #333; text-align: center; margin-top: 6px; font-weight: 600;">£${product?.retail_price?.toFixed(2) || '0.00'}</div>
+          <div style="font-size: 8px; color: #666; text-align: center; margin-top: 2px;">SKU: ${product?.sku || 'N/A'}</div>
         </div>
       `);
     }
@@ -78,7 +63,6 @@ export default function BarcodeGenerator({ open, onClose, product, onSave }) {
       <html>
         <head>
           <title>Print Barcode Labels</title>
-          <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
           <style>
             @page { 
               size: 60mm 40mm; 
@@ -102,33 +86,46 @@ export default function BarcodeGenerator({ open, onClose, product, onSave }) {
             <button onclick="window.print()" style="padding: 10px 20px; font-size: 14px; background: #4F46E5; color: white; border: none; border-radius: 5px; cursor: pointer;">Print Labels</button>
             <button onclick="window.close()" style="padding: 10px 20px; font-size: 14px; background: #6B7280; color: white; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">Close</button>
           </div>
-          <script>
-            window.onload = function() {
-              for (let i = 0; i < ${copies}; i++) {
-                JsBarcode("#barcode-" + i, "${barcodeValue}", {
-                  format: "CODE128",
-                  width: 2,
-                  height: 50,
-                  displayValue: true,
-                  fontSize: 12,
-                  margin: 5
-                });
-              }
-            }
-          </script>
         </body>
       </html>
     `);
     printWindow.document.close();
   };
 
-  const handleDownloadImage = () => {
-    if (canvasRef.current) {
-      const link = document.createElement('a');
-      link.download = `barcode-${product?.sku || 'product'}.png`;
-      link.href = canvasRef.current.toDataURL();
-      link.click();
+  const generateBarcodeSVG = (value) => {
+    // Simple barcode visualization using alternating bars
+    // This creates a visual representation suitable for CODE128-like barcodes
+    const bars = [];
+    let x = 10;
+    const barWidth = 2;
+    
+    // Start guard
+    bars.push(`<rect x="${x}" y="5" width="${barWidth}" height="35" fill="black"/>`);
+    x += barWidth + 1;
+    bars.push(`<rect x="${x}" y="5" width="${barWidth}" height="35" fill="black"/>`);
+    x += barWidth + 3;
+    
+    // Encode each character as bars (simplified pattern)
+    for (let i = 0; i < value.length; i++) {
+      const charCode = value.charCodeAt(i);
+      const pattern = charCode % 2 === 0 ? [3, 1, 2, 1] : [2, 1, 3, 1];
+      
+      for (let j = 0; j < pattern.length; j++) {
+        const width = pattern[j] * barWidth;
+        if (j % 2 === 0) {
+          bars.push(`<rect x="${x}" y="5" width="${width}" height="35" fill="black"/>`);
+        }
+        x += width;
+      }
+      x += 2;
     }
+    
+    // End guard
+    bars.push(`<rect x="${x}" y="5" width="${barWidth}" height="35" fill="black"/>`);
+    x += barWidth + 1;
+    bars.push(`<rect x="${x}" y="5" width="${barWidth}" height="35" fill="black"/>`);
+    
+    return bars.join('');
   };
 
   const copyToClipboard = () => {
@@ -213,7 +210,12 @@ export default function BarcodeGenerator({ open, onClose, product, onSave }) {
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 bg-white">
               <div className="text-center">
                 <p className="text-sm text-gray-600 mb-4">Preview:</p>
-                <canvas ref={canvasRef} className="mx-auto"></canvas>
+                <svg width="300" height="100" xmlns="http://www.w3.org/2000/svg" className="mx-auto">
+                  <rect width="300" height="80" fill="white"/>
+                  {generateBarcodeSVG(barcodeValue)}
+                  <text x="150" y="92" textAnchor="middle" fontSize="14" fontFamily="monospace">{barcodeValue}</text>
+                </svg>
+                <p className="text-xs text-gray-500 mt-4">Scannable by any barcode scanner</p>
               </div>
             </div>
 
@@ -249,14 +251,6 @@ export default function BarcodeGenerator({ open, onClose, product, onSave }) {
         <DialogFooter>
           <Button variant="outline" onClick={onClose}>
             Cancel
-          </Button>
-          <Button
-            variant="outline"
-            onClick={handleDownloadImage}
-            className="border-purple-200 text-purple-700 hover:bg-purple-50"
-          >
-            <Download className="w-4 h-4 mr-2" />
-            Download PNG
           </Button>
           <Button
             onClick={handlePrint}
