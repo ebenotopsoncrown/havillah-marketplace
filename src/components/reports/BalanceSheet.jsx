@@ -8,7 +8,7 @@ export default function BalanceSheet({ products, customers, suppliers, sales, ex
   const [drilldownModal, setDrilldownModal] = useState({ open: false, title: '', transactions: [], type: '' });
 
   // ASSETS
-  // Current Assets - Inventory
+  // Current Assets - Inventory (FROM PRODUCTS)
   const inventoryValue = products.reduce((sum, product) => {
     const value = (product.stock_quantity || 0) * (product.cost_price || 0);
     return sum + value;
@@ -16,34 +16,32 @@ export default function BalanceSheet({ products, customers, suppliers, sales, ex
   
   const inventoryProducts = products.filter(p => (p.stock_quantity || 0) > 0);
   
-  // Current Assets - Accounts Receivable (Customer credit balances)
+  // Current Assets - Accounts Receivable (FROM CUSTOMERS)
   const accountsReceivable = customers.reduce((sum, customer) => {
     return sum + (customer.credit_balance || 0);
   }, 0);
   
   const customersWithCredit = customers.filter(c => (c.credit_balance || 0) > 0);
   
-  // Current Assets - Cash (Simplified: Total sales revenue - expenses)
+  // Current Assets - Cash (FROM SALES - EXPENSES)
   const totalRevenue = sales.reduce((sum, sale) => sum + (sale.total_amount || 0), 0);
   const totalExpenses = expenses.reduce((sum, exp) => sum + (exp.amount || 0), 0);
   const cashOnHand = totalRevenue - totalExpenses;
   
   const totalCurrentAssets = inventoryValue + accountsReceivable + cashOnHand;
   
-  // Fixed Assets (assumed values for demonstration)
-  const propertyPlantEquipment = 50000; // Placeholder for shop fixtures, equipment, etc.
-  
-  const totalAssets = totalCurrentAssets + propertyPlantEquipment;
+  // NO HARDCODED FIXED ASSETS - Only show if we have actual data
+  const totalAssets = totalCurrentAssets;
   
   // LIABILITIES
-  // Current Liabilities - Accounts Payable (Amount owed to suppliers)
+  // Current Liabilities - Accounts Payable (FROM SUPPLIERS)
   const accountsPayable = suppliers.reduce((sum, supplier) => {
     return sum + (supplier.account_balance || 0);
   }, 0);
   
   const suppliersWithBalance = suppliers.filter(s => (s.account_balance || 0) > 0);
   
-  // Current Liabilities - Unpaid expenses
+  // Current Liabilities - Unpaid expenses (FROM EXPENSES)
   const unpaidExpenses = expenses
     .filter(exp => exp.status === 'pending')
     .reduce((sum, exp) => sum + (exp.amount || 0), 0);
@@ -52,10 +50,8 @@ export default function BalanceSheet({ products, customers, suppliers, sales, ex
   
   const totalCurrentLiabilities = accountsPayable + unpaidExpenses;
   
-  // Long-term Liabilities (placeholder)
-  const longTermDebt = 20000; // Placeholder
-  
-  const totalLiabilities = totalCurrentLiabilities + longTermDebt;
+  // NO HARDCODED LONG-TERM LIABILITIES
+  const totalLiabilities = totalCurrentLiabilities;
   
   // EQUITY
   // Owner's Equity = Assets - Liabilities
@@ -96,11 +92,11 @@ export default function BalanceSheet({ products, customers, suppliers, sales, ex
               <div className="space-y-2 py-2">
                 <div 
                   className="flex justify-between items-center py-1 px-4 ml-4 text-gray-700 hover:bg-gray-50 cursor-pointer transition-colors"
-                  onClick={() => showDrilldown('Cash & Bank - All Sales', sales, 'sales')}
+                  onClick={() => showDrilldown('Cash & Bank - From Sales Revenue', sales, 'sales')}
                 >
                   <div className="flex items-center gap-2">
                     <CreditCard className="w-4 h-4 text-green-600" />
-                    <span>Cash & Bank</span>
+                    <span>Cash & Bank (from {sales.length} sales)</span>
                   </div>
                   <span className="font-medium text-green-600">£{cashOnHand.toFixed(2)}</span>
                 </div>
@@ -123,20 +119,6 @@ export default function BalanceSheet({ products, customers, suppliers, sales, ex
                     <span>Inventory ({inventoryProducts.length} products)</span>
                   </div>
                   <span>£{inventoryValue.toFixed(2)}</span>
-                </div>
-              </div>
-            </div>
-            
-            {/* Fixed Assets */}
-            <div className="mt-3">
-              <div className="flex justify-between items-center py-2 px-4 bg-blue-50 rounded">
-                <span className="font-semibold text-blue-800">Fixed Assets</span>
-                <span className="font-semibold text-blue-800">£{propertyPlantEquipment.toFixed(2)}</span>
-              </div>
-              <div className="py-1 px-4 ml-4 text-gray-700">
-                <div className="flex justify-between items-center hover:bg-gray-50 py-1">
-                  <span>Property, Plant & Equipment</span>
-                  <span>£{propertyPlantEquipment.toFixed(2)}</span>
                 </div>
               </div>
             </div>
@@ -172,20 +154,6 @@ export default function BalanceSheet({ products, customers, suppliers, sales, ex
                 </div>
               </div>
             </div>
-            
-            {/* Long-term Liabilities */}
-            <div className="mt-3">
-              <div className="flex justify-between items-center py-2 px-4 bg-orange-50 rounded">
-                <span className="font-semibold text-orange-800">Long-term Liabilities</span>
-                <span className="font-semibold text-orange-800">£{longTermDebt.toFixed(2)}</span>
-              </div>
-              <div className="py-1 px-4 ml-4 text-gray-700">
-                <div className="flex justify-between items-center hover:bg-gray-50 py-1">
-                  <span>Long-term Debt</span>
-                  <span className="text-red-600">£{longTermDebt.toFixed(2)}</span>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* EQUITY */}
@@ -196,7 +164,7 @@ export default function BalanceSheet({ products, customers, suppliers, sales, ex
             </div>
             <div className="py-1 px-4 ml-4 text-gray-700 mt-2">
               <div className="flex justify-between items-center hover:bg-gray-50 py-1">
-                <span>Retained Earnings</span>
+                <span>Retained Earnings (Assets - Liabilities)</span>
                 <span className="font-medium text-green-600">£{ownersEquity.toFixed(2)}</span>
               </div>
             </div>
@@ -211,39 +179,33 @@ export default function BalanceSheet({ products, customers, suppliers, sales, ex
           </div>
 
           {/* Financial Health Indicators */}
-          <div className="grid grid-cols-2 gap-4 pt-4 border-t">
-            <div className="text-center p-3 bg-gray-50 rounded-lg">
-              <p className="text-xs text-gray-600 mb-1">Current Ratio</p>
-              <p className="text-lg font-bold text-gray-900">
-                {totalCurrentLiabilities > 0 
-                  ? (totalCurrentAssets / totalCurrentLiabilities).toFixed(2) 
-                  : 'N/A'}
-              </p>
-              <p className="text-xs text-gray-500 mt-1">
-                {totalCurrentLiabilities > 0 && (totalCurrentAssets / totalCurrentLiabilities) >= 1.5 
-                  ? 'Good' 
-                  : 'Monitor'}
-              </p>
+          {totalCurrentLiabilities > 0 && (
+            <div className="grid grid-cols-2 gap-4 pt-4 border-t">
+              <div className="text-center p-3 bg-gray-50 rounded-lg">
+                <p className="text-xs text-gray-600 mb-1">Current Ratio</p>
+                <p className="text-lg font-bold text-gray-900">
+                  {(totalCurrentAssets / totalCurrentLiabilities).toFixed(2)}
+                </p>
+                <p className="text-xs text-gray-500 mt-1">
+                  {(totalCurrentAssets / totalCurrentLiabilities) >= 1.5 ? 'Good' : 'Monitor'}
+                </p>
+              </div>
+              <div className="text-center p-3 bg-gray-50 rounded-lg">
+                <p className="text-xs text-gray-600 mb-1">Debt-to-Equity</p>
+                <p className="text-lg font-bold text-gray-900">
+                  {ownersEquity > 0 ? (totalLiabilities / ownersEquity).toFixed(2) : 'N/A'}
+                </p>
+                <p className="text-xs text-gray-500 mt-1">
+                  {ownersEquity > 0 && (totalLiabilities / ownersEquity) < 1 ? 'Healthy' : 'Monitor'}
+                </p>
+              </div>
             </div>
-            <div className="text-center p-3 bg-gray-50 rounded-lg">
-              <p className="text-xs text-gray-600 mb-1">Debt-to-Equity</p>
-              <p className="text-lg font-bold text-gray-900">
-                {ownersEquity > 0 
-                  ? (totalLiabilities / ownersEquity).toFixed(2) 
-                  : 'N/A'}
-              </p>
-              <p className="text-xs text-gray-500 mt-1">
-                {ownersEquity > 0 && (totalLiabilities / ownersEquity) < 1 
-                  ? 'Healthy' 
-                  : 'Monitor'}
-              </p>
-            </div>
-          </div>
+          )}
 
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 flex items-center gap-2">
             <MousePointer className="w-4 h-4 text-blue-600" />
             <p className="text-sm text-blue-900">
-              <strong>Tip:</strong> Click on any amount to see the underlying transactions
+              <strong>100% Traceable:</strong> All figures are from actual transactions. Click any amount to verify.
             </p>
           </div>
         </CardContent>
