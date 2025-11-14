@@ -19,7 +19,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { Upload, X, Image as ImageIcon } from "lucide-react";
+import { X, Image as ImageIcon } from "lucide-react";
+import ProductURLScraper from "./ProductURLScraper";
 
 export default function ProductFormModal({ open, onClose, product, categories, onSave, processing }) {
   const [formData, setFormData] = useState({
@@ -50,7 +51,7 @@ export default function ProductFormModal({ open, onClose, product, categories, o
       setImagePreview(product.image_url || "");
     } else {
       setFormData({
-        sku: "",
+        sku: `SKU-${Date.now()}`,
         barcode: "",
         name: "",
         description: "",
@@ -70,6 +71,23 @@ export default function ProductFormModal({ open, onClose, product, categories, o
       setImagePreview("");
     }
   }, [product, open]);
+
+  const handleProductExtracted = (extractedData) => {
+    setFormData({
+      ...formData,
+      name: extractedData.name || formData.name,
+      description: extractedData.description || formData.description,
+      brand: extractedData.brand || formData.brand,
+      retail_price: extractedData.retail_price || formData.retail_price,
+      cost_price: extractedData.cost_price || formData.cost_price,
+      unit_type: extractedData.unit_type || formData.unit_type,
+      image_url: extractedData.image_url || formData.image_url,
+    });
+    
+    if (extractedData.image_url) {
+      setImagePreview(extractedData.image_url);
+    }
+  };
 
   const handleImageUpload = async (e) => {
     const file = e.target.files?.[0];
@@ -114,6 +132,11 @@ export default function ProductFormModal({ open, onClose, product, categories, o
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* URL Scraper - Only show for new products */}
+          {!product && (
+            <ProductURLScraper onProductExtracted={handleProductExtracted} />
+          )}
+
           {/* Product Image Upload */}
           <div className="space-y-2">
             <Label>Product Image</Label>
@@ -175,6 +198,7 @@ export default function ProductFormModal({ open, onClose, product, categories, o
                 id="barcode"
                 value={formData.barcode}
                 onChange={(e) => setFormData({ ...formData, barcode: e.target.value })}
+                placeholder="Leave empty to generate later"
               />
             </div>
           </div>
