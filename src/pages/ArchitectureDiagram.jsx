@@ -54,7 +54,7 @@ export default function ArchitectureDiagram() {
             <p className="text-xs text-gray-500">
               <strong>Designed and Developed by Ebenezer James</strong>
               <br />
-              Using Base44 Platform | Version 1.0 | 2024
+              Using Base44 Platform | Version 1.0 | 2025
             </p>
           </div>
 
@@ -478,8 +478,8 @@ export default function ArchitectureDiagram() {
               <strong className="text-gray-900">Designed and Developed by Ebenezer James</strong>
             </p>
             <p className="mb-1">Using Base44 Platform - Full-stack Development Platform</p>
-            <p>© 2024 Coriander Cash & Carry Business Suite | All Rights Reserved</p>
-            <p className="mt-2 text-gray-500">Version 1.0 | Last Updated: November 2024</p>
+            <p>© 2025 Coriander Cash & Carry Business Suite | All Rights Reserved</p>
+            <p className="mt-2 text-gray-500">Version 1.0 | Last Updated: November 2025</p>
           </div>
         </div>
       </div>
