@@ -17,7 +17,8 @@ import AppSettings from './pages/AppSettings';
 import Home from './pages/Home';
 import StaffPortal from './pages/StaffPortal';
 import AccessControlGuide from './pages/AccessControlGuide';
-import Layout from './Layout.jsx';
+import ArchitectureDiagram from './pages/ArchitectureDiagram';
+import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
@@ -40,10 +41,11 @@ export const PAGES = {
     "Home": Home,
     "StaffPortal": StaffPortal,
     "AccessControlGuide": AccessControlGuide,
+    "ArchitectureDiagram": ArchitectureDiagram,
 }
 
 export const pagesConfig = {
     mainPage: "Dashboard",
     Pages: PAGES,
-    Layout: Layout,
+    Layout: __Layout,
 };

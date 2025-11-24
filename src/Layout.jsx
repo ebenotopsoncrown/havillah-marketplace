@@ -203,11 +203,20 @@ export default function Layout({ children, currentPageName }) {
                           </SidebarMenuButton>
                           <SidebarMenuButton asChild>
                             <Link 
+                              to={createPageUrl("ArchitectureDiagram")} 
+                              className="flex items-center gap-3 px-3 py-2 hover:bg-indigo-50 hover:text-indigo-700 transition-colors duration-200 rounded-lg text-sm"
+                            >
+                              <BookOpen className="w-4 h-4" />
+                              <span>Architecture Diagram</span>
+                            </Link>
+                          </SidebarMenuButton>
+                          <SidebarMenuButton asChild>
+                            <Link 
                               to={createPageUrl("SystemDocumentation")} 
                               className="flex items-center gap-3 px-3 py-2 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 rounded-lg text-sm"
                             >
                               <BookOpen className="w-4 h-4" />
-                              <span>Documentation</span>
+                              <span>Full Documentation</span>
                             </Link>
                           </SidebarMenuButton>
                           <SidebarMenuButton asChild>
