@@ -212,6 +212,15 @@ export default function Layout({ children, currentPageName }) {
                           </SidebarMenuButton>
                           <SidebarMenuButton asChild>
                             <Link 
+                              to={createPageUrl("BrandAssets")} 
+                              className="flex items-center gap-3 px-3 py-2 hover:bg-emerald-50 hover:text-emerald-700 transition-colors duration-200 rounded-lg text-sm"
+                            >
+                              <Store className="w-4 h-4" />
+                              <span>Brand & Logo</span>
+                            </Link>
+                          </SidebarMenuButton>
+                          <SidebarMenuButton asChild>
+                            <Link 
                               to={createPageUrl("SystemDocumentation")} 
                               className="flex items-center gap-3 px-3 py-2 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 rounded-lg text-sm"
                             >
