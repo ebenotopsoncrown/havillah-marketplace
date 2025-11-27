@@ -18,6 +18,7 @@ import Home from './pages/Home';
 import StaffPortal from './pages/StaffPortal';
 import AccessControlGuide from './pages/AccessControlGuide';
 import ArchitectureDiagram from './pages/ArchitectureDiagram';
+import BrandAssets from './pages/BrandAssets';
 import __Layout from './Layout.jsx';
 
 
@@ -42,6 +43,7 @@ export const PAGES = {
     "StaffPortal": StaffPortal,
     "AccessControlGuide": AccessControlGuide,
     "ArchitectureDiagram": ArchitectureDiagram,
+    "BrandAssets": BrandAssets,
 }
 
 export const pagesConfig = {
