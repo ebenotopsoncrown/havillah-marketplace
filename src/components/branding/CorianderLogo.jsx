@@ -22,8 +22,8 @@ export default function CorianderLogo({
     subtext: darkMode ? '#D1D5DB' : '#6B7280'
   };
 
-  // Coriander Leaf SVG Icon
-  const LeafIcon = ({ size }) => (
+  // Shopping Basket with Fresh Produce Icon
+  const ShoppingIcon = ({ size }) => (
     <svg 
       width={size} 
       height={size} 
@@ -31,52 +31,99 @@ export default function CorianderLogo({
       fill="none" 
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* Main leaf shape */}
+      {/* Basket base */}
       <path
-        d="M50 10 C30 25, 15 45, 20 70 C25 85, 40 95, 50 95 C60 95, 75 85, 80 70 C85 45, 70 25, 50 10"
+        d="M15 45 L20 85 C21 90, 25 92, 30 92 L70 92 C75 92, 79 90, 80 85 L85 45"
         fill={colors.primary}
-      />
-      {/* Leaf veins */}
-      <path
-        d="M50 20 L50 85"
         stroke={darkMode ? '#166534' : '#15803D'}
+        strokeWidth="2"
+      />
+      {/* Basket handle */}
+      <path
+        d="M30 45 C30 25, 50 15, 50 15 C50 15, 70 25, 70 45"
+        stroke={colors.primary}
+        strokeWidth="6"
+        strokeLinecap="round"
+        fill="none"
+      />
+      {/* Basket rim */}
+      <rect
+        x="12"
+        y="42"
+        width="76"
+        height="8"
+        rx="3"
+        fill={colors.secondary}
+      />
+      {/* Basket weave lines */}
+      <path
+        d="M25 55 L30 82"
+        stroke={darkMode ? '#166534' : '#15803D'}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <path
+        d="M40 55 L42 82"
+        stroke={darkMode ? '#166534' : '#15803D'}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <path
+        d="M55 55 L55 82"
+        stroke={darkMode ? '#166534' : '#15803D'}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <path
+        d="M70 55 L65 82"
+        stroke={darkMode ? '#166534' : '#15803D'}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      {/* Fresh produce peeking out - Apple */}
+      <circle
+        cx="35"
+        cy="38"
+        r="10"
+        fill="#EF4444"
+      />
+      <path
+        d="M35 28 C37 25, 40 26, 38 30"
+        stroke="#166534"
+        strokeWidth="2"
+        strokeLinecap="round"
+        fill="none"
+      />
+      {/* Orange */}
+      <circle
+        cx="55"
+        cy="35"
+        r="9"
+        fill="#F97316"
+      />
+      {/* Carrot top */}
+      <path
+        d="M72 32 L72 20"
+        stroke="#22C55E"
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+      <path
+        d="M72 24 L68 18"
+        stroke="#22C55E"
         strokeWidth="2"
         strokeLinecap="round"
       />
       <path
-        d="M50 35 C40 40, 32 50, 30 60"
-        stroke={darkMode ? '#166534' : '#15803D'}
-        strokeWidth="1.5"
+        d="M72 24 L76 18"
+        stroke="#22C55E"
+        strokeWidth="2"
         strokeLinecap="round"
-        fill="none"
       />
+      {/* Carrot */}
       <path
-        d="M50 35 C60 40, 68 50, 70 60"
-        stroke={darkMode ? '#166534' : '#15803D'}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        fill="none"
-      />
-      <path
-        d="M50 55 C42 58, 36 65, 35 72"
-        stroke={darkMode ? '#166534' : '#15803D'}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        fill="none"
-      />
-      <path
-        d="M50 55 C58 58, 64 65, 65 72"
-        stroke={darkMode ? '#166534' : '#15803D'}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        fill="none"
-      />
-      {/* Accent circle */}
-      <circle
-        cx="50"
-        cy="15"
-        r="4"
-        fill={colors.secondary}
+        d="M72 32 L72 42 L69 50 L75 50 L72 42"
+        fill="#F97316"
       />
     </svg>
   );
@@ -85,7 +132,7 @@ export default function CorianderLogo({
   if (variant === 'icon') {
     return (
       <div className={`inline-flex items-center justify-center ${className}`}>
-        <LeafIcon size={s.icon} />
+        <ShoppingIcon size={s.icon} />
       </div>
     );
   }
@@ -94,7 +141,7 @@ export default function CorianderLogo({
   if (variant === 'stacked') {
     return (
       <div className={`inline-flex flex-col items-center ${className}`}>
-        <LeafIcon size={s.icon} />
+        <ShoppingIcon size={s.icon} />
         <div className="text-center mt-2">
           <div 
             style={{ 
@@ -128,7 +175,7 @@ export default function CorianderLogo({
   if (variant === 'horizontal') {
     return (
       <div className={`inline-flex items-center gap-3 ${className}`}>
-        <LeafIcon size={s.icon} />
+        <ShoppingIcon size={s.icon} />
         <div>
           <div 
             style={{ 
@@ -162,7 +209,7 @@ export default function CorianderLogo({
   return (
     <div className={`inline-flex items-center gap-4 ${className}`}>
       <div className="flex-shrink-0">
-        <LeafIcon size={s.icon} />
+        <ShoppingIcon size={s.icon} />
       </div>
       <div>
         <div 
