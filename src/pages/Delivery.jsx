@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Truck, MapPin, Clock, CheckCircle, Package } from "lucide-react";
+import { Truck, MapPin, Clock, CheckCircle, Package, Navigation, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -18,9 +18,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import DeliveryMap from "../components/delivery/DeliveryMap";
 
 export default function Delivery() {
   const [statusFilter, setStatusFilter] = useState("pending");
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [showMap, setShowMap] = useState(false);
   const queryClient = useQueryClient();
 
   const { data: orders = [], isLoading } = useQuery({
@@ -252,9 +261,16 @@ export default function Delivery() {
                             <Button variant="outline" className="w-full">
                               View Details
                             </Button>
-                            <Button variant="outline" className="w-full">
-                              <MapPin className="w-4 h-4 mr-2" />
-                              Open in Maps
+                            <Button 
+                              variant="outline" 
+                              className="w-full"
+                              onClick={() => {
+                                setSelectedOrder(order);
+                                setShowMap(true);
+                              }}
+                            >
+                              <Navigation className="w-4 h-4 mr-2" />
+                              View Route & Map
                             </Button>
                           </div>
                         </div>
@@ -285,6 +301,35 @@ export default function Delivery() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Route Map Modal */}
+      <Dialog open={showMap} onOpenChange={setShowMap}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Navigation className="w-5 h-5" />
+              Delivery Route - {selectedOrder?.order_number}
+            </DialogTitle>
+          </DialogHeader>
+          {selectedOrder && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
+                <div>
+                  <p className="text-sm text-gray-600">Customer</p>
+                  <p className="font-semibold">{selectedOrder.customer_name}</p>
+                  <p className="text-sm text-gray-600">{selectedOrder.customer_phone}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">Delivery Address</p>
+                  <p className="font-semibold">{selectedOrder.delivery_address}</p>
+                  <p className="text-sm text-gray-600">{selectedOrder.delivery_postcode}</p>
+                </div>
+              </div>
+              <DeliveryMap order={selectedOrder} />
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

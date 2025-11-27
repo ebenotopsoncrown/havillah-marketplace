@@ -10,11 +10,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { CheckCircle, Truck, Store, CreditCard, Banknote, User } from "lucide-react";
+import { CheckCircle, Truck, Store, CreditCard, Banknote, User, Loader2, Shield } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { base44 } from "@/api/base44Client";
+import AddressAutocomplete from "./AddressAutocomplete";
 
 export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, processing }) {
   const [completed, setCompleted] = useState(false);
+  const [stripeLoading, setStripeLoading] = useState(false);
+  const [addressValidation, setAddressValidation] = useState(null);
   const [formData, setFormData] = useState({
     customer_name: "",
     customer_email: "",
@@ -29,6 +33,36 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // For card payments, redirect to Stripe
+    if (formData.payment_method === "card") {
+      setStripeLoading(true);
+      try {
+        // First create the order
+        const orderId = await onPlaceOrder(formData, true); // true = don't show success, return order ID
+        
+        // Then create Stripe checkout session
+        const response = await base44.functions.invoke('createStripeCheckout', {
+          cart,
+          formData,
+          orderId
+        });
+        
+        if (response.data.url) {
+          // Redirect to Stripe Checkout
+          window.location.href = response.data.url;
+        } else {
+          throw new Error('Failed to create payment session');
+        }
+      } catch (error) {
+        console.error('Payment error:', error);
+        alert('Payment setup failed. Please try again.');
+        setStripeLoading(false);
+      }
+      return;
+    }
+    
+    // For non-card payments, proceed normally
     await onPlaceOrder(formData);
     setCompleted(true);
     setTimeout(() => {
@@ -187,37 +221,23 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
           {formData.delivery_type === "delivery" && (
             <div className="space-y-4">
               <h3 className="font-semibold text-lg border-b pb-2">Delivery Address</h3>
+
+              <AddressAutocomplete
+                address={formData.delivery_address}
+                postcode={formData.delivery_postcode}
+                onAddressChange={(value) => setFormData({ ...formData, delivery_address: value })}
+                onPostcodeChange={(value) => setFormData({ ...formData, delivery_postcode: value })}
+                onValidation={setAddressValidation}
+              />
+
               <div className="space-y-2">
-                <Label htmlFor="delivery_address">Street Address *</Label>
-                <Textarea
-                  id="delivery_address"
-                  value={formData.delivery_address}
-                  onChange={(e) => setFormData({ ...formData, delivery_address: e.target.value })}
-                  required
-                  rows={3}
-                  placeholder="123 Main Street, Apartment 4B"
+                <Label htmlFor="delivery_slot">Preferred Time Slot</Label>
+                <Input
+                  id="delivery_slot"
+                  value={formData.delivery_slot}
+                  onChange={(e) => setFormData({ ...formData, delivery_slot: e.target.value })}
+                  placeholder="e.g., 2-4 PM tomorrow"
                 />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="delivery_postcode">Postcode *</Label>
-                  <Input
-                    id="delivery_postcode"
-                    value={formData.delivery_postcode}
-                    onChange={(e) => setFormData({ ...formData, delivery_postcode: e.target.value })}
-                    required
-                    placeholder="SW1A 1AA"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="delivery_slot">Preferred Time Slot</Label>
-                  <Input
-                    id="delivery_slot"
-                    value={formData.delivery_slot}
-                    onChange={(e) => setFormData({ ...formData, delivery_slot: e.target.value })}
-                    placeholder="e.g., 2-4 PM tomorrow"
-                  />
-                </div>
               </div>
             </div>
           )}
@@ -266,9 +286,16 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
           {/* Payment Info */}
           {formData.payment_method === "card" && (
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <p className="text-sm text-blue-900">
-                <strong>Secure Payment:</strong> After placing your order, you'll be redirected to our secure payment partner to complete your card payment. Your card details are never stored on our servers.
-              </p>
+              <div className="flex items-start gap-3">
+                <Shield className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="text-sm text-blue-900 font-medium">Secure Payment via Stripe</p>
+                  <p className="text-xs text-blue-700 mt-1">
+                    You'll be redirected to Stripe's secure checkout to complete your card payment. 
+                    Your card details are never stored on our servers.
+                  </p>
+                </div>
+              </div>
             </div>
           )}
 
@@ -286,18 +313,23 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
 
           {/* Action Buttons */}
           <div className="flex gap-3 pt-4 border-t">
-            <Button type="button" variant="outline" onClick={onClose} disabled={processing} className="flex-1">
+            <Button type="button" variant="outline" onClick={onClose} disabled={processing || stripeLoading} className="flex-1">
               Cancel
             </Button>
             <Button 
               type="submit" 
-              disabled={processing}
+              disabled={processing || stripeLoading}
               className="flex-1 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 h-12 text-lg"
             >
-              {processing ? (
+              {processing || stripeLoading ? (
                 <>
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
-                  Processing...
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  {stripeLoading ? 'Redirecting to Payment...' : 'Processing...'}
+                </>
+              ) : formData.payment_method === "card" ? (
+                <>
+                  <CreditCard className="w-5 h-5 mr-2" />
+                  Pay £{total.toFixed(2)} with Card
                 </>
               ) : (
                 <>
