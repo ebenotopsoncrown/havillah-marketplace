@@ -1,5 +1,16 @@
 import React from 'react';
 
+// Official logo URL
+export const LOGO_URL = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6916561b91823be40dc5b5b8/f261a1386_image.png";
+
+// Business Details
+export const BUSINESS_INFO = {
+  name: "Coriander Cash & Carry Ltd",
+  address: "846-848, Wimborne Rd, Moordown, Bournemouth BH9 2DS",
+  phone: "01202 531940",
+  email: "brothersajibournemouth@gmail.com"
+};
+
 export default function CorianderLogo({ 
   variant = 'full', // 'full', 'icon', 'horizontal', 'stacked'
   size = 'medium', // 'small', 'medium', 'large', 'xlarge'
@@ -7,10 +18,10 @@ export default function CorianderLogo({
   className = ''
 }) {
   const sizes = {
-    small: { icon: 32, text: 14, subtext: 8 },
-    medium: { icon: 48, text: 20, subtext: 10 },
-    large: { icon: 64, text: 28, subtext: 14 },
-    xlarge: { icon: 96, text: 40, subtext: 18 }
+    small: { icon: 40, text: 14, subtext: 8 },
+    medium: { icon: 60, text: 20, subtext: 10 },
+    large: { icon: 80, text: 28, subtext: 14 },
+    xlarge: { icon: 120, text: 40, subtext: 18 }
   };
 
   const s = sizes[size] || sizes.medium;
@@ -21,6 +32,16 @@ export default function CorianderLogo({
     text: darkMode ? '#FFFFFF' : '#1F2937',
     subtext: darkMode ? '#D1D5DB' : '#6B7280'
   };
+  
+  // Use actual logo image
+  const LogoImage = ({ height }) => (
+    <img 
+      src={LOGO_URL} 
+      alt="Coriander Cash & Carry Ltd" 
+      style={{ height, width: 'auto' }}
+      className="object-contain"
+    />
+  );
 
   // Shopping Basket with Fresh Produce Icon
   const ShoppingIcon = ({ size }) => (
@@ -132,122 +153,15 @@ export default function CorianderLogo({
   if (variant === 'icon') {
     return (
       <div className={`inline-flex items-center justify-center ${className}`}>
-        <ShoppingIcon size={s.icon} />
+        <LogoImage height={s.icon} />
       </div>
     );
   }
 
-  // Stacked variant (icon on top, text below)
-  if (variant === 'stacked') {
-    return (
-      <div className={`inline-flex flex-col items-center ${className}`}>
-        <ShoppingIcon size={s.icon} />
-        <div className="text-center mt-2">
-          <div 
-            style={{ 
-              fontSize: s.text, 
-              fontWeight: 700, 
-              color: colors.text,
-              fontFamily: 'Georgia, serif',
-              letterSpacing: '0.02em'
-            }}
-          >
-            CORIANDER
-          </div>
-          <div 
-            style={{ 
-              fontSize: s.subtext, 
-              fontWeight: 600, 
-              color: colors.secondary,
-              fontFamily: 'Arial, sans-serif',
-              letterSpacing: '0.15em',
-              marginTop: 2
-            }}
-          >
-            CASH & CARRY
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Horizontal variant (icon left, text right inline)
-  if (variant === 'horizontal') {
-    return (
-      <div className={`inline-flex items-center gap-3 ${className}`}>
-        <ShoppingIcon size={s.icon} />
-        <div>
-          <div 
-            style={{ 
-              fontSize: s.text, 
-              fontWeight: 700, 
-              color: colors.text,
-              fontFamily: 'Georgia, serif',
-              letterSpacing: '0.02em',
-              lineHeight: 1.1
-            }}
-          >
-            CORIANDER
-          </div>
-          <div 
-            style={{ 
-              fontSize: s.subtext, 
-              fontWeight: 600, 
-              color: colors.secondary,
-              fontFamily: 'Arial, sans-serif',
-              letterSpacing: '0.15em'
-            }}
-          >
-            CASH & CARRY
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Full variant (default - horizontal with tagline)
+  // All other variants just show the logo image (text is already in the logo)
   return (
-    <div className={`inline-flex items-center gap-4 ${className}`}>
-      <div className="flex-shrink-0">
-        <ShoppingIcon size={s.icon} />
-      </div>
-      <div>
-        <div 
-          style={{ 
-            fontSize: s.text, 
-            fontWeight: 700, 
-            color: colors.text,
-            fontFamily: 'Georgia, serif',
-            letterSpacing: '0.02em',
-            lineHeight: 1.1
-          }}
-        >
-          CORIANDER
-        </div>
-        <div 
-          style={{ 
-            fontSize: s.subtext, 
-            fontWeight: 600, 
-            color: colors.secondary,
-            fontFamily: 'Arial, sans-serif',
-            letterSpacing: '0.15em',
-            marginTop: 2
-          }}
-        >
-          CASH & CARRY
-        </div>
-        <div 
-          style={{ 
-            fontSize: s.subtext * 0.85, 
-            color: colors.subtext,
-            fontFamily: 'Arial, sans-serif',
-            marginTop: 4,
-            fontStyle: 'italic'
-          }}
-        >
-          Quality Wholesale Since 2025
-        </div>
-      </div>
+    <div className={`inline-flex items-center ${className}`}>
+      <LogoImage height={s.icon} />
     </div>
   );
 }
@@ -256,13 +170,16 @@ export default function CorianderLogo({
 export function LetterheadLogo({ className = '' }) {
   return (
     <div className={`flex items-center justify-between border-b-2 border-green-700 pb-4 ${className}`}>
-      <CorianderLogo variant="horizontal" size="large" />
+      <img 
+        src={LOGO_URL} 
+        alt="Coriander Cash & Carry Ltd" 
+        className="h-20 w-auto object-contain"
+      />
       <div className="text-right text-sm text-gray-600">
-        <p className="font-semibold text-gray-800">Coriander Cash & Carry Ltd</p>
-        <p>123 High Street, London, SW1A 1AA</p>
-        <p>Tel: 020 1234 5678</p>
-        <p>info@coriandercashandcarry.co.uk</p>
-        <p className="text-xs text-gray-500 mt-1">VAT Reg: GB 123 4567 89</p>
+        <p className="font-semibold text-gray-800">{BUSINESS_INFO.name}</p>
+        <p>{BUSINESS_INFO.address}</p>
+        <p>Tel: {BUSINESS_INFO.phone}</p>
+        <p>{BUSINESS_INFO.email}</p>
       </div>
     </div>
   );
@@ -272,8 +189,8 @@ export function LetterheadLogo({ className = '' }) {
 export function DocumentFooter({ className = '' }) {
   return (
     <div className={`border-t border-gray-300 pt-3 mt-8 text-center text-xs text-gray-500 ${className}`}>
-      <p>Coriander Cash & Carry Ltd | Registered in England & Wales | Company No: 12345678</p>
-      <p>Registered Office: 123 High Street, London, SW1A 1AA</p>
+      <p>{BUSINESS_INFO.name} | Registered in England & Wales</p>
+      <p>Registered Office: {BUSINESS_INFO.address}</p>
     </div>
   );
 }
