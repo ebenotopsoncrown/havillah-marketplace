@@ -1,11 +1,14 @@
 import React, { useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Download, Printer, FileText, Copy, Check } from "lucide-react";
-import CorianderLogo, { LetterheadLogo, DocumentFooter } from "../components/branding/CorianderLogo";
+import { Download, Printer, FileText, Copy, Check, Image, File } from "lucide-react";
+import CorianderLogo, { LetterheadLogo, DocumentFooter, LOGO_URL, BUSINESS_INFO } from "../components/branding/CorianderLogo";
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 export default function BrandAssets() {
   const [copied, setCopied] = React.useState(false);
+  const [downloading, setDownloading] = React.useState(false);
   const letterheadRef = useRef(null);
 
   const handlePrint = () => {
@@ -17,6 +20,46 @@ export default function BrandAssets() {
     navigator.clipboard.writeText(colors);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const downloadAsJPG = async () => {
+    if (!letterheadRef.current) return;
+    setDownloading(true);
+    try {
+      const canvas = await html2canvas(letterheadRef.current, {
+        scale: 2,
+        backgroundColor: '#ffffff',
+        useCORS: true
+      });
+      const link = document.createElement('a');
+      link.download = 'Coriander-Letterhead.jpg';
+      link.href = canvas.toDataURL('image/jpeg', 0.95);
+      link.click();
+    } catch (error) {
+      console.error('Error generating JPG:', error);
+    }
+    setDownloading(false);
+  };
+
+  const downloadAsPDF = async () => {
+    if (!letterheadRef.current) return;
+    setDownloading(true);
+    try {
+      const canvas = await html2canvas(letterheadRef.current, {
+        scale: 2,
+        backgroundColor: '#ffffff',
+        useCORS: true
+      });
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save('Coriander-Letterhead.pdf');
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    }
+    setDownloading(false);
   };
 
   return (
@@ -34,105 +77,83 @@ export default function BrandAssets() {
           </Button>
         </div>
 
-        {/* Logo Variants */}
+        {/* Official Logo */}
         <Card className="shadow-lg">
           <CardHeader className="border-b">
-            <CardTitle>Logo Variants</CardTitle>
+            <CardTitle>Official Logo</CardTitle>
           </CardHeader>
           <CardContent className="p-8">
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {/* Full Logo */}
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Light Background */}
               <div className="text-center">
-                <div className="bg-white border-2 border-gray-200 rounded-xl p-6 mb-3 flex items-center justify-center min-h-[140px]">
-                  <CorianderLogo variant="full" size="medium" />
+                <div className="bg-white border-2 border-gray-200 rounded-xl p-8 mb-3 flex items-center justify-center min-h-[180px]">
+                  <img src={LOGO_URL} alt="Coriander Cash & Carry Ltd" className="h-32 w-auto" />
                 </div>
-                <p className="text-sm font-medium text-gray-700">Full Logo</p>
+                <p className="text-sm font-medium text-gray-700">Light Background</p>
                 <p className="text-xs text-gray-500">Primary use</p>
               </div>
 
-              {/* Horizontal */}
+              {/* Dark Background */}
               <div className="text-center">
-                <div className="bg-white border-2 border-gray-200 rounded-xl p-6 mb-3 flex items-center justify-center min-h-[140px]">
-                  <CorianderLogo variant="horizontal" size="medium" />
+                <div className="bg-gray-900 border-2 border-gray-700 rounded-xl p-8 mb-3 flex items-center justify-center min-h-[180px]">
+                  <img src={LOGO_URL} alt="Coriander Cash & Carry Ltd" className="h-32 w-auto" />
                 </div>
-                <p className="text-sm font-medium text-gray-700">Horizontal</p>
-                <p className="text-xs text-gray-500">Headers & documents</p>
-              </div>
-
-              {/* Stacked */}
-              <div className="text-center">
-                <div className="bg-white border-2 border-gray-200 rounded-xl p-6 mb-3 flex items-center justify-center min-h-[140px]">
-                  <CorianderLogo variant="stacked" size="medium" />
-                </div>
-                <p className="text-sm font-medium text-gray-700">Stacked</p>
-                <p className="text-xs text-gray-500">Social media & signage</p>
-              </div>
-
-              {/* Icon Only */}
-              <div className="text-center">
-                <div className="bg-white border-2 border-gray-200 rounded-xl p-6 mb-3 flex items-center justify-center min-h-[140px]">
-                  <CorianderLogo variant="icon" size="large" />
-                </div>
-                <p className="text-sm font-medium text-gray-700">Icon Only</p>
-                <p className="text-xs text-gray-500">Favicon & app icons</p>
+                <p className="text-sm font-medium text-gray-700">Dark Background</p>
+                <p className="text-xs text-gray-500">Alternative use</p>
               </div>
             </div>
 
-            {/* Dark Mode Variants */}
+            {/* Size Variations */}
             <div className="mt-10 pt-8 border-t">
-              <h3 className="text-lg font-semibold mb-6">Dark Background Variants</h3>
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <h3 className="text-lg font-semibold mb-6">Size Variations</h3>
+              <div className="flex flex-wrap items-end justify-center gap-8 bg-gray-50 rounded-xl p-8">
                 <div className="text-center">
-                  <div className="bg-gray-900 border-2 border-gray-700 rounded-xl p-6 mb-3 flex items-center justify-center min-h-[140px]">
-                    <CorianderLogo variant="full" size="medium" darkMode />
-                  </div>
-                  <p className="text-sm font-medium text-gray-700">Full (Dark)</p>
+                  <img src={LOGO_URL} alt="Small" className="h-10 w-auto mx-auto" />
+                  <p className="text-xs text-gray-500 mt-2">Small (40px)</p>
                 </div>
                 <div className="text-center">
-                  <div className="bg-gray-900 border-2 border-gray-700 rounded-xl p-6 mb-3 flex items-center justify-center min-h-[140px]">
-                    <CorianderLogo variant="horizontal" size="medium" darkMode />
-                  </div>
-                  <p className="text-sm font-medium text-gray-700">Horizontal (Dark)</p>
+                  <img src={LOGO_URL} alt="Medium" className="h-16 w-auto mx-auto" />
+                  <p className="text-xs text-gray-500 mt-2">Medium (64px)</p>
                 </div>
                 <div className="text-center">
-                  <div className="bg-gray-900 border-2 border-gray-700 rounded-xl p-6 mb-3 flex items-center justify-center min-h-[140px]">
-                    <CorianderLogo variant="stacked" size="medium" darkMode />
-                  </div>
-                  <p className="text-sm font-medium text-gray-700">Stacked (Dark)</p>
+                  <img src={LOGO_URL} alt="Large" className="h-24 w-auto mx-auto" />
+                  <p className="text-xs text-gray-500 mt-2">Large (96px)</p>
                 </div>
                 <div className="text-center">
-                  <div className="bg-gray-900 border-2 border-gray-700 rounded-xl p-6 mb-3 flex items-center justify-center min-h-[140px]">
-                    <CorianderLogo variant="icon" size="large" darkMode />
-                  </div>
-                  <p className="text-sm font-medium text-gray-700">Icon (Dark)</p>
+                  <img src={LOGO_URL} alt="X-Large" className="h-32 w-auto mx-auto" />
+                  <p className="text-xs text-gray-500 mt-2">X-Large (128px)</p>
                 </div>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Size Variations */}
+        {/* Business Information */}
         <Card className="shadow-lg">
           <CardHeader className="border-b">
-            <CardTitle>Size Variations</CardTitle>
+            <CardTitle>Business Information</CardTitle>
           </CardHeader>
           <CardContent className="p-8">
-            <div className="flex flex-wrap items-end gap-8">
-              <div className="text-center">
-                <CorianderLogo variant="horizontal" size="small" />
-                <p className="text-xs text-gray-500 mt-2">Small</p>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="space-y-4">
+                <div>
+                  <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Company Name</p>
+                  <p className="text-lg text-gray-900">{BUSINESS_INFO.name}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Address</p>
+                  <p className="text-lg text-gray-900">{BUSINESS_INFO.address}</p>
+                </div>
               </div>
-              <div className="text-center">
-                <CorianderLogo variant="horizontal" size="medium" />
-                <p className="text-xs text-gray-500 mt-2">Medium</p>
-              </div>
-              <div className="text-center">
-                <CorianderLogo variant="horizontal" size="large" />
-                <p className="text-xs text-gray-500 mt-2">Large</p>
-              </div>
-              <div className="text-center">
-                <CorianderLogo variant="horizontal" size="xlarge" />
-                <p className="text-xs text-gray-500 mt-2">X-Large</p>
+              <div className="space-y-4">
+                <div>
+                  <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Phone</p>
+                  <p className="text-lg text-gray-900">{BUSINESS_INFO.phone}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Email</p>
+                  <p className="text-lg text-gray-900">{BUSINESS_INFO.email}</p>
+                </div>
               </div>
             </div>
           </CardContent>
@@ -178,37 +199,98 @@ export default function BrandAssets() {
         </Card>
 
         {/* Letterhead Preview */}
-        <Card className="shadow-lg" ref={letterheadRef}>
+        <Card className="shadow-lg">
           <CardHeader className="border-b flex flex-row items-center justify-between">
             <CardTitle className="flex items-center gap-2">
               <FileText className="w-5 h-5" />
-              Letterhead Template
+              Professional Letterhead
             </CardTitle>
+            <div className="flex gap-2">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={downloadAsJPG}
+                disabled={downloading}
+              >
+                <Image className="w-4 h-4 mr-2" />
+                Download JPG
+              </Button>
+              <Button 
+                size="sm" 
+                onClick={downloadAsPDF}
+                disabled={downloading}
+                className="bg-red-600 hover:bg-red-700"
+              >
+                <File className="w-4 h-4 mr-2" />
+                Download PDF
+              </Button>
+            </div>
           </CardHeader>
           <CardContent className="p-8">
-            <div className="bg-white border-2 border-gray-200 rounded-xl p-8 shadow-inner">
-              <LetterheadLogo />
+            <div 
+              ref={letterheadRef}
+              className="bg-white border-2 border-gray-200 rounded-xl shadow-inner"
+              style={{ width: '210mm', minHeight: '297mm', padding: '20mm', margin: '0 auto' }}
+            >
+              {/* Letterhead Header */}
+              <div className="flex items-start justify-between border-b-4 border-green-600 pb-6 mb-8">
+                <img 
+                  src={LOGO_URL} 
+                  alt="Coriander Cash & Carry Ltd" 
+                  className="h-24 w-auto object-contain"
+                  crossOrigin="anonymous"
+                />
+                <div className="text-right">
+                  <h1 className="text-2xl font-bold text-green-700 mb-2">{BUSINESS_INFO.name}</h1>
+                  <p className="text-gray-600">{BUSINESS_INFO.address}</p>
+                  <p className="text-gray-600 mt-2">
+                    <span className="font-semibold">Tel:</span> {BUSINESS_INFO.phone}
+                  </p>
+                  <p className="text-gray-600">
+                    <span className="font-semibold">Email:</span> {BUSINESS_INFO.email}
+                  </p>
+                </div>
+              </div>
               
-              <div className="mt-12 space-y-4 text-gray-700">
-                <p className="text-sm text-gray-500">Date: {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
-                <p className="mt-6">Dear Valued Customer,</p>
-                <p className="text-gray-600 leading-relaxed">
-                  This is a sample letterhead template for official business correspondence. 
-                  The header includes our company logo, address, and contact information in a 
-                  professional layout suitable for invoices, quotes, and formal letters.
+              {/* Letter Content Area */}
+              <div className="space-y-6 text-gray-700 min-h-[180mm]">
+                <p className="text-sm text-gray-500">
+                  Date: {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
                 </p>
-                <p className="text-gray-600 leading-relaxed">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod 
-                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-                  quis nostrud exercitation ullamco laboris.
-                </p>
+                
                 <div className="mt-8">
-                  <p>Kind regards,</p>
-                  <p className="mt-4 font-semibold">The Coriander Team</p>
+                  <p className="mb-4">[Recipient Name]</p>
+                  <p className="mb-4">[Recipient Address]</p>
+                </div>
+
+                <p className="mt-8">Dear [Recipient],</p>
+                
+                <p className="text-gray-600 leading-relaxed mt-4">
+                  [Your letter content goes here. This professional letterhead template 
+                  can be used for official business correspondence, invoices, quotations, 
+                  and formal communications.]
+                </p>
+                
+                <p className="text-gray-600 leading-relaxed">
+                  [Continue your letter content here...]
+                </p>
+                
+                <div className="mt-16">
+                  <p>Yours sincerely,</p>
+                  <div className="mt-12">
+                    <p className="font-semibold">[Signatory Name]</p>
+                    <p className="text-gray-600">[Position/Title]</p>
+                    <p className="text-gray-600">{BUSINESS_INFO.name}</p>
+                  </div>
                 </div>
               </div>
 
-              <DocumentFooter />
+              {/* Footer */}
+              <div className="border-t-2 border-green-600 pt-4 mt-8 text-center text-xs text-gray-500">
+                <p className="font-semibold text-gray-700">{BUSINESS_INFO.name}</p>
+                <p>{BUSINESS_INFO.address}</p>
+                <p>Tel: {BUSINESS_INFO.phone} | Email: {BUSINESS_INFO.email}</p>
+              </div>
             </div>
           </CardContent>
         </Card>
