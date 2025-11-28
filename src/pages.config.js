@@ -19,6 +19,7 @@ import StaffPortal from './pages/StaffPortal';
 import AccessControlGuide from './pages/AccessControlGuide';
 import ArchitectureDiagram from './pages/ArchitectureDiagram';
 import BrandAssets from './pages/BrandAssets';
+import ExpressionOfInterestLetter from './pages/ExpressionOfInterestLetter';
 import __Layout from './Layout.jsx';
 
 
@@ -44,6 +45,7 @@ export const PAGES = {
     "AccessControlGuide": AccessControlGuide,
     "ArchitectureDiagram": ArchitectureDiagram,
     "BrandAssets": BrandAssets,
+    "ExpressionOfInterestLetter": ExpressionOfInterestLetter,
 }
 
 export const pagesConfig = {
