@@ -178,7 +178,7 @@ export default function ExpressionOfInterestLetter() {
           marginTop: '-20mm'
         }}
       >
-        <div className="border-t-2 border-green-600 pt-3 text-center text-xs text-gray-500">
+        <div className="pt-3 text-center text-xs text-gray-500">
           <p className="font-semibold text-gray-700">{BUSINESS_INFO.name}</p>
           <p>{BUSINESS_INFO.address} | Tel: {BUSINESS_INFO.phone} | Email: {BUSINESS_INFO.email}</p>
         </div>
