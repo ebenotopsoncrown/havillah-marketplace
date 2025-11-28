@@ -1,7 +1,9 @@
 import React, { useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Download, Printer, FileText, Copy, Check, Image, File } from "lucide-react";
+import { Download, Printer, FileText, Copy, Check, Image, File, ExternalLink } from "lucide-react";
+import { Link } from "react-router-dom";
+import { createPageUrl } from "@/utils";
 import CorianderLogo, { LetterheadLogo, DocumentFooter, LOGO_URL, BUSINESS_INFO } from "../components/branding/CorianderLogo";
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
@@ -206,6 +208,12 @@ export default function BrandAssets() {
               Professional Letterhead
             </CardTitle>
             <div className="flex gap-2">
+              <Link to={createPageUrl("ExpressionOfInterestLetter")}>
+                <Button variant="outline" size="sm" className="border-green-200 text-green-700 hover:bg-green-50">
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  View EOI Letter
+                </Button>
+              </Link>
               <Button 
                 variant="outline" 
                 size="sm" 
