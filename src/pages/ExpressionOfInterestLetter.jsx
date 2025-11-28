@@ -167,12 +167,20 @@ export default function ExpressionOfInterestLetter() {
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="absolute bottom-0 left-0 right-0 px-6 pb-4" style={{ marginTop: 'auto' }}>
-          <div className="border-t-2 border-green-600 pt-3 text-center text-xs text-gray-500">
-            <p className="font-semibold text-gray-700">{BUSINESS_INFO.name}</p>
-            <p>{BUSINESS_INFO.address} | Tel: {BUSINESS_INFO.phone} | Email: {BUSINESS_INFO.email}</p>
-          </div>
+      </div>
+      
+      {/* Footer - Fixed at bottom of A4 page */}
+      <div 
+        className="bg-white mx-auto print:shadow-none"
+        style={{ 
+          width: '210mm',
+          padding: '0 25mm 15mm 25mm',
+          marginTop: '-20mm'
+        }}
+      >
+        <div className="border-t-2 border-green-600 pt-3 text-center text-xs text-gray-500">
+          <p className="font-semibold text-gray-700">{BUSINESS_INFO.name}</p>
+          <p>{BUSINESS_INFO.address} | Tel: {BUSINESS_INFO.phone} | Email: {BUSINESS_INFO.email}</p>
         </div>
       </div>
 
