@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
@@ -21,12 +21,31 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 export default function Home() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
   const { data: products = [] } = useQuery({
     queryKey: ['featured-products'],
     queryFn: () => base44.entities.Product.list('-created_date', 8),
   });
 
   const featuredProducts = products.filter(p => p.is_active && p.stock_quantity > 0).slice(0, 4);
+
+  // High-quality images for Afro-Asian grocery store
+  const heroImages = [
+    "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=800&h=600&fit=crop&q=90", // Vibrant vegetables & fruits market
+    "https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=800&h=600&fit=crop&q=90", // Colorful spices display
+    "https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&h=600&fit=crop&q=90", // Asian grocery shelves
+    "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=800&h=600&fit=crop&q=90", // Fresh produce market
+    "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=800&h=600&fit=crop&q=90", // International food aisle
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
+    }, 4000); // Change image every 4 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">
@@ -69,7 +88,7 @@ export default function Home() {
             <div>
               <Badge className="bg-green-600 mb-4">🎉 Now Open for Online Orders</Badge>
               <h2 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                Quality Asian Groceries<br />
+                Quality Afro-Asian Groceries<br />
                 <span className="text-green-600">Delivered to Your Door</span>
               </h2>
               <p className="text-xl text-gray-700 mb-8">
@@ -91,12 +110,35 @@ export default function Home() {
               </div>
             </div>
             <div className="relative">
-              <div className="bg-white rounded-2xl shadow-2xl p-8 border-2 border-green-200">
-                <img
-                  src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&h=400&fit=crop"
-                  alt="Asian Grocery Store"
-                  className="rounded-lg w-full h-80 object-cover"
-                />
+              <div className="bg-white rounded-2xl shadow-2xl p-8 border-2 border-green-200 overflow-hidden">
+                <div className="relative h-80 rounded-lg overflow-hidden">
+                  {heroImages.map((image, index) => (
+                    <img
+                      key={index}
+                      src={image}
+                      alt={`Afro-Asian Grocery Store ${index + 1}`}
+                      className={`absolute inset-0 w-full h-full object-cover rounded-lg transition-opacity duration-1000 ${
+                        index === currentImageIndex ? 'opacity-100' : 'opacity-0'
+                      }`}
+                    />
+                  ))}
+                  
+                  {/* Slide Indicators */}
+                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
+                    {heroImages.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentImageIndex(index)}
+                        className={`w-2 h-2 rounded-full transition-all ${
+                          index === currentImageIndex 
+                            ? 'bg-white w-8' 
+                            : 'bg-white/50 hover:bg-white/75'
+                        }`}
+                        aria-label={`Go to slide ${index + 1}`}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

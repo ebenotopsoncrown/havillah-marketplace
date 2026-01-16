@@ -1,51 +1,51 @@
-import Dashboard from './pages/Dashboard';
-import POS from './pages/POS';
-import Products from './pages/Products';
-import OnlineStore from './pages/OnlineStore';
-import Sales from './pages/Sales';
-import Orders from './pages/Orders';
-import Customers from './pages/Customers';
-import Suppliers from './pages/Suppliers';
-import Reports from './pages/Reports';
-import CustomerStore from './pages/CustomerStore';
-import Delivery from './pages/Delivery';
-import HardwareGuide from './pages/HardwareGuide';
-import Purchases from './pages/Purchases';
-import Expenses from './pages/Expenses';
-import SystemDocumentation from './pages/SystemDocumentation';
-import AppSettings from './pages/AppSettings';
-import Home from './pages/Home';
-import StaffPortal from './pages/StaffPortal';
 import AccessControlGuide from './pages/AccessControlGuide';
+import AppSettings from './pages/AppSettings';
 import ArchitectureDiagram from './pages/ArchitectureDiagram';
 import BrandAssets from './pages/BrandAssets';
+import CustomerStore from './pages/CustomerStore';
+import Customers from './pages/Customers';
+import Dashboard from './pages/Dashboard';
+import Delivery from './pages/Delivery';
+import Expenses from './pages/Expenses';
 import ExpressionOfInterestLetter from './pages/ExpressionOfInterestLetter';
+import HardwareGuide from './pages/HardwareGuide';
+import Home from './pages/Home';
+import OnlineStore from './pages/OnlineStore';
+import Orders from './pages/Orders';
+import POS from './pages/POS';
+import Products from './pages/Products';
+import Purchases from './pages/Purchases';
+import Reports from './pages/Reports';
+import Sales from './pages/Sales';
+import StaffPortal from './pages/StaffPortal';
+import Suppliers from './pages/Suppliers';
+import SystemDocumentation from './pages/SystemDocumentation';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
-    "Dashboard": Dashboard,
-    "POS": POS,
-    "Products": Products,
-    "OnlineStore": OnlineStore,
-    "Sales": Sales,
-    "Orders": Orders,
-    "Customers": Customers,
-    "Suppliers": Suppliers,
-    "Reports": Reports,
-    "CustomerStore": CustomerStore,
-    "Delivery": Delivery,
-    "HardwareGuide": HardwareGuide,
-    "Purchases": Purchases,
-    "Expenses": Expenses,
-    "SystemDocumentation": SystemDocumentation,
-    "AppSettings": AppSettings,
-    "Home": Home,
-    "StaffPortal": StaffPortal,
     "AccessControlGuide": AccessControlGuide,
+    "AppSettings": AppSettings,
     "ArchitectureDiagram": ArchitectureDiagram,
     "BrandAssets": BrandAssets,
+    "CustomerStore": CustomerStore,
+    "Customers": Customers,
+    "Dashboard": Dashboard,
+    "Delivery": Delivery,
+    "Expenses": Expenses,
     "ExpressionOfInterestLetter": ExpressionOfInterestLetter,
+    "HardwareGuide": HardwareGuide,
+    "Home": Home,
+    "OnlineStore": OnlineStore,
+    "Orders": Orders,
+    "POS": POS,
+    "Products": Products,
+    "Purchases": Purchases,
+    "Reports": Reports,
+    "Sales": Sales,
+    "StaffPortal": StaffPortal,
+    "Suppliers": Suppliers,
+    "SystemDocumentation": SystemDocumentation,
 }
 
 export const pagesConfig = {
