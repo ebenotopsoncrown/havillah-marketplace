@@ -23,6 +23,7 @@ import StaffPortal from './pages/StaffPortal';
 import StoreQRCode from './pages/StoreQRCode';
 import Suppliers from './pages/Suppliers';
 import SystemDocumentation from './pages/SystemDocumentation';
+import DriverPortal from './pages/DriverPortal';
 import __Layout from './Layout.jsx';
 
 
@@ -52,6 +53,7 @@ export const PAGES = {
     "StoreQRCode": StoreQRCode,
     "Suppliers": Suppliers,
     "SystemDocumentation": SystemDocumentation,
+    "DriverPortal": DriverPortal,
 }
 
 export const pagesConfig = {
