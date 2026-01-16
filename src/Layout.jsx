@@ -269,6 +269,19 @@ export default function Layout({ children, currentPageName }) {
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
+
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <Link 
+                        to={createPageUrl("DriverPortal")} 
+                        className="flex items-center gap-3 px-3 py-2.5 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200 rounded-lg"
+                        target="_blank"
+                      >
+                        <TruckIcon className="w-5 h-5" />
+                        <span>Driver Portal</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>
