@@ -13,21 +13,21 @@ import Expenses from './pages/Expenses';
 import ExpressionOfInterestLetter from './pages/ExpressionOfInterestLetter';
 import HardwareGuide from './pages/HardwareGuide';
 import Home from './pages/Home';
+import MyData from './pages/MyData';
 import OnlineStore from './pages/OnlineStore';
 import Orders from './pages/Orders';
 import POS from './pages/POS';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 import Products from './pages/Products';
 import Purchases from './pages/Purchases';
 import Reports from './pages/Reports';
 import Sales from './pages/Sales';
+import SecurityDashboard from './pages/SecurityDashboard';
 import StaffPortal from './pages/StaffPortal';
 import StoreQRCode from './pages/StoreQRCode';
 import Suppliers from './pages/Suppliers';
 import SystemDocumentation from './pages/SystemDocumentation';
-import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsAndConditions from './pages/TermsAndConditions';
-import MyData from './pages/MyData';
-import SecurityDashboard from './pages/SecurityDashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -47,21 +47,21 @@ export const PAGES = {
     "ExpressionOfInterestLetter": ExpressionOfInterestLetter,
     "HardwareGuide": HardwareGuide,
     "Home": Home,
+    "MyData": MyData,
     "OnlineStore": OnlineStore,
     "Orders": Orders,
     "POS": POS,
+    "PrivacyPolicy": PrivacyPolicy,
     "Products": Products,
     "Purchases": Purchases,
     "Reports": Reports,
     "Sales": Sales,
+    "SecurityDashboard": SecurityDashboard,
     "StaffPortal": StaffPortal,
     "StoreQRCode": StoreQRCode,
     "Suppliers": Suppliers,
     "SystemDocumentation": SystemDocumentation,
-    "PrivacyPolicy": PrivacyPolicy,
     "TermsAndConditions": TermsAndConditions,
-    "MyData": MyData,
-    "SecurityDashboard": SecurityDashboard,
 }
 
 export const pagesConfig = {

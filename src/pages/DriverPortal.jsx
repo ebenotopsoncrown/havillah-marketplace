@@ -53,15 +53,18 @@ export default function DriverPortal() {
     refetchInterval: 5000, // Refresh every 5 seconds
   });
 
-  // Get ready orders (picked and ready for dispatch)
-  const { data: readyOrders = [] } = useQuery({
+  // Get ready orders (confirmed or ready for dispatch)
+  const { data: allOrders = [] } = useQuery({
     queryKey: ['ready-orders'],
     queryFn: () => base44.entities.Order.filter({ 
-      status: 'ready',
       delivery_type: 'delivery'
     }),
     refetchInterval: 10000,
   });
+
+  const readyOrders = allOrders.filter(order => 
+    ['confirmed', 'picking', 'ready'].includes(order.status)
+  );
 
   useEffect(() => {
     if (deliveryRuns.length > 0) {

@@ -202,24 +202,38 @@ export default function Orders() {
                       </div>
                       <div className="flex flex-col items-end justify-between">
                         <p className="text-2xl font-bold text-indigo-600">£{order.total_amount?.toFixed(2)}</p>
-                        <Select
-                          value={order.status}
-                          onValueChange={(value) => handleStatusChange(order.id, value)}
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <SelectTrigger className="w-48">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="pending">Pending</SelectItem>
-                            <SelectItem value="confirmed">Confirmed</SelectItem>
-                            <SelectItem value="picking">Picking</SelectItem>
-                            <SelectItem value="ready">Ready</SelectItem>
-                            <SelectItem value="dispatched">Dispatched</SelectItem>
-                            <SelectItem value="delivered">Delivered</SelectItem>
-                            <SelectItem value="cancelled">Cancelled</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        <div className="flex gap-2">
+                          {order.status === 'pending' && (
+                            <Button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleStatusChange(order.id, 'confirmed');
+                              }}
+                              size="sm"
+                              className="bg-blue-600 hover:bg-blue-700"
+                            >
+                              Confirm Order
+                            </Button>
+                          )}
+                          <Select
+                            value={order.status}
+                            onValueChange={(value) => handleStatusChange(order.id, value)}
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <SelectTrigger className="w-48">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="pending">Pending</SelectItem>
+                              <SelectItem value="confirmed">Confirmed</SelectItem>
+                              <SelectItem value="picking">Picking</SelectItem>
+                              <SelectItem value="ready">Ready</SelectItem>
+                              <SelectItem value="dispatched">Dispatched</SelectItem>
+                              <SelectItem value="delivered">Delivered</SelectItem>
+                              <SelectItem value="cancelled">Cancelled</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
                       </div>
                     </div>
                   </div>
