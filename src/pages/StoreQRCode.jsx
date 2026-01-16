@@ -6,6 +6,7 @@ import { Download, Printer, Copy, Check, QrCode, ExternalLink, Store } from "luc
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import html2canvas from 'html2canvas';
+import { createPageUrl } from "@/utils";
 
 export default function StoreQRCode() {
   const [copied, setCopied] = React.useState(false);
@@ -13,9 +14,7 @@ export default function StoreQRCode() {
   const qrRef = useRef(null);
 
   // Get the direct URL to CustomerStore
-  const baseUrl = window.location.origin;
-  const appPath = window.location.pathname.split('/').slice(0, 3).join('/'); // Get /app/<appId>
-  const storeUrl = `${baseUrl}${appPath}/customerstore`;
+  const storeUrl = `${window.location.origin}${createPageUrl('CustomerStore')}`;
 
   const handleCopyUrl = () => {
     navigator.clipboard.writeText(storeUrl);
