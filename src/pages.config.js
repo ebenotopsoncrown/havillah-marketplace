@@ -22,6 +22,7 @@ import StaffPortal from './pages/StaffPortal';
 import Suppliers from './pages/Suppliers';
 import SystemDocumentation from './pages/SystemDocumentation';
 import StoreQRCode from './pages/StoreQRCode';
+import CustomerAccount from './pages/CustomerAccount';
 import __Layout from './Layout.jsx';
 
 
@@ -50,6 +51,7 @@ export const PAGES = {
     "Suppliers": Suppliers,
     "SystemDocumentation": SystemDocumentation,
     "StoreQRCode": StoreQRCode,
+    "CustomerAccount": CustomerAccount,
 }
 
 export const pagesConfig = {

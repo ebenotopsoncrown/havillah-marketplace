@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { ShoppingCart, Search, Store, Phone, Mail, MapPin, Clock } from "lucide-react";
+import { ShoppingCart, Search, Store, Phone, Mail, MapPin, Clock, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -189,18 +189,25 @@ export default function CustomerStore() {
               </div>
             </div>
             
-            <Button
-              onClick={() => setShowCart(true)}
-              className="relative bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800"
-            >
-              <ShoppingCart className="w-5 h-5 mr-2" />
-              Cart
-              {cartItemsCount > 0 && (
-                <Badge className="absolute -top-2 -right-2 bg-orange-500 hover:bg-orange-600">
-                  {cartItemsCount}
-                </Badge>
-              )}
-            </Button>
+            <div className="flex items-center gap-3">
+              <Link to={createPageUrl('CustomerAccount')}>
+                <Button variant="outline" className="border-2 hover:bg-gray-50">
+                  <User className="w-5 h-5" />
+                </Button>
+              </Link>
+              <Button
+                onClick={() => setShowCart(true)}
+                className="relative bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800"
+              >
+                <ShoppingCart className="w-5 h-5 mr-2" />
+                Cart
+                {cartItemsCount > 0 && (
+                  <Badge className="absolute -top-2 -right-2 bg-orange-500 hover:bg-orange-600">
+                    {cartItemsCount}
+                  </Badge>
+                )}
+              </Button>
+            </div>
           </div>
 
           {/* Search Bar */}
