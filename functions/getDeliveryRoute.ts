@@ -2,11 +2,11 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.4';
 
 const GOOGLE_MAPS_API_KEY = Deno.env.get("GOOGLE_MAPS_API_KEY");
 
-// Store location (you can update this)
+// Store location
 const STORE_LOCATION = {
-  lat: 51.5074,
-  lng: -0.1278,
-  address: "123 High Street, London, SW1A 1AA"
+  lat: 50.7397,
+  lng: -1.8594,
+  address: "846-848 Wimborne Rd, Bournemouth BH9 2DS, UK"
 };
 
 Deno.serve(async (req) => {

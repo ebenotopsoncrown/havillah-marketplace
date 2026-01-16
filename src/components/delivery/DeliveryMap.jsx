@@ -86,11 +86,14 @@ export default function DeliveryMap({ order, onClose }) {
       if (response.data.success) {
         setRouteData(response.data);
       } else {
-        setError(response.data.error || 'Could not calculate route');
+        const errorMsg = response.data.message || response.data.error || 'Could not calculate route';
+        setError(errorMsg);
+        console.error('Route calculation failed:', response.data);
       }
     } catch (err) {
       console.error('Route error:', err);
-      setError('Failed to load route');
+      const errorMsg = err.response?.data?.error || err.message || 'Failed to load route';
+      setError(errorMsg);
     } finally {
       setLoading(false);
     }

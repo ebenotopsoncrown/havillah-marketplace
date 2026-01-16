@@ -52,10 +52,15 @@ export default function LoadOrdersModal({ open, onClose, readyOrders, driver }) 
       const response = await base44.functions.invoke('optimizeDeliveryRoute', {
         orderIds: selectedOrders
       });
-      setOptimizedRoute(response.data);
+      
+      if (response.data.error) {
+        alert(`Route optimization failed: ${response.data.error}\n${response.data.message || ''}`);
+      } else {
+        setOptimizedRoute(response.data);
+      }
     } catch (error) {
       console.error('Route optimization failed:', error);
-      alert('Failed to optimize route. Please try again.');
+      alert(`Failed to optimize route: ${error.response?.data?.error || error.message}`);
     }
     setOptimizing(false);
   };
