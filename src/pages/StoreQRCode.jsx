@@ -13,7 +13,9 @@ export default function StoreQRCode() {
   const qrRef = useRef(null);
 
   // Get the direct URL to CustomerStore
-  const storeUrl = `${window.location.origin}${window.location.pathname.split('/').slice(0, -1).join('/')}/customerstore`;
+  const baseUrl = window.location.origin;
+  const appPath = window.location.pathname.split('/').slice(0, 3).join('/'); // Get /app/<appId>
+  const storeUrl = `${baseUrl}${appPath}/customerstore`;
 
   const handleCopyUrl = () => {
     navigator.clipboard.writeText(storeUrl);
