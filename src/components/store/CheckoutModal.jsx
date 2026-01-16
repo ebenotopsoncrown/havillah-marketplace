@@ -303,9 +303,14 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
                 </div>
               )}
 
-              {deliveryFeeData?.outOfRange && (
+              {(deliveryFeeData?.outOfRange || deliveryFeeData?.belowMinimum) && (
                 <div className="bg-red-50 border border-red-200 rounded-lg p-4">
                   <p className="text-sm text-red-700 font-medium">{deliveryFeeData.error}</p>
+                  {deliveryFeeData?.belowMinimum && (
+                    <p className="text-xs text-red-600 mt-1">
+                      Add £{(deliveryFeeData.minimumRequired - subtotal).toFixed(2)} more to qualify for delivery
+                    </p>
+                  )}
                 </div>
               )}
 
@@ -397,7 +402,7 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
             </Button>
             <Button 
               type="submit" 
-              disabled={processing || stripeLoading}
+              disabled={processing || stripeLoading || (formData.delivery_type === "delivery" && (deliveryFeeData?.belowMinimum || deliveryFeeData?.outOfRange))}
               className="flex-1 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 h-12 text-lg"
             >
               {processing || stripeLoading ? (

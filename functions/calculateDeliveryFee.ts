@@ -6,6 +6,7 @@ const STORE_ADDRESS = "846-848 Wimborne Rd, Moordown, Bournemouth BH9 2DS, UK";
 // Delivery fee structure
 const BASE_FEE = 4.5;
 const FREE_DELIVERY_THRESHOLD = 50;
+const MINIMUM_ORDER_FOR_DELIVERY = 15; // Minimum order value for delivery
 
 // Distance tiers (in miles)
 const DISTANCE_TIERS = [
@@ -34,6 +35,16 @@ Deno.serve(async (req) => {
       return Response.json({ 
         error: 'Missing required parameters',
         fee: BASE_FEE 
+      }, { status: 400 });
+    }
+
+    // Check minimum order amount
+    if (orderTotal < MINIMUM_ORDER_FOR_DELIVERY) {
+      return Response.json({ 
+        error: `Minimum order value for delivery is £${MINIMUM_ORDER_FOR_DELIVERY}`,
+        fee: null,
+        belowMinimum: true,
+        minimumRequired: MINIMUM_ORDER_FOR_DELIVERY
       }, { status: 400 });
     }
 
