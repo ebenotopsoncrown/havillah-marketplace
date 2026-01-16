@@ -150,7 +150,7 @@ export default function AddressAutocomplete({
         <div className={`p-3 rounded-lg text-sm flex items-start gap-2 ${
           validationResult.valid 
             ? 'bg-green-50 text-green-800 border border-green-200' 
-            : 'bg-red-50 text-red-800 border border-red-200'
+            : 'bg-yellow-50 text-yellow-800 border border-yellow-200'
         }`}>
           {validationResult.valid ? (
             <>
@@ -164,8 +164,8 @@ export default function AddressAutocomplete({
             <>
               <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium">Could not verify address</p>
-                <p className="text-xs opacity-75">Please check your postcode and try again</p>
+                <p className="font-medium">Address verification recommended</p>
+                <p className="text-xs opacity-75">We couldn't verify this address automatically, but you can still proceed if you're sure it's correct.</p>
               </div>
             </>
           )}
