@@ -19,6 +19,8 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
   const [completed, setCompleted] = useState(false);
   const [stripeLoading, setStripeLoading] = useState(false);
   const [addressValidation, setAddressValidation] = useState(null);
+  const [deliveryFeeData, setDeliveryFeeData] = useState(null);
+  const [calculatingFee, setCalculatingFee] = useState(false);
   const [formData, setFormData] = useState({
     customer_name: "",
     customer_email: "",
@@ -82,9 +84,41 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
     }, 3000);
   };
 
+  // Calculate delivery fee when postcode changes
+  React.useEffect(() => {
+    if (formData.delivery_type === "delivery" && formData.delivery_postcode && formData.delivery_postcode.length >= 5) {
+      const timer = setTimeout(async () => {
+        setCalculatingFee(true);
+        try {
+          const response = await base44.functions.invoke('calculateDeliveryFee', {
+            cart,
+            deliveryPostcode: formData.delivery_postcode,
+            orderTotal: subtotal
+          });
+          
+          if (response.data.fee !== null && response.data.fee !== undefined) {
+            setDeliveryFeeData(response.data);
+          } else {
+            setDeliveryFeeData(null);
+          }
+        } catch (error) {
+          console.error('Fee calculation error:', error);
+          setDeliveryFeeData(null);
+        }
+        setCalculatingFee(false);
+      }, 800);
+      
+      return () => clearTimeout(timer);
+    } else {
+      setDeliveryFeeData(null);
+    }
+  }, [formData.delivery_postcode, formData.delivery_type, cart]);
+
   const subtotal = cart.reduce((sum, item) => sum + (item.unit_price * item.quantity), 0);
   const vat = cart.reduce((sum, item) => sum + (item.unit_price * item.quantity * item.vat_rate / 100), 0);
-  const deliveryCharge = formData.delivery_type === "delivery" ? 5 : 0;
+  const deliveryCharge = formData.delivery_type === "delivery" 
+    ? (deliveryFeeData?.fee !== null && deliveryFeeData?.fee !== undefined ? deliveryFeeData.fee : 3.95)
+    : 0;
   const total = subtotal + vat + deliveryCharge;
 
   if (completed) {
@@ -133,7 +167,9 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
               </div>
               <div>
                 <p className="opacity-75">Delivery</p>
-                <p className="font-semibold">£{deliveryCharge.toFixed(2)}</p>
+                <p className="font-semibold">
+                  {calculatingFee ? 'Calculating...' : `£${deliveryCharge.toFixed(2)}`}
+                </p>
               </div>
             </div>
           </div>
@@ -195,7 +231,7 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
                     <p className="text-sm text-gray-600">Delivered to your address</p>
                   </div>
                   <Badge className="bg-indigo-100 text-indigo-700 border-indigo-200">
-                    £5.00
+                    {calculatingFee ? 'Calculating...' : deliveryFeeData?.fee !== null && deliveryFeeData?.fee !== undefined ? `£${deliveryFeeData.fee.toFixed(2)}` : 'From £3.95'}
                   </Badge>
                 </Label>
               </div>
@@ -229,6 +265,49 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
                 onPostcodeChange={(value) => setFormData({ ...formData, delivery_postcode: value })}
                 onValidation={setAddressValidation}
               />
+
+              {deliveryFeeData && deliveryFeeData.breakdown && (
+                <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-sm text-indigo-900 mb-2">Delivery Fee Breakdown</h4>
+                  <div className="space-y-1 text-sm text-indigo-700">
+                    {deliveryFeeData.breakdown.freeDelivery ? (
+                      <p className="font-semibold text-green-700">🎉 {deliveryFeeData.breakdown.reason}</p>
+                    ) : (
+                      <>
+                        <div className="flex justify-between">
+                          <span>Base fee:</span>
+                          <span>£{deliveryFeeData.breakdown.baseFee.toFixed(2)}</span>
+                        </div>
+                        {deliveryFeeData.breakdown.distanceFee > 0 && (
+                          <div className="flex justify-between">
+                            <span>Distance ({deliveryFeeData.distance} miles):</span>
+                            <span>+£{deliveryFeeData.breakdown.distanceFee.toFixed(2)}</span>
+                          </div>
+                        )}
+                        {deliveryFeeData.breakdown.weightSurcharge > 0 && (
+                          <div className="flex justify-between">
+                            <span>Weight surcharge ({deliveryFeeData.weight} kg):</span>
+                            <span>+£{deliveryFeeData.breakdown.weightSurcharge.toFixed(2)}</span>
+                          </div>
+                        )}
+                        <div className="flex justify-between font-semibold border-t border-indigo-300 pt-1 mt-1">
+                          <span>Total delivery:</span>
+                          <span>£{deliveryFeeData.fee.toFixed(2)}</span>
+                        </div>
+                      </>
+                    )}
+                    {deliveryFeeData.estimatedTime && (
+                      <p className="text-xs mt-2">Estimated delivery time: {deliveryFeeData.estimatedTime}</p>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {deliveryFeeData?.outOfRange && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                  <p className="text-sm text-red-700 font-medium">{deliveryFeeData.error}</p>
+                </div>
+              )}
 
               <div className="space-y-2">
                 <Label htmlFor="delivery_slot">Preferred Time Slot</Label>

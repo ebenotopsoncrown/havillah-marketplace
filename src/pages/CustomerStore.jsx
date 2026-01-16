@@ -104,10 +104,26 @@ export default function CustomerStore() {
     }
   };
 
-  const handlePlaceOrder = async (customerData) => {
+  const handlePlaceOrder = async (customerData, returnOrderId = false) => {
     const subtotal = cart.reduce((sum, item) => sum + (item.unit_price * item.quantity), 0);
     const vatAmount = cart.reduce((sum, item) => sum + (item.unit_price * item.quantity * item.vat_rate / 100), 0);
-    const deliveryCharge = customerData.delivery_type === "delivery" ? 5 : 0;
+    
+    // Calculate delivery fee if delivery
+    let deliveryCharge = 0;
+    if (customerData.delivery_type === "delivery" && customerData.delivery_postcode) {
+      try {
+        const feeResponse = await base44.functions.invoke('calculateDeliveryFee', {
+          cart,
+          deliveryPostcode: customerData.delivery_postcode,
+          orderTotal: subtotal
+        });
+        deliveryCharge = feeResponse.data.fee || 3.95;
+      } catch (error) {
+        console.error('Failed to calculate delivery fee:', error);
+        deliveryCharge = 3.95; // Fallback to base fee
+      }
+    }
+    
     const total = subtotal + vatAmount + deliveryCharge;
 
     const orderNumber = `ORD-${Date.now()}`;
@@ -135,7 +151,11 @@ export default function CustomerStore() {
       items: cart
     };
 
-    await createOrderMutation.mutateAsync(orderData);
+    const order = await createOrderMutation.mutateAsync(orderData);
+    
+    if (returnOrderId) {
+      return order.id;
+    }
   };
 
   const cartItemsCount = cart.reduce((sum, item) => sum + item.quantity, 0);
