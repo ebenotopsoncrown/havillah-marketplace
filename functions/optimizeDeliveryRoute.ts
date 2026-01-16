@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
+import { checkRateLimit, sanitizeObject } from './utils/validation.js';
 
 const STORE_ADDRESS = "846-848 Wimborne Rd, Bournemouth BH9 2DS, UK";
 
@@ -25,7 +26,18 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { orderIds } = await req.json();
+    // Rate limiting
+    const rateLimit = checkRateLimit(user.email, 20, 60000);
+    if (!rateLimit.allowed) {
+      return Response.json({ 
+        error: 'Rate limit exceeded',
+        retryAfter: rateLimit.retryAfter 
+      }, { status: 429 });
+    }
+
+    const requestData = await req.json();
+    const sanitized = sanitizeObject(requestData);
+    const { orderIds } = sanitized;
 
     if (!orderIds || orderIds.length === 0) {
       return Response.json({ error: 'No orders provided' }, { status: 400 });

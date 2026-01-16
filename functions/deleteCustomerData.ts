@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
+import { checkRateLimit } from './utils/validation.js';
 
 Deno.serve(async (req) => {
   try {
@@ -7,6 +8,15 @@ Deno.serve(async (req) => {
 
     if (!user) {
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    // Rate limiting - max 3 deletion requests per hour per user
+    const rateLimit = checkRateLimit(`delete_${user.email}`, 3, 3600000);
+    if (!rateLimit.allowed) {
+      return Response.json({ 
+        error: 'Too many deletion requests. Please try again later.',
+        retryAfter: rateLimit.retryAfter 
+      }, { status: 429 });
     }
 
     // Get all customer's orders
