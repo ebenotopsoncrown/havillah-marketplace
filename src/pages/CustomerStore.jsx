@@ -117,10 +117,10 @@ export default function CustomerStore() {
           deliveryPostcode: customerData.delivery_postcode,
           orderTotal: subtotal
         });
-        deliveryCharge = feeResponse.data.fee || 3.95;
+        deliveryCharge = feeResponse.data.fee || 4.5;
       } catch (error) {
         console.error('Failed to calculate delivery fee:', error);
-        deliveryCharge = 3.95; // Fallback to base fee
+        deliveryCharge = 4.5; // Fallback to base fee
       }
     }
     

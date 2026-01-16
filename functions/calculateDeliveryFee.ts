@@ -4,7 +4,7 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 const STORE_ADDRESS = "846-848 Wimborne Rd, Moordown, Bournemouth BH9 2DS, UK";
 
 // Delivery fee structure
-const BASE_FEE = 3.95;
+const BASE_FEE = 4.5;
 const FREE_DELIVERY_THRESHOLD = 50;
 
 // Distance tiers (in miles)

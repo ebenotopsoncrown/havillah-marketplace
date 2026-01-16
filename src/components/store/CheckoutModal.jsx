@@ -117,7 +117,7 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
   const subtotal = cart.reduce((sum, item) => sum + (item.unit_price * item.quantity), 0);
   const vat = cart.reduce((sum, item) => sum + (item.unit_price * item.quantity * item.vat_rate / 100), 0);
   const deliveryCharge = formData.delivery_type === "delivery" 
-    ? (deliveryFeeData?.fee !== null && deliveryFeeData?.fee !== undefined ? deliveryFeeData.fee : 3.95)
+    ? (deliveryFeeData?.fee !== null && deliveryFeeData?.fee !== undefined ? deliveryFeeData.fee : 4.5)
     : 0;
   const total = subtotal + vat + deliveryCharge;
 
@@ -231,7 +231,7 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
                     <p className="text-sm text-gray-600">Delivered to your address</p>
                   </div>
                   <Badge className="bg-indigo-100 text-indigo-700 border-indigo-200">
-                    {calculatingFee ? 'Calculating...' : deliveryFeeData?.fee !== null && deliveryFeeData?.fee !== undefined ? `£${deliveryFeeData.fee.toFixed(2)}` : 'From £3.95'}
+                    {calculatingFee ? 'Calculating...' : deliveryFeeData?.fee !== null && deliveryFeeData?.fee !== undefined ? `£${deliveryFeeData.fee.toFixed(2)}` : 'From £4.50'}
                   </Badge>
                 </Label>
               </div>
