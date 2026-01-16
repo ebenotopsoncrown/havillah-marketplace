@@ -27,6 +27,8 @@ export default function AddressAutocomplete({
         address
       });
       
+      console.log('Validation response:', response.data);
+      
       setValidationResult(response.data);
       if (onValidation) {
         onValidation(response.data);
@@ -38,7 +40,11 @@ export default function AddressAutocomplete({
       }
     } catch (error) {
       console.error('Validation error:', error);
-      setValidationResult({ valid: false, error: 'Could not validate address' });
+      setValidationResult({ 
+        valid: false, 
+        error: 'Could not validate address',
+        suggestion: 'Verification service error. You can proceed if your address is correct.'
+      });
     } finally {
       setValidating(false);
     }
@@ -164,8 +170,14 @@ export default function AddressAutocomplete({
             <>
               <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium">Address verification recommended</p>
-                <p className="text-xs opacity-75">We couldn't verify this address automatically, but you can still proceed if you're sure it's correct.</p>
+                <p className="font-medium">Could not verify address</p>
+                <p className="text-xs opacity-75">
+                  {validationResult.suggestion || validationResult.error_message || 
+                   'We couldn\'t verify this address automatically, but you can still proceed if you\'re sure it\'s correct.'}
+                </p>
+                {validationResult.note && (
+                  <p className="text-xs opacity-75 mt-1">Note: {validationResult.note}</p>
+                )}
               </div>
             </>
           )}
