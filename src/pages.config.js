@@ -2,6 +2,7 @@ import AccessControlGuide from './pages/AccessControlGuide';
 import AppSettings from './pages/AppSettings';
 import ArchitectureDiagram from './pages/ArchitectureDiagram';
 import BrandAssets from './pages/BrandAssets';
+import ClickAndCollect from './pages/ClickAndCollect';
 import CustomerStore from './pages/CustomerStore';
 import Customers from './pages/Customers';
 import Dashboard from './pages/Dashboard';
@@ -20,7 +21,7 @@ import Sales from './pages/Sales';
 import StaffPortal from './pages/StaffPortal';
 import Suppliers from './pages/Suppliers';
 import SystemDocumentation from './pages/SystemDocumentation';
-import ClickAndCollect from './pages/ClickAndCollect';
+import StoreQRCode from './pages/StoreQRCode';
 import __Layout from './Layout.jsx';
 
 
@@ -29,6 +30,7 @@ export const PAGES = {
     "AppSettings": AppSettings,
     "ArchitectureDiagram": ArchitectureDiagram,
     "BrandAssets": BrandAssets,
+    "ClickAndCollect": ClickAndCollect,
     "CustomerStore": CustomerStore,
     "Customers": Customers,
     "Dashboard": Dashboard,
@@ -47,7 +49,7 @@ export const PAGES = {
     "StaffPortal": StaffPortal,
     "Suppliers": Suppliers,
     "SystemDocumentation": SystemDocumentation,
-    "ClickAndCollect": ClickAndCollect,
+    "StoreQRCode": StoreQRCode,
 }
 
 export const pagesConfig = {

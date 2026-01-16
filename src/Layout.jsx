@@ -19,7 +19,8 @@ import {
   BookOpen,
   UserPlus,
   Shield,
-  Globe
+  Globe,
+  QrCode
 } from "lucide-react";
 import {
   Sidebar,
@@ -222,6 +223,15 @@ export default function Layout({ children, currentPageName }) {
                             >
                               <Store className="w-4 h-4" />
                               <span>Brand & Logo</span>
+                            </Link>
+                          </SidebarMenuButton>
+                          <SidebarMenuButton asChild>
+                            <Link 
+                              to={createPageUrl("StoreQRCode")} 
+                              className="flex items-center gap-3 px-3 py-2 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 rounded-lg text-sm"
+                            >
+                              <QrCode className="w-4 h-4" />
+                              <span>Store QR Code</span>
                             </Link>
                           </SidebarMenuButton>
                           <SidebarMenuButton asChild>
