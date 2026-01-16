@@ -121,21 +121,26 @@ export default function LoadOrdersModal({ open, onClose, readyOrders, driver }) 
                     onClick={() => toggleOrder(order.id)}
                   >
                     <div className="flex items-start gap-3">
-                      <Checkbox
-                        checked={selectedOrders.includes(order.id)}
-                        onCheckedChange={() => toggleOrder(order.id)}
-                      />
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-2">
-                          <p className="font-bold text-gray-900">{order.order_number}</p>
-                          <p className="font-bold text-indigo-600">£{order.total_amount.toFixed(2)}</p>
-                        </div>
-                        <p className="text-sm text-gray-600 mb-2">{order.customer_name}</p>
-                        <p className="text-sm text-gray-500 flex items-start gap-2">
-                          <MapPin className="w-4 h-4 mt-0.5" />
-                          {order.delivery_address}, {order.delivery_postcode}
-                        </p>
+                    <Checkbox
+                      checked={selectedOrders.includes(order.id)}
+                      onCheckedChange={() => toggleOrder(order.id)}
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between mb-2">
+                        <p className="font-bold text-gray-900">{order.order_number}</p>
+                        <p className="font-bold text-indigo-600">£{order.total_amount.toFixed(2)}</p>
                       </div>
+                      <p className="text-sm text-gray-600 mb-2">{order.customer_name}</p>
+                      {order.delivery_slot && (
+                        <Badge variant="outline" className="mb-2 bg-blue-50 text-blue-700 border-blue-200">
+                          {order.delivery_slot}
+                        </Badge>
+                      )}
+                      <p className="text-sm text-gray-500 flex items-start gap-2">
+                        <MapPin className="w-4 h-4 mt-0.5" />
+                        {order.delivery_address}, {order.delivery_postcode}
+                      </p>
+                    </div>
                     </div>
                   </div>
                 ))}
@@ -223,6 +228,11 @@ export default function LoadOrdersModal({ open, onClose, readyOrders, driver }) 
                         <Badge variant="outline">{stop.duration_minutes} mins</Badge>
                       </div>
                       <p className="text-sm text-gray-600 mb-1">{stop.customer_name}</p>
+                      {stop.delivery_slot && (
+                        <Badge className="bg-blue-100 text-blue-700 text-xs mb-1">
+                          {stop.delivery_slot}
+                        </Badge>
+                      )}
                       <p className="text-sm text-gray-500">{stop.address}</p>
                     </div>
                   </div>

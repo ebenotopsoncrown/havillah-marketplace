@@ -2,6 +2,20 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 
 const STORE_ADDRESS = "846-848 Wimborne Rd, Bournemouth BH9 2DS, UK";
 
+// Extract earliest time from delivery slot (e.g., "2-3pm" -> 14)
+function extractTimeFromSlot(slot) {
+  if (!slot || slot === 'Anytime') return 9; // Default early morning
+  
+  const match = slot.match(/(\d+)/);
+  if (!match) return 9;
+  
+  let hour = parseInt(match[1]);
+  if (slot.toLowerCase().includes('pm') && hour < 12) hour += 12;
+  if (slot.toLowerCase().includes('am') && hour === 12) hour = 0;
+  
+  return hour;
+}
+
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
@@ -22,7 +36,7 @@ Deno.serve(async (req) => {
       orderIds.map(id => base44.entities.Order.get(id))
     );
 
-    // Build waypoints (delivery addresses)
+    // Build waypoints (delivery addresses) with time slots
     const waypoints = orders
       .filter(order => order.delivery_address && order.delivery_postcode)
       .map(order => ({
@@ -30,8 +44,16 @@ Deno.serve(async (req) => {
         order_number: order.order_number,
         address: `${order.delivery_address}, ${order.delivery_postcode}, UK`,
         customer_name: order.customer_name,
-        total: order.total_amount
+        total: order.total_amount,
+        delivery_slot: order.delivery_slot || 'Anytime'
       }));
+
+    // Sort by delivery slot time (earliest first)
+    waypoints.sort((a, b) => {
+      const timeA = extractTimeFromSlot(a.delivery_slot);
+      const timeB = extractTimeFromSlot(b.delivery_slot);
+      return timeA - timeB;
+    });
 
     if (waypoints.length === 0) {
       return Response.json({ error: 'No valid delivery addresses found' }, { status: 400 });
@@ -71,6 +93,7 @@ Deno.serve(async (req) => {
       sequence: index + 1,
       distance_miles: (legs[index].distance.value / 1609.34).toFixed(2),
       duration_minutes: Math.ceil(legs[index].duration.value / 60),
+      delivery_slot: stop.delivery_slot,
       estimated_arrival: null // Will be calculated when run starts
     }));
 

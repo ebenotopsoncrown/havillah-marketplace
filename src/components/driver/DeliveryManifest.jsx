@@ -85,6 +85,12 @@ export default function DeliveryManifest({ open, onClose, run }) {
                         </div>
                       </div>
 
+                      {stop.delivery_slot && (
+                        <div className="mb-3 bg-blue-50 border border-blue-200 rounded p-2">
+                          <p className="text-xs text-blue-600 font-semibold">Delivery Window: {stop.delivery_slot}</p>
+                        </div>
+                      )}
+
                       <div className="mb-3">
                         <p className="text-xs text-gray-500 mb-1">Delivery Address</p>
                         <p className="font-medium flex items-start gap-2">

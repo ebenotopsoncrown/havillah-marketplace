@@ -175,6 +175,13 @@ export default function ActiveRunView({ run, driver }) {
                       </div>
                     </div>
 
+                    {stop.delivery_slot && (
+                      <Badge className="bg-blue-100 text-blue-700 mb-2">
+                        <Clock className="w-3 h-3 mr-1" />
+                        {stop.delivery_slot}
+                      </Badge>
+                    )}
+
                     <p className="text-sm text-gray-700 flex items-start gap-2 mb-3">
                       <MapPin className="w-4 h-4 mt-0.5 text-gray-400" />
                       {stop.address}
