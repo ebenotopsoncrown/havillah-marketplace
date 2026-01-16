@@ -223,6 +223,25 @@ export default function Delivery() {
 
                           {/* Right: Actions */}
                           <div className="lg:w-64 flex flex-col gap-2">
+                            {["pending", "confirmed"].includes(order.status) && (
+                              <Button
+                                onClick={() => handleStatusChange(order.id, "picking")}
+                                variant="outline"
+                                className="w-full"
+                              >
+                                <Package className="w-4 h-4 mr-2" />
+                                Start Picking
+                              </Button>
+                            )}
+                            {order.status === "picking" && (
+                              <Button
+                                onClick={() => handleStatusChange(order.id, "ready")}
+                                className="w-full bg-gradient-to-r from-indigo-600 to-indigo-700"
+                              >
+                                <CheckCircle className="w-4 h-4 mr-2" />
+                                Mark as Ready
+                              </Button>
+                            )}
                             {order.status === "ready" && (
                               <Button
                                 onClick={() => handleStatusChange(order.id, "dispatched")}
@@ -239,23 +258,6 @@ export default function Delivery() {
                               >
                                 <CheckCircle className="w-4 h-4 mr-2" />
                                 Mark as Delivered
-                              </Button>
-                            )}
-                            {["pending", "confirmed"].includes(order.status) && (
-                              <Button
-                                onClick={() => handleStatusChange(order.id, "picking")}
-                                variant="outline"
-                                className="w-full"
-                              >
-                                Start Picking
-                              </Button>
-                            )}
-                            {order.status === "picking" && (
-                              <Button
-                                onClick={() => handleStatusChange(order.id, "ready")}
-                                className="w-full bg-gradient-to-r from-indigo-600 to-indigo-700"
-                              >
-                                Mark as Ready
                               </Button>
                             )}
                             <Button variant="outline" className="w-full">
