@@ -5,6 +5,8 @@ import { ShoppingCart, Search, Store, Phone, Mail, MapPin, Clock } from "lucide-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
+import { createPageUrl } from "@/utils";
 
 import ProductCatalog from "../components/store/ProductCatalog";
 import ShoppingCartDrawer from "../components/store/ShoppingCartDrawer";
@@ -313,12 +315,12 @@ export default function CustomerStore() {
           
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
             <p>&copy; 2025 Coriander Cash & Carry. All rights reserved.</p>
-            <a 
-              href={window.location.origin + window.location.pathname.split('/').slice(0, 3).join('/') + '/dashboard'} 
+            <Link 
+              to={createPageUrl('Dashboard')} 
               className="text-gray-500 hover:text-gray-300 underline text-xs mt-2 inline-block"
             >
               Staff Login
-            </a>
+            </Link>
           </div>
         </div>
       </footer>
