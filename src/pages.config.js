@@ -3,6 +3,7 @@ import AppSettings from './pages/AppSettings';
 import ArchitectureDiagram from './pages/ArchitectureDiagram';
 import BrandAssets from './pages/BrandAssets';
 import ClickAndCollect from './pages/ClickAndCollect';
+import CustomerAccount from './pages/CustomerAccount';
 import CustomerStore from './pages/CustomerStore';
 import Customers from './pages/Customers';
 import Dashboard from './pages/Dashboard';
@@ -19,10 +20,9 @@ import Purchases from './pages/Purchases';
 import Reports from './pages/Reports';
 import Sales from './pages/Sales';
 import StaffPortal from './pages/StaffPortal';
+import StoreQRCode from './pages/StoreQRCode';
 import Suppliers from './pages/Suppliers';
 import SystemDocumentation from './pages/SystemDocumentation';
-import StoreQRCode from './pages/StoreQRCode';
-import CustomerAccount from './pages/CustomerAccount';
 import __Layout from './Layout.jsx';
 
 
@@ -32,6 +32,7 @@ export const PAGES = {
     "ArchitectureDiagram": ArchitectureDiagram,
     "BrandAssets": BrandAssets,
     "ClickAndCollect": ClickAndCollect,
+    "CustomerAccount": CustomerAccount,
     "CustomerStore": CustomerStore,
     "Customers": Customers,
     "Dashboard": Dashboard,
@@ -48,10 +49,9 @@ export const PAGES = {
     "Reports": Reports,
     "Sales": Sales,
     "StaffPortal": StaffPortal,
+    "StoreQRCode": StoreQRCode,
     "Suppliers": Suppliers,
     "SystemDocumentation": SystemDocumentation,
-    "StoreQRCode": StoreQRCode,
-    "CustomerAccount": CustomerAccount,
 }
 
 export const pagesConfig = {

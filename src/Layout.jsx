@@ -111,7 +111,7 @@ export default function Layout({ children, currentPageName }) {
   const [settingsOpen, setSettingsOpen] = React.useState(false);
   
   // Pages without sidebar (public-facing)
-  const publicPages = ["CustomerStore", "Home", "StaffPortal"];
+  const publicPages = ["CustomerStore", "Home", "StaffPortal", "CustomerAccount"];
   const isPublicPage = publicPages.includes(currentPageName);
   
   if (isPublicPage) {

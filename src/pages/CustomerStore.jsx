@@ -304,7 +304,7 @@ export default function CustomerStore() {
                 </p>
                 <p className="flex items-center gap-2">
                   <MapPin className="w-4 h-4" />
-                  London, UK
+                  Bournemouth, UK
                 </p>
               </div>
             </div>
