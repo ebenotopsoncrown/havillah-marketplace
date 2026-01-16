@@ -20,6 +20,7 @@ import Sales from './pages/Sales';
 import StaffPortal from './pages/StaffPortal';
 import Suppliers from './pages/Suppliers';
 import SystemDocumentation from './pages/SystemDocumentation';
+import ClickAndCollect from './pages/ClickAndCollect';
 import __Layout from './Layout.jsx';
 
 
@@ -46,6 +47,7 @@ export const PAGES = {
     "StaffPortal": StaffPortal,
     "Suppliers": Suppliers,
     "SystemDocumentation": SystemDocumentation,
+    "ClickAndCollect": ClickAndCollect,
 }
 
 export const pagesConfig = {

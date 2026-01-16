@@ -74,6 +74,11 @@ const navigationItems = [
     icon: TruckIcon,
   },
   {
+    title: "Click & Collect",
+    url: createPageUrl("ClickAndCollect"),
+    icon: Store,
+  },
+  {
     title: "Purchases",
     url: createPageUrl("Purchases"),
     icon: ClipboardList,
