@@ -18,11 +18,17 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    if (!GOOGLE_MAPS_API_KEY) {
+      return Response.json({ error: 'Google Maps API key not configured' }, { status: 500 });
+    }
+
     const { destination, waypoints } = await req.json();
     
     if (!destination) {
       return Response.json({ error: 'Destination is required' }, { status: 400 });
     }
+    
+    console.log('Calculating route to:', destination);
 
     // Build the directions API URL
     let directionsUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=${STORE_LOCATION.lat},${STORE_LOCATION.lng}&destination=${encodeURIComponent(destination)}&key=${GOOGLE_MAPS_API_KEY}&mode=driving&units=imperial`;
@@ -35,6 +41,8 @@ Deno.serve(async (req) => {
 
     const response = await fetch(directionsUrl);
     const data = await response.json();
+
+    console.log('Google Maps API response status:', data.status);
 
     if (data.status === 'OK' && data.routes.length > 0) {
       const route = data.routes[0];
@@ -61,10 +69,12 @@ Deno.serve(async (req) => {
         optimized_waypoint_order: route.waypoint_order || []
       });
     } else {
+      console.error('Route not found. API status:', data.status, 'Error:', data.error_message);
       return Response.json({
         success: false,
         error: 'Route not found',
-        status: data.status
+        status: data.status,
+        message: data.error_message || 'Unable to calculate route to this address'
       });
     }
   } catch (error) {

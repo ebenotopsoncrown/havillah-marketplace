@@ -73,21 +73,31 @@ Deno.serve(async (req) => {
 
     // Call Google Maps Directions API with waypoint optimization
     const apiKey = Deno.env.get('GOOGLE_MAPS_API_KEY');
+    if (!apiKey) {
+      return Response.json({ error: 'Google Maps API key not configured' }, { status: 500 });
+    }
+
     const origin = encodeURIComponent(STORE_ADDRESS);
     const destination = encodeURIComponent(STORE_ADDRESS); // Return to store
-    const waypointsParam = waypoints
-      .map(w => `optimize:true|${encodeURIComponent(w.address)}`)
+    const waypointsParam = 'optimize:true|' + waypoints
+      .map(w => encodeURIComponent(w.address))
       .join('|');
 
     const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&waypoints=${waypointsParam}&key=${apiKey}`;
+    
+    console.log('Requesting route optimization for', waypoints.length, 'stops');
 
     const response = await fetch(url);
     const data = await response.json();
 
+    console.log('Google Maps API response status:', data.status);
+
     if (data.status !== 'OK') {
+      console.error('Google Maps API error:', data);
       return Response.json({ 
         error: 'Route optimization failed', 
-        details: data.status 
+        details: data.status,
+        message: data.error_message || 'Unable to calculate route'
       }, { status: 500 });
     }
 
