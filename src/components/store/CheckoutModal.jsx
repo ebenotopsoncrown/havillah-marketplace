@@ -120,6 +120,16 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
     ? (deliveryFeeData?.fee !== null && deliveryFeeData?.fee !== undefined ? deliveryFeeData.fee : 4.5)
     : 0;
   const total = subtotal + vat + deliveryCharge;
+  
+  const MINIMUM_ORDER_FOR_DELIVERY = 15;
+  const canDeliverOrder = subtotal >= MINIMUM_ORDER_FOR_DELIVERY;
+  
+  // Auto-switch to click & collect if below minimum
+  React.useEffect(() => {
+    if (!canDeliverOrder && formData.delivery_type === "delivery") {
+      setFormData({ ...formData, delivery_type: "click_and_collect" });
+    }
+  }, [canDeliverOrder]);
 
   if (completed) {
     return (
@@ -216,13 +226,22 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
           {/* Delivery Method */}
           <div className="space-y-3">
             <h3 className="font-semibold text-lg border-b pb-2">Delivery Method</h3>
+            {!canDeliverOrder && (
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+                <p className="text-sm text-amber-800">
+                  <strong>Minimum order for delivery: £{MINIMUM_ORDER_FOR_DELIVERY}</strong>
+                  <br />
+                  Add £{(MINIMUM_ORDER_FOR_DELIVERY - subtotal).toFixed(2)} more to unlock home delivery, or choose Click & Collect.
+                </p>
+              </div>
+            )}
             <RadioGroup
               value={formData.delivery_type}
               onValueChange={(value) => setFormData({ ...formData, delivery_type: value })}
             >
-              <div className="flex items-center space-x-2 border-2 rounded-lg p-4 cursor-pointer hover:bg-gray-50 transition-colors">
-                <RadioGroupItem value="delivery" id="delivery" />
-                <Label htmlFor="delivery" className="flex items-center gap-3 cursor-pointer flex-1">
+              <div className={`flex items-center space-x-2 border-2 rounded-lg p-4 transition-colors ${canDeliverOrder ? 'cursor-pointer hover:bg-gray-50' : 'opacity-50 cursor-not-allowed bg-gray-50'}`}>
+                <RadioGroupItem value="delivery" id="delivery" disabled={!canDeliverOrder} />
+                <Label htmlFor="delivery" className={`flex items-center gap-3 flex-1 ${canDeliverOrder ? 'cursor-pointer' : 'cursor-not-allowed'}`}>
                   <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
                     <Truck className="w-6 h-6 text-indigo-600" />
                   </div>
@@ -402,7 +421,7 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
             </Button>
             <Button 
               type="submit" 
-              disabled={processing || stripeLoading || (formData.delivery_type === "delivery" && (deliveryFeeData?.belowMinimum || deliveryFeeData?.outOfRange))}
+              disabled={processing || stripeLoading || (formData.delivery_type === "delivery" && deliveryFeeData?.outOfRange)}
               className="flex-1 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 h-12 text-lg"
             >
               {processing || stripeLoading ? (
