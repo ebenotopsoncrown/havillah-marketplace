@@ -8,6 +8,7 @@ import CustomerStore from './pages/CustomerStore';
 import Customers from './pages/Customers';
 import Dashboard from './pages/Dashboard';
 import Delivery from './pages/Delivery';
+import DriverPortal from './pages/DriverPortal';
 import Expenses from './pages/Expenses';
 import ExpressionOfInterestLetter from './pages/ExpressionOfInterestLetter';
 import HardwareGuide from './pages/HardwareGuide';
@@ -23,7 +24,10 @@ import StaffPortal from './pages/StaffPortal';
 import StoreQRCode from './pages/StoreQRCode';
 import Suppliers from './pages/Suppliers';
 import SystemDocumentation from './pages/SystemDocumentation';
-import DriverPortal from './pages/DriverPortal';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsAndConditions from './pages/TermsAndConditions';
+import MyData from './pages/MyData';
+import SecurityDashboard from './pages/SecurityDashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -38,6 +42,7 @@ export const PAGES = {
     "Customers": Customers,
     "Dashboard": Dashboard,
     "Delivery": Delivery,
+    "DriverPortal": DriverPortal,
     "Expenses": Expenses,
     "ExpressionOfInterestLetter": ExpressionOfInterestLetter,
     "HardwareGuide": HardwareGuide,
@@ -53,7 +58,10 @@ export const PAGES = {
     "StoreQRCode": StoreQRCode,
     "Suppliers": Suppliers,
     "SystemDocumentation": SystemDocumentation,
-    "DriverPortal": DriverPortal,
+    "PrivacyPolicy": PrivacyPolicy,
+    "TermsAndConditions": TermsAndConditions,
+    "MyData": MyData,
+    "SecurityDashboard": SecurityDashboard,
 }
 
 export const pagesConfig = {

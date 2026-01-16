@@ -11,6 +11,7 @@ import { createPageUrl } from "@/utils";
 import ProductCatalog from "../components/store/ProductCatalog";
 import ShoppingCartDrawer from "../components/store/ShoppingCartDrawer";
 import CheckoutModal from "../components/store/CheckoutModal";
+import CookieConsent from "../components/security/CookieConsent";
 
 export default function CustomerStore() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -322,12 +323,32 @@ export default function CustomerStore() {
           
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
             <p>&copy; 2025 Coriander Cash & Carry. All rights reserved.</p>
-            <Link 
-              to={createPageUrl('Dashboard')} 
-              className="text-gray-500 hover:text-gray-300 underline text-xs mt-2 inline-block"
-            >
-              Staff Login
-            </Link>
+            <div className="flex items-center justify-center gap-4 mt-3">
+              <Link 
+                to={createPageUrl('PrivacyPolicy')} 
+                className="text-gray-400 hover:text-gray-300 underline text-xs"
+              >
+                Privacy Policy
+              </Link>
+              <Link 
+                to={createPageUrl('TermsAndConditions')} 
+                className="text-gray-400 hover:text-gray-300 underline text-xs"
+              >
+                Terms & Conditions
+              </Link>
+              <Link 
+                to={createPageUrl('MyData')} 
+                className="text-gray-400 hover:text-gray-300 underline text-xs"
+              >
+                My Data
+              </Link>
+              <Link 
+                to={createPageUrl('Dashboard')} 
+                className="text-gray-500 hover:text-gray-300 underline text-xs"
+              >
+                Staff Login
+              </Link>
+            </div>
           </div>
         </div>
       </footer>
@@ -349,7 +370,9 @@ export default function CustomerStore() {
         cart={cart}
         onPlaceOrder={handlePlaceOrder}
         processing={createOrderMutation.isPending}
-      />
-    </div>
-  );
-}
+        />
+
+        <CookieConsent />
+        </div>
+        );
+        }

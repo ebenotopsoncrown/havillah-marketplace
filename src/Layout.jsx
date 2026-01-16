@@ -252,6 +252,15 @@ export default function Layout({ children, currentPageName }) {
                               <span>Hardware Setup</span>
                             </Link>
                           </SidebarMenuButton>
+                          <SidebarMenuButton asChild>
+                            <Link 
+                              to={createPageUrl("SecurityDashboard")} 
+                              className="flex items-center gap-3 px-3 py-2 hover:bg-red-50 hover:text-red-700 transition-colors duration-200 rounded-lg text-sm"
+                            >
+                              <Shield className="w-4 h-4" />
+                              <span>Security Dashboard</span>
+                            </Link>
+                          </SidebarMenuButton>
                         </div>
                       </CollapsibleContent>
                     </SidebarMenuItem>
