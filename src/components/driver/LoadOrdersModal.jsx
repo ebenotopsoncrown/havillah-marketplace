@@ -55,13 +55,15 @@ export default function LoadOrdersModal({ open, onClose, readyOrders, driver }) 
       
       console.log('Optimization response:', response.data);
       
-      if (response.data.error) {
+      if (response.data.error || response.data.ok === false) {
         const errorDetails = [
-          `Error: ${response.data.error}`,
+          `Error: ${response.data.error || response.data.code}`,
+          response.data.message ? `Message: ${response.data.message}` : '',
           response.data.google_error ? `Google: ${response.data.google_error}` : '',
           response.data.status ? `Status: ${response.data.status}` : '',
           response.data.details ? `Details: ${response.data.details}` : '',
-          response.data.api_key_preview ? `Key: ${response.data.api_key_preview}` : ''
+          response.data.api_key_preview ? `Backend Key: ${response.data.api_key_preview}` : '',
+          response.data.upstreamStatus ? `HTTP: ${response.data.upstreamStatus}` : ''
         ].filter(Boolean).join('\n');
         
         console.error('Full error response:', response.data);
