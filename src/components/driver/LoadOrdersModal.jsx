@@ -53,14 +53,31 @@ export default function LoadOrdersModal({ open, onClose, readyOrders, driver }) 
         orderIds: selectedOrders
       });
       
+      console.log('Optimization response:', response.data);
+      
       if (response.data.error) {
-        alert(`Route optimization failed: ${response.data.error}\n${response.data.message || ''}`);
+        const errorDetails = [
+          `Error: ${response.data.error}`,
+          response.data.google_error ? `Google: ${response.data.google_error}` : '',
+          response.data.status ? `Status: ${response.data.status}` : '',
+          response.data.details ? `Details: ${response.data.details}` : '',
+          response.data.api_key_preview ? `Key: ${response.data.api_key_preview}` : ''
+        ].filter(Boolean).join('\n');
+        
+        console.error('Full error response:', response.data);
+        alert(errorDetails);
       } else {
         setOptimizedRoute(response.data);
       }
     } catch (error) {
       console.error('Route optimization failed:', error);
-      alert(`Failed to optimize route: ${error.response?.data?.error || error.message}`);
+      console.error('Error response:', error.response?.data);
+      
+      const errorMsg = error.response?.data ? 
+        JSON.stringify(error.response.data, null, 2) : 
+        error.message;
+      
+      alert(`Failed to optimize route:\n${errorMsg}`);
     }
     setOptimizing(false);
   };
