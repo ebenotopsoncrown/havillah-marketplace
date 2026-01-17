@@ -97,7 +97,8 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Google Maps API key not configured' }, { status: 500 });
     }
 
-    console.log('API Key (masked):', apiKey.substring(0, 10) + '...' + apiKey.substring(apiKey.length - 4));
+    // PATCH 3: Log masked API key to confirm which key is being used
+    console.log('MAPS_KEY', apiKey.slice(0, 4), '...', apiKey.slice(-4));
 
     const origin = encodeURIComponent(STORE_ADDRESS);
     const destination = encodeURIComponent(STORE_ADDRESS); // Return to store
