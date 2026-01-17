@@ -71,56 +71,24 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'No valid delivery addresses found' }, { status: 400 });
     }
 
-    // GUARD CLAUSE: Single stop doesn't need optimization
+    // PATCH 1: GUARD CLAUSE - Single stop doesn't need optimization, just return it
     if (waypoints.length === 1) {
-      console.log('Single stop detected - skipping optimization, calculating direct route');
-      
-      const apiKey = Deno.env.get('GOOGLE_MAPS_API_KEY');
-      if (!apiKey) {
-        return Response.json({ error: 'Google Maps API key not configured' }, { status: 500 });
-      }
-
-      // Calculate simple route from store to single stop and back
-      const origin = encodeURIComponent(STORE_ADDRESS);
-      const destination = encodeURIComponent(waypoints[0].address);
-      const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${apiKey}`;
-      
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-
-        if (data.status !== 'OK') {
-          return Response.json({ 
-            error: 'Failed to calculate route', 
-            status: data.status,
-            google_error: data.error_message,
-            api_key_preview: apiKey.substring(0, 10) + '...' + apiKey.substring(apiKey.length - 4)
-          }, { status: 500 });
-        }
-
-        const leg = data.routes[0].legs[0];
-        return Response.json({
-          optimized_stops: [{
-            ...waypoints[0],
-            sequence: 1,
-            distance_miles: (leg.distance.value / 1609.34).toFixed(2),
-            duration_minutes: Math.ceil(leg.duration.value / 60),
-            estimated_arrival: null
-          }],
-          total_distance_miles: ((leg.distance.value * 2) / 1609.34).toFixed(2), // Round trip
-          estimated_duration_minutes: Math.ceil((leg.duration.value * 2) / 60),
-          polyline: data.routes[0].overview_polyline.points,
-          summary: data.routes[0].summary,
-          optimized: false,
-          reason: 'SINGLE_STOP_NO_OPTIMIZATION_NEEDED'
-        });
-      } catch (error) {
-        console.error('Single stop route error:', error);
-        return Response.json({ 
-          error: 'Failed to calculate single stop route', 
-          details: error.message 
-        }, { status: 500 });
-      }
+      console.log('Single stop - no optimization needed, returning as-is');
+      return Response.json({
+        optimized_stops: [{
+          ...waypoints[0],
+          sequence: 1,
+          distance_miles: '0.00',
+          duration_minutes: 15,
+          estimated_arrival: null
+        }],
+        total_distance_miles: '0.00',
+        estimated_duration_minutes: 15,
+        polyline: '',
+        summary: 'Single delivery stop',
+        optimized: false,
+        reason: 'NOT_ENOUGH_STOPS'
+      });
     }
 
     // Call Google Maps Directions API with waypoint optimization
