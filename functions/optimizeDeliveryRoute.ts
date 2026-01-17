@@ -108,9 +108,12 @@ Deno.serve(async (req) => {
 
     const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&waypoints=${waypointsParam}&key=${apiKey}`;
     
-    console.log('Requesting route optimization for', waypoints.length, 'stops');
-    console.log('Store address:', STORE_ADDRESS);
-    console.log('Request URL (without key):', url.replace(apiKey, 'HIDDEN'));
+    console.log('=== ROUTE OPTIMIZATION REQUEST ===');
+    console.log('Stops:', waypoints.length);
+    console.log('Store:', STORE_ADDRESS);
+    console.log('Waypoints:', waypoints.map(w => w.address));
+    console.log('Full URL (masked):', url.replace(apiKey, 'HIDDEN_KEY'));
+    console.log('==================================');
     
     const response = await fetch(url);
     const data = await response.json();
@@ -119,6 +122,8 @@ Deno.serve(async (req) => {
     console.log('HTTP Status:', response.status);
     console.log('Response Status:', data.status);
     console.log('Error message:', data.error_message);
+    console.log('Available travel modes:', data.available_travel_modes);
+    console.log('Geocoded waypoints:', data.geocoded_waypoints);
     console.log('Full response:', JSON.stringify(data, null, 2));
     console.log('================================');
 
