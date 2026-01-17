@@ -71,11 +71,65 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'No valid delivery addresses found' }, { status: 400 });
     }
 
+    // GUARD CLAUSE: Single stop doesn't need optimization
+    if (waypoints.length === 1) {
+      console.log('Single stop detected - skipping optimization, calculating direct route');
+      
+      const apiKey = Deno.env.get('GOOGLE_MAPS_API_KEY');
+      if (!apiKey) {
+        return Response.json({ error: 'Google Maps API key not configured' }, { status: 500 });
+      }
+
+      // Calculate simple route from store to single stop and back
+      const origin = encodeURIComponent(STORE_ADDRESS);
+      const destination = encodeURIComponent(waypoints[0].address);
+      const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${apiKey}`;
+      
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data.status !== 'OK') {
+          return Response.json({ 
+            error: 'Failed to calculate route', 
+            status: data.status,
+            google_error: data.error_message,
+            api_key_preview: apiKey.substring(0, 10) + '...' + apiKey.substring(apiKey.length - 4)
+          }, { status: 500 });
+        }
+
+        const leg = data.routes[0].legs[0];
+        return Response.json({
+          optimized_stops: [{
+            ...waypoints[0],
+            sequence: 1,
+            distance_miles: (leg.distance.value / 1609.34).toFixed(2),
+            duration_minutes: Math.ceil(leg.duration.value / 60),
+            estimated_arrival: null
+          }],
+          total_distance_miles: ((leg.distance.value * 2) / 1609.34).toFixed(2), // Round trip
+          estimated_duration_minutes: Math.ceil((leg.duration.value * 2) / 60),
+          polyline: data.routes[0].overview_polyline.points,
+          summary: data.routes[0].summary,
+          optimized: false,
+          reason: 'SINGLE_STOP_NO_OPTIMIZATION_NEEDED'
+        });
+      } catch (error) {
+        console.error('Single stop route error:', error);
+        return Response.json({ 
+          error: 'Failed to calculate single stop route', 
+          details: error.message 
+        }, { status: 500 });
+      }
+    }
+
     // Call Google Maps Directions API with waypoint optimization
     const apiKey = Deno.env.get('GOOGLE_MAPS_API_KEY');
     if (!apiKey) {
       return Response.json({ error: 'Google Maps API key not configured' }, { status: 500 });
     }
+
+    console.log('API Key (masked):', apiKey.substring(0, 10) + '...' + apiKey.substring(apiKey.length - 4));
 
     const origin = encodeURIComponent(STORE_ADDRESS);
     const destination = encodeURIComponent(STORE_ADDRESS); // Return to store
@@ -86,29 +140,66 @@ Deno.serve(async (req) => {
     const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&waypoints=${waypointsParam}&key=${apiKey}`;
     
     console.log('Requesting route optimization for', waypoints.length, 'stops');
-
-    console.log('Making request to Google Maps API...');
     console.log('Store address:', STORE_ADDRESS);
-    console.log('Number of waypoints:', waypoints.length);
+    console.log('Request URL (without key):', url.replace(apiKey, 'HIDDEN'));
     
     const response = await fetch(url);
     const data = await response.json();
 
     console.log('=== GOOGLE MAPS API RESPONSE ===');
-    console.log('Status:', data.status);
+    console.log('HTTP Status:', response.status);
+    console.log('Response Status:', data.status);
     console.log('Error message:', data.error_message);
     console.log('Full response:', JSON.stringify(data, null, 2));
     console.log('================================');
 
     if (data.status !== 'OK') {
       console.error('Google Maps API error - Full details:', JSON.stringify(data, null, 2));
+      
+      // FALLBACK: Return unoptimized route if optimization fails
+      console.log('Attempting fallback: returning stops in original order');
+      try {
+        const fallbackUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&waypoints=${waypoints.map(w => encodeURIComponent(w.address)).join('|')}&key=${apiKey}`;
+        const fallbackResponse = await fetch(fallbackUrl);
+        const fallbackData = await fallbackResponse.json();
+        
+        if (fallbackData.status === 'OK') {
+          const route = fallbackData.routes[0];
+          const legs = route.legs;
+          const detailedStops = waypoints.map((stop, index) => ({
+            ...stop,
+            sequence: index + 1,
+            distance_miles: (legs[index].distance.value / 1609.34).toFixed(2),
+            duration_minutes: Math.ceil(legs[index].duration.value / 60),
+            estimated_arrival: null
+          }));
+
+          const totalDistance = legs.reduce((sum, leg) => sum + leg.distance.value, 0) / 1609.34;
+          const totalDuration = legs.reduce((sum, leg) => sum + leg.duration.value, 0) / 60;
+
+          return Response.json({
+            optimized_stops: detailedStops,
+            total_distance_miles: totalDistance.toFixed(2),
+            estimated_duration_minutes: Math.ceil(totalDuration),
+            polyline: route.overview_polyline.points,
+            summary: route.summary,
+            optimized: false,
+            fallback: true,
+            original_error: data.error_message
+          });
+        }
+      } catch (fallbackError) {
+        console.error('Fallback also failed:', fallbackError);
+      }
+      
       return Response.json({ 
         error: 'Route optimization failed', 
         status: data.status,
         google_error: data.error_message || 'No error message provided',
+        upstream_status: response.status,
         details: `API returned status: ${data.status}. Check if: 1) API key has correct restrictions (None for server calls), 2) Directions API is enabled, 3) Billing is active`,
-        available_geocoded_waypoints: data.available_travel_modes,
-        geocoded_waypoints: data.geocoded_waypoints
+        api_key_preview: apiKey.substring(0, 10) + '...' + apiKey.substring(apiKey.length - 4),
+        full_response: data
       }, { status: 500 });
     }
 
@@ -139,7 +230,8 @@ Deno.serve(async (req) => {
       total_distance_miles: totalDistance.toFixed(2),
       estimated_duration_minutes: Math.ceil(totalDuration),
       polyline: route.overview_polyline.points,
-      summary: route.summary
+      summary: route.summary,
+      optimized: true
     });
 
   } catch (error) {
