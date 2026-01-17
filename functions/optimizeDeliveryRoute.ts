@@ -122,53 +122,27 @@ Deno.serve(async (req) => {
     console.log('Full response:', JSON.stringify(data, null, 2));
     console.log('================================');
 
+    // PATCH 2: Return upstream error details (don't hide the real issue)
     if (data.status !== 'OK') {
       console.error('Google Maps API error - Full details:', JSON.stringify(data, null, 2));
       
-      // FALLBACK: Return unoptimized route if optimization fails
-      console.log('Attempting fallback: returning stops in original order');
-      try {
-        const fallbackUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&waypoints=${waypoints.map(w => encodeURIComponent(w.address)).join('|')}&key=${apiKey}`;
-        const fallbackResponse = await fetch(fallbackUrl);
-        const fallbackData = await fallbackResponse.json();
-        
-        if (fallbackData.status === 'OK') {
-          const route = fallbackData.routes[0];
-          const legs = route.legs;
-          const detailedStops = waypoints.map((stop, index) => ({
-            ...stop,
-            sequence: index + 1,
-            distance_miles: (legs[index].distance.value / 1609.34).toFixed(2),
-            duration_minutes: Math.ceil(legs[index].duration.value / 60),
-            estimated_arrival: null
-          }));
-
-          const totalDistance = legs.reduce((sum, leg) => sum + leg.distance.value, 0) / 1609.34;
-          const totalDuration = legs.reduce((sum, leg) => sum + leg.duration.value, 0) / 60;
-
-          return Response.json({
-            optimized_stops: detailedStops,
-            total_distance_miles: totalDistance.toFixed(2),
-            estimated_duration_minutes: Math.ceil(totalDuration),
-            polyline: route.overview_polyline.points,
-            summary: route.summary,
-            optimized: false,
-            fallback: true,
-            original_error: data.error_message
-          });
-        }
-      } catch (fallbackError) {
-        console.error('Fallback also failed:', fallbackError);
-      }
-      
       return Response.json({ 
-        error: 'Route optimization failed', 
+        ok: false,
+        code: 'GOOGLE_OPTIMIZE_FAILED',
+        error: 'Route optimization failed',
+        message: data.error_message || 'No error message from Google',
+        upstreamStatus: response.status,
+        upstreamBody: data,
         status: data.status,
-        google_error: data.error_message || 'No error message provided',
-        upstream_status: response.status,
-        details: `API returned status: ${data.status}. Check if: 1) API key has correct restrictions (None for server calls), 2) Directions API is enabled, 3) Billing is active`,
-        api_key_preview: apiKey.substring(0, 10) + '...' + apiKey.substring(apiKey.length - 4),
-        full_response: data
+        google_error: data.error_message,
+        api_key_preview: apiKey.slice(0, 4) + '...' + apiKey.slice(-4),
+        available_travel_modes: data.available_travel_modes,
+        geocoded_waypoints: data.geocoded_waypoints,
+        request_info: {
+          origin: STORE_ADDRESS,
+          waypoints_count: waypoints.length,
+          optimization: true
+        }
       }, { status: 500 });
     }
 
