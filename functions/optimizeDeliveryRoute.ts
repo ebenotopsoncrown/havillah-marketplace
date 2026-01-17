@@ -87,17 +87,28 @@ Deno.serve(async (req) => {
     
     console.log('Requesting route optimization for', waypoints.length, 'stops');
 
+    console.log('Making request to Google Maps API...');
+    console.log('Store address:', STORE_ADDRESS);
+    console.log('Number of waypoints:', waypoints.length);
+    
     const response = await fetch(url);
     const data = await response.json();
 
-    console.log('Google Maps API response status:', data.status);
+    console.log('=== GOOGLE MAPS API RESPONSE ===');
+    console.log('Status:', data.status);
+    console.log('Error message:', data.error_message);
+    console.log('Full response:', JSON.stringify(data, null, 2));
+    console.log('================================');
 
     if (data.status !== 'OK') {
-      console.error('Google Maps API error:', data);
+      console.error('Google Maps API error - Full details:', JSON.stringify(data, null, 2));
       return Response.json({ 
         error: 'Route optimization failed', 
-        details: data.status,
-        message: data.error_message || 'Unable to calculate route'
+        status: data.status,
+        google_error: data.error_message || 'No error message provided',
+        details: `API returned status: ${data.status}. Check if: 1) API key has correct restrictions (None for server calls), 2) Directions API is enabled, 3) Billing is active`,
+        available_geocoded_waypoints: data.available_travel_modes,
+        geocoded_waypoints: data.geocoded_waypoints
       }, { status: 500 });
     }
 
