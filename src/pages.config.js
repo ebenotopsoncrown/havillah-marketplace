@@ -28,6 +28,7 @@ import StoreQRCode from './pages/StoreQRCode';
 import Suppliers from './pages/Suppliers';
 import SystemDocumentation from './pages/SystemDocumentation';
 import TermsAndConditions from './pages/TermsAndConditions';
+import TestGoogleMapsAPI from './pages/TestGoogleMapsAPI';
 import __Layout from './Layout.jsx';
 
 
@@ -62,6 +63,7 @@ export const PAGES = {
     "Suppliers": Suppliers,
     "SystemDocumentation": SystemDocumentation,
     "TermsAndConditions": TermsAndConditions,
+    "TestGoogleMapsAPI": TestGoogleMapsAPI,
 }
 
 export const pagesConfig = {
