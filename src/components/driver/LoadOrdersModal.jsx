@@ -12,6 +12,7 @@ export default function LoadOrdersModal({ open, onClose, readyOrders, driver }) 
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [optimizing, setOptimizing] = useState(false);
   const [optimizedRoute, setOptimizedRoute] = useState(null);
+  const [optimizationFailed, setOptimizationFailed] = useState(false);
   const queryClient = useQueryClient();
 
   const createRunMutation = useMutation({
@@ -48,6 +49,7 @@ export default function LoadOrdersModal({ open, onClose, readyOrders, driver }) 
 
   const handleOptimizeRoute = async () => {
     setOptimizing(true);
+    setOptimizationFailed(false);
     try {
       const response = await base44.functions.invoke('optimizeDeliveryRoute', {
         orderIds: selectedOrders
@@ -67,9 +69,11 @@ export default function LoadOrdersModal({ open, onClose, readyOrders, driver }) 
         ].filter(Boolean).join('\n');
         
         console.error('Full error response:', response.data);
-        alert(errorDetails);
+        alert(errorDetails + '\n\nYou can proceed without optimization.');
+        setOptimizationFailed(true);
       } else {
         setOptimizedRoute(response.data);
+        setOptimizationFailed(false);
       }
     } catch (error) {
       console.error('Route optimization failed:', error);
@@ -79,9 +83,35 @@ export default function LoadOrdersModal({ open, onClose, readyOrders, driver }) 
         JSON.stringify(error.response.data, null, 2) : 
         error.message;
       
-      alert(`Failed to optimize route:\n${errorMsg}`);
+      alert(`Failed to optimize route:\n${errorMsg}\n\nYou can proceed without optimization.`);
+      setOptimizationFailed(true);
     }
     setOptimizing(false);
+  };
+
+  const handleStartRunWithoutOptimization = async () => {
+    const runNumber = `RUN-${Date.now()}`;
+    const selectedOrderDetails = readyOrders.filter(order => 
+      selectedOrders.includes(order.id)
+    );
+    
+    const runData = {
+      run_number: runNumber,
+      driver_id: driver.id,
+      driver_name: driver.full_name,
+      status: 'in_progress',
+      order_ids: selectedOrders,
+      optimized_route: null,
+      start_time: new Date().toISOString(),
+      delivery_stops: selectedOrderDetails.map((order, index) => ({
+        order_id: order.id,
+        address: `${order.delivery_address}, ${order.delivery_postcode}`,
+        customer_name: order.customer_name,
+        sequence: index + 1
+      }))
+    };
+
+    await createRunMutation.mutateAsync(runData);
   };
 
   const handleStartRun = async () => {
@@ -174,23 +204,44 @@ export default function LoadOrdersModal({ open, onClose, readyOrders, driver }) 
                 <Button variant="outline" onClick={onClose} className="flex-1">
                   Cancel
                 </Button>
-                <Button
-                  onClick={handleOptimizeRoute}
-                  disabled={selectedOrders.length === 0 || optimizing}
-                  className="flex-1 bg-indigo-600 hover:bg-indigo-700"
-                >
-                  {optimizing ? (
-                    <>
-                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                      Optimizing Route...
-                    </>
-                  ) : (
-                    <>
-                      <Navigation className="w-5 h-5 mr-2" />
-                      Optimize Route ({selectedOrders.length})
-                    </>
-                  )}
-                </Button>
+                {optimizationFailed && (
+                  <Button
+                    onClick={handleStartRunWithoutOptimization}
+                    disabled={createRunMutation.isPending}
+                    className="flex-1 bg-orange-600 hover:bg-orange-700"
+                  >
+                    {createRunMutation.isPending ? (
+                      <>
+                        <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                        Starting...
+                      </>
+                    ) : (
+                      <>
+                        <CheckCircle className="w-5 h-5 mr-2" />
+                        Proceed Without Route Optimization
+                      </>
+                    )}
+                  </Button>
+                )}
+                {!optimizationFailed && (
+                  <Button
+                    onClick={handleOptimizeRoute}
+                    disabled={selectedOrders.length === 0 || optimizing}
+                    className="flex-1 bg-indigo-600 hover:bg-indigo-700"
+                  >
+                    {optimizing ? (
+                      <>
+                        <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                        Optimizing Route...
+                      </>
+                    ) : (
+                      <>
+                        <Navigation className="w-5 h-5 mr-2" />
+                        Optimize Route ({selectedOrders.length})
+                      </>
+                    )}
+                  </Button>
+                )}
               </div>
             </div>
           </>
