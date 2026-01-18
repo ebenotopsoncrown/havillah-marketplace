@@ -11,7 +11,8 @@ import {
   CheckCircle, 
   Navigation,
   Phone,
-  Flag
+  Flag,
+  AlertCircle
 } from "lucide-react";
 import DeliveryConfirmationModal from "./DeliveryConfirmationModal";
 
@@ -40,6 +41,16 @@ export default function ActiveRunView({ run, driver }) {
 
   const completeRunMutation = useMutation({
     mutationFn: async () => {
+      // Validation: Ensure all stops are completed
+      if (!run.delivery_stops || run.delivery_stops.length === 0) {
+        throw new Error('Cannot complete run with no delivery stops');
+      }
+      
+      const incompleteStops = run.delivery_stops.filter(s => !s.completion_time);
+      if (incompleteStops.length > 0) {
+        throw new Error(`Cannot complete run. ${incompleteStops.length} stops still pending.`);
+      }
+
       const endTime = new Date().toISOString();
       const startTime = new Date(run.start_time);
       const duration = (new Date(endTime) - startTime) / 60000; // minutes
@@ -53,6 +64,9 @@ export default function ActiveRunView({ run, driver }) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['driver-runs'] });
     },
+    onError: (error) => {
+      alert(`Error: ${error.message}`);
+    }
   });
 
   const elapsedTime = Math.floor((currentTime - new Date(run.start_time)) / 1000);
@@ -62,6 +76,28 @@ export default function ActiveRunView({ run, driver }) {
 
   const completedStops = run.delivery_stops?.filter(s => s.completion_time) || [];
   const pendingStops = run.delivery_stops?.filter(s => !s.completion_time) || [];
+
+  // Safety check: If run has no delivery stops, show error
+  if (!run.delivery_stops || run.delivery_stops.length === 0) {
+    return (
+      <Card className="border-2 border-red-200 bg-red-50">
+        <CardContent className="p-8 text-center">
+          <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-red-900 mb-2">Invalid Delivery Run</h3>
+          <p className="text-red-700 mb-4">
+            This delivery run has no stops loaded. Please contact dispatch or start a new run.
+          </p>
+          <Button
+            onClick={() => completeRunMutation.mutate()}
+            variant="outline"
+            className="border-red-300 text-red-700 hover:bg-red-100"
+          >
+            Cancel This Run
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -119,10 +155,15 @@ export default function ActiveRunView({ run, driver }) {
               <MapPin className="w-5 h-5" />
               Delivery Route
             </span>
-            {pendingStops.length === 0 && (
+            {pendingStops.length === 0 && run.delivery_stops?.length > 0 && (
               <Button
-                onClick={() => completeRunMutation.mutate()}
+                onClick={() => {
+                  if (window.confirm('Are you sure you want to complete this delivery run? All stops have been delivered.')) {
+                    completeRunMutation.mutate();
+                  }
+                }}
                 className="bg-green-600 hover:bg-green-700"
+                disabled={completeRunMutation.isPending}
               >
                 <Flag className="w-4 h-4 mr-2" />
                 Complete Run
