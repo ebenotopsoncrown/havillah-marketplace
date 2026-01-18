@@ -29,6 +29,9 @@ import Suppliers from './pages/Suppliers';
 import SystemDocumentation from './pages/SystemDocumentation';
 import TermsAndConditions from './pages/TermsAndConditions';
 import TestGoogleMapsAPI from './pages/TestGoogleMapsAPI';
+import StaffLogin from './pages/StaffLogin';
+import OrderConfirmation from './pages/OrderConfirmation';
+import PickingAndPacking from './pages/PickingAndPacking';
 import __Layout from './Layout.jsx';
 
 
@@ -64,6 +67,9 @@ export const PAGES = {
     "SystemDocumentation": SystemDocumentation,
     "TermsAndConditions": TermsAndConditions,
     "TestGoogleMapsAPI": TestGoogleMapsAPI,
+    "StaffLogin": StaffLogin,
+    "OrderConfirmation": OrderConfirmation,
+    "PickingAndPacking": PickingAndPacking,
 }
 
 export const pagesConfig = {
