@@ -217,24 +217,6 @@ export default function Orders() {
                               Confirm Order
                             </Button>
                           )}
-                          <Select
-                            value={order.status}
-                            onValueChange={(value) => handleStatusChange(order.id, value)}
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <SelectTrigger className="w-48">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="pending_confirmation">Pending Confirmation</SelectItem>
-                              <SelectItem value="confirmed">Confirmed</SelectItem>
-                              <SelectItem value="picking">Picking</SelectItem>
-                              <SelectItem value="ready">Ready</SelectItem>
-                              <SelectItem value="dispatched">Dispatched</SelectItem>
-                              <SelectItem value="delivered">Delivered</SelectItem>
-                              <SelectItem value="cancelled">Cancelled</SelectItem>
-                            </SelectContent>
-                          </Select>
                         </div>
                       </div>
                     </div>
