@@ -22,11 +22,13 @@ import {
 import { format } from "date-fns";
 
 import OrderDetailsCard from "../components/orders/OrderDetailsCard";
+import OrderConfirmationModal from "../components/orders/OrderConfirmationModal";
 
 export default function Orders() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [confirmingOrder, setConfirmingOrder] = useState(null);
   const queryClient = useQueryClient();
 
   const { data: orders = [], isLoading } = useQuery({
@@ -63,7 +65,7 @@ export default function Orders() {
   };
 
   const statusColors = {
-    pending: "bg-yellow-100 text-yellow-800 border-yellow-200",
+    pending_confirmation: "bg-yellow-100 text-yellow-800 border-yellow-200",
     confirmed: "bg-blue-100 text-blue-800 border-blue-200",
     picking: "bg-purple-100 text-purple-800 border-purple-200",
     ready: "bg-indigo-100 text-indigo-800 border-indigo-200",
@@ -72,7 +74,7 @@ export default function Orders() {
     cancelled: "bg-red-100 text-red-800 border-red-200"
   };
 
-  const pendingOrders = orders.filter(o => ['pending', 'confirmed'].includes(o.status));
+  const pendingOrders = orders.filter(o => ['pending_confirmation', 'confirmed'].includes(o.status));
   const activeOrders = orders.filter(o => ['picking', 'ready', 'dispatched'].includes(o.status));
   const completedOrders = orders.filter(o => o.status === 'delivered');
 
@@ -137,7 +139,7 @@ export default function Orders() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Status</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
+                  <SelectItem value="pending_confirmation">Pending Confirmation</SelectItem>
                   <SelectItem value="confirmed">Confirmed</SelectItem>
                   <SelectItem value="picking">Picking</SelectItem>
                   <SelectItem value="ready">Ready</SelectItem>
@@ -203,11 +205,11 @@ export default function Orders() {
                       <div className="flex flex-col items-end justify-between">
                         <p className="text-2xl font-bold text-indigo-600">£{order.total_amount?.toFixed(2)}</p>
                         <div className="flex gap-2">
-                          {order.status === 'pending' && (
+                          {order.status === 'pending_confirmation' && (
                             <Button
                               onClick={(e) => {
                                 e.stopPropagation();
-                                handleStatusChange(order.id, 'confirmed');
+                                setConfirmingOrder(order);
                               }}
                               size="sm"
                               className="bg-blue-600 hover:bg-blue-700"
@@ -224,7 +226,7 @@ export default function Orders() {
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="pending">Pending</SelectItem>
+                              <SelectItem value="pending_confirmation">Pending Confirmation</SelectItem>
                               <SelectItem value="confirmed">Confirmed</SelectItem>
                               <SelectItem value="picking">Picking</SelectItem>
                               <SelectItem value="ready">Ready</SelectItem>
@@ -248,6 +250,15 @@ export default function Orders() {
             order={selectedOrder}
             items={getOrderItems(selectedOrder.id)}
             onClose={() => setSelectedOrder(null)}
+          />
+        )}
+
+        {confirmingOrder && (
+          <OrderConfirmationModal
+            open={!!confirmingOrder}
+            onClose={() => setConfirmingOrder(null)}
+            order={confirmingOrder}
+            items={getOrderItems(confirmingOrder.id)}
           />
         )}
       </div>
