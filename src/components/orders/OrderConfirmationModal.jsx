@@ -60,6 +60,25 @@ export default function OrderConfirmationModal({ open, onClose, order, items }) 
         }
       });
 
+      // Update or delete order items based on availability
+      for (const item of unavailableItems) {
+        const substitute = substitutes[item.id];
+        
+        if (substitute) {
+          // Update item with substitute product
+          await base44.entities.OrderItem.update(item.id, {
+            product_id: substitute.id,
+            product_name: substitute.name,
+            sku: substitute.sku,
+            unit_price: substitute.retail_price,
+            line_total: substitute.retail_price * item.quantity
+          });
+        } else {
+          // No substitute - delete the item
+          await base44.entities.OrderItem.delete(item.id);
+        }
+      }
+
       // Update order status
       await base44.entities.Order.update(order.id, {
         status: 'confirmed',
@@ -152,6 +171,7 @@ export default function OrderConfirmationModal({ open, onClose, order, items }) 
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['orders'] });
+      queryClient.invalidateQueries({ queryKey: ['order-items'] });
       setItemStatuses({});
       setSubstitutes({});
       setSearchTerms({});
