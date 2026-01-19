@@ -271,6 +271,10 @@ export default function Orders() {
             order={selectedOrder}
             items={getOrderItems(selectedOrder.id)}
             onClose={() => setSelectedOrder(null)}
+            onStatusChange={(orderId, newStatus) => {
+              handleStatusChange(orderId, newStatus);
+              setSelectedOrder(null);
+            }}
           />
         )}
 

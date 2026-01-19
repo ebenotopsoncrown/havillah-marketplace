@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
+import { Package, CheckCircle, Truck } from 'lucide-react';
 import {
   Table,
   TableBody,
@@ -12,14 +13,28 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export default function OrderDetailsCard({ order, items, onClose }) {
+export default function OrderDetailsCard({ order, items, onClose, onStatusChange }) {
+  const statusColors = {
+    pending_confirmation: "bg-yellow-100 text-yellow-800 border-yellow-200",
+    confirmed: "bg-blue-100 text-blue-800 border-blue-200",
+    picking: "bg-purple-100 text-purple-800 border-purple-200",
+    ready: "bg-indigo-100 text-indigo-800 border-indigo-200",
+    dispatched: "bg-orange-100 text-orange-800 border-orange-200",
+    delivered: "bg-green-100 text-green-800 border-green-200",
+    cancelled: "bg-red-100 text-red-800 border-red-200"
+  };
   return (
     <Card className="shadow-lg">
       <CardHeader className="border-b bg-gradient-to-r from-indigo-50 to-purple-50">
         <div className="flex items-center justify-between">
           <div>
             <CardTitle className="text-xl">Order Details</CardTitle>
-            <p className="text-sm text-gray-600 mt-1">{order.order_number}</p>
+            <div className="flex items-center gap-3 mt-2">
+              <p className="text-sm text-gray-600">{order.order_number}</p>
+              <Badge className={`${statusColors[order.status]} border`}>
+                {order.status.replace(/_/g, ' ').toUpperCase()}
+              </Badge>
+            </div>
           </div>
           <Button variant="outline" onClick={onClose}>
             Close
@@ -123,6 +138,51 @@ export default function OrderDetailsCard({ order, items, onClose }) {
           <div className="mt-6 p-4 bg-gray-50 rounded-lg">
             <h3 className="font-semibold mb-2 text-sm">Order Notes</h3>
             <p className="text-sm text-gray-700">{order.notes}</p>
+          </div>
+        )}
+
+        {/* Action Buttons Based on Status */}
+        {onStatusChange && (
+          <div className="mt-6 pt-6 border-t">
+            <h3 className="font-semibold mb-3">Order Actions</h3>
+            <div className="flex gap-3">
+              {order.status === 'confirmed' && (
+                <Button
+                  onClick={() => onStatusChange(order.id, 'picking')}
+                  className="bg-purple-600 hover:bg-purple-700"
+                >
+                  <Package className="w-4 h-4 mr-2" />
+                  Start Picking
+                </Button>
+              )}
+              {order.status === 'picking' && (
+                <Button
+                  onClick={() => onStatusChange(order.id, 'ready')}
+                  className="bg-indigo-600 hover:bg-indigo-700"
+                >
+                  <CheckCircle className="w-4 h-4 mr-2" />
+                  Mark as Ready
+                </Button>
+              )}
+              {order.status === 'ready' && order.delivery_type === 'delivery' && (
+                <Button
+                  onClick={() => onStatusChange(order.id, 'dispatched')}
+                  className="bg-orange-600 hover:bg-orange-700"
+                >
+                  <Truck className="w-4 h-4 mr-2" />
+                  Mark as Dispatched
+                </Button>
+              )}
+              {order.status === 'dispatched' && (
+                <Button
+                  onClick={() => onStatusChange(order.id, 'delivered')}
+                  className="bg-green-600 hover:bg-green-700"
+                >
+                  <CheckCircle className="w-4 h-4 mr-2" />
+                  Mark as Delivered
+                </Button>
+              )}
+            </div>
           </div>
         )}
       </CardContent>
