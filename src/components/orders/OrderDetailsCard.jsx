@@ -18,7 +18,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export default function OrderDetailsCard({ order, items, onClose, onStatusChange }) {
+export default function OrderDetailsCard({ order, items, onClose, onStatusChange, onConfirmOrder }) {
   const statusColors = {
     pending_confirmation: "bg-yellow-100 text-yellow-800 border-yellow-200",
     confirmed: "bg-blue-100 text-blue-800 border-blue-200",
@@ -143,11 +143,20 @@ export default function OrderDetailsCard({ order, items, onClose, onStatusChange
         )}
 
         {/* Action Buttons Based on Status */}
-        {onStatusChange && (
+        {(onStatusChange || onConfirmOrder) && (
           <div className="mt-6 pt-6 border-t">
             <h3 className="font-semibold mb-3">Order Actions</h3>
             <div className="flex gap-3">
-              {order.status === 'confirmed' && (
+              {order.status === 'pending_confirmation' && onConfirmOrder && (
+                <Button
+                  onClick={() => onConfirmOrder(order)}
+                  className="bg-blue-600 hover:bg-blue-700"
+                >
+                  <CheckCircle className="w-4 h-4 mr-2" />
+                  Confirm Order
+                </Button>
+              )}
+              {order.status === 'confirmed' && onStatusChange && (
                 <Button
                   onClick={() => onStatusChange(order.id, 'picking')}
                   className="bg-purple-600 hover:bg-purple-700"
@@ -156,7 +165,7 @@ export default function OrderDetailsCard({ order, items, onClose, onStatusChange
                   Start Picking
                 </Button>
               )}
-              {order.status === 'picking' && (
+              {order.status === 'picking' && onStatusChange && (
                 <Button
                   onClick={() => onStatusChange(order.id, 'ready')}
                   className="bg-indigo-600 hover:bg-indigo-700"
@@ -165,7 +174,7 @@ export default function OrderDetailsCard({ order, items, onClose, onStatusChange
                   Mark as Ready
                 </Button>
               )}
-              {order.status === 'ready' && order.delivery_type === 'delivery' && (
+              {order.status === 'ready' && order.delivery_type === 'delivery' && onStatusChange && (
                 <Button
                   onClick={() => onStatusChange(order.id, 'dispatched')}
                   className="bg-orange-600 hover:bg-orange-700"
@@ -174,7 +183,7 @@ export default function OrderDetailsCard({ order, items, onClose, onStatusChange
                   Mark as Dispatched
                 </Button>
               )}
-              {order.status === 'dispatched' && (
+              {order.status === 'dispatched' && onStatusChange && (
                 <Button
                   onClick={() => onStatusChange(order.id, 'delivered')}
                   className="bg-green-600 hover:bg-green-700"

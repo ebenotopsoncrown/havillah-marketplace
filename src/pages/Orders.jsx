@@ -275,6 +275,10 @@ export default function Orders() {
               handleStatusChange(orderId, newStatus);
               setSelectedOrder(null);
             }}
+            onConfirmOrder={(order) => {
+              setSelectedOrder(null);
+              setConfirmingOrder(order);
+            }}
           />
         )}
 
