@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Input } from "@/components/ui/input";
-import { Search, Package, Truck, CheckCircle } from "lucide-react";
+import { Search, Package, Truck, CheckCircle, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -23,12 +23,24 @@ import { format } from "date-fns";
 
 import OrderDetailsCard from "../components/orders/OrderDetailsCard";
 import OrderConfirmationModal from "../components/orders/OrderConfirmationModal";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { useMutation } from "@tanstack/react-query";
 
 export default function Orders() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [confirmingOrder, setConfirmingOrder] = useState(null);
+  const [cancellingOrder, setCancellingOrder] = useState(null);
   const queryClient = useQueryClient();
 
   const { data: orders = [], isLoading } = useQuery({
@@ -45,6 +57,20 @@ export default function Orders() {
     mutationFn: ({ id, data }) => base44.entities.Order.update(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['orders'] });
+    },
+  });
+
+  const cancelOrderMutation = useMutation({
+    mutationFn: async (orderId) => {
+      return base44.functions.invoke('cancelOrder', {
+        orderId,
+        cancelledBy: 'staff',
+        reason: 'Cancelled by store staff'
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['orders'] });
+      setCancellingOrder(null);
     },
   });
 
@@ -217,6 +243,20 @@ export default function Orders() {
                               Confirm Order
                             </Button>
                           )}
+                          {!['delivered', 'cancelled'].includes(order.status) && (
+                            <Button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setCancellingOrder(order);
+                              }}
+                              size="sm"
+                              variant="outline"
+                              className="border-red-300 text-red-700 hover:bg-red-50"
+                            >
+                              <XCircle className="w-4 h-4 mr-1" />
+                              Cancel
+                            </Button>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -243,6 +283,32 @@ export default function Orders() {
             items={getOrderItems(confirmingOrder.id)}
           />
         )}
+
+        <AlertDialog open={!!cancellingOrder} onOpenChange={() => setCancellingOrder(null)}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Cancel Order?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to cancel order <strong>{cancellingOrder?.order_number}</strong>?
+                {cancellingOrder?.stripe_payment_intent_id && (
+                  <span className="block mt-2 text-green-700 font-medium">
+                    ✓ A full refund of £{cancellingOrder?.total_amount?.toFixed(2)} will be processed automatically.
+                  </span>
+                )}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Keep Order</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => cancelOrderMutation.mutate(cancellingOrder.id)}
+                className="bg-red-600 hover:bg-red-700"
+                disabled={cancelOrderMutation.isPending}
+              >
+                {cancelOrderMutation.isPending ? 'Cancelling...' : 'Yes, Cancel Order'}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );

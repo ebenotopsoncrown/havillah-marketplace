@@ -27,11 +27,58 @@ export default function OrderConfirmationModal({ open, onClose, order, items }) 
       const unavailableItems = items.filter(item => itemStatuses[item.id] === 'unavailable');
       const confirmedItems = items.filter(item => itemStatuses[item.id] === 'available');
 
+      // Calculate refund amount for price differences
+      let totalRefundAmount = 0;
+      const refundDetails = [];
+
+      unavailableItems.forEach(item => {
+        const substitute = substitutes[item.id];
+        const originalPrice = item.line_total;
+        
+        if (substitute) {
+          // Calculate substitute total
+          const substituteTotalPrice = substitute.retail_price * item.quantity;
+          const priceDifference = originalPrice - substituteTotalPrice;
+          
+          if (priceDifference > 0) {
+            // Substitute is cheaper - add to refund
+            totalRefundAmount += priceDifference;
+            refundDetails.push({
+              item: item.product_name,
+              substitute: substitute.name,
+              amount: priceDifference
+            });
+          }
+        } else {
+          // No substitute - full refund for this item
+          totalRefundAmount += originalPrice;
+          refundDetails.push({
+            item: item.product_name,
+            substitute: null,
+            amount: originalPrice
+          });
+        }
+      });
+
       // Update order status
       await base44.entities.Order.update(order.id, {
         status: 'confirmed',
         confirmed_at: new Date().toISOString()
       });
+
+      // Process refund if needed and payment was via card
+      if (totalRefundAmount > 0 && order.stripe_payment_intent_id) {
+        try {
+          await base44.functions.invoke('processRefund', {
+            orderId: order.id,
+            amount: totalRefundAmount,
+            reason: 'Item unavailable or price adjustment'
+          });
+        } catch (refundError) {
+          console.error('Refund failed:', refundError);
+          // Continue with confirmation even if refund fails
+        }
+      }
 
       // Build email body with unavailable items info
       let emailBody = `
@@ -64,6 +111,21 @@ export default function OrderConfirmationModal({ open, onClose, order, items }) 
             </ul>
           </div>
         `;
+
+        // Add refund information if applicable
+        if (totalRefundAmount > 0 && order.stripe_payment_intent_id) {
+          emailBody += `
+            <div style="background-color: #D1FAE5; border-left: 4px solid #059669; padding: 15px; margin: 20px 0;">
+              <h3 style="color: #065F46; margin-top: 0;">Refund Processed</h3>
+              <p style="color: #047857;">
+                A refund of <strong>£${totalRefundAmount.toFixed(2)}</strong> has been processed to your original payment method.
+              </p>
+              <p style="color: #047857; font-size: 12px; margin-top: 10px;">
+                The refund will appear in your account within 5-10 business days.
+              </p>
+            </div>
+          `;
+        }
       }
 
       emailBody += `

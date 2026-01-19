@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import {
@@ -17,16 +17,29 @@ import {
   Clock,
   CreditCard,
   CheckCircle,
-  Truck
+  Truck,
+  XCircle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export default function CustomerAccount() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [cancellingOrder, setCancellingOrder] = useState(null);
+  const queryClient = useQueryClient();
 
   React.useEffect(() => {
     const loadUser = async () => {
@@ -48,6 +61,20 @@ export default function CustomerAccount() {
       return base44.entities.Order.filter({ customer_email: user.email }, '-created_date');
     },
     enabled: !!user?.email,
+  });
+
+  const cancelOrderMutation = useMutation({
+    mutationFn: async (orderId) => {
+      return base44.functions.invoke('cancelOrder', {
+        orderId,
+        cancelledBy: user.email,
+        reason: 'Cancelled by customer'
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['customer-orders'] });
+      setCancellingOrder(null);
+    },
   });
 
   const handleLogout = async () => {
@@ -74,7 +101,7 @@ export default function CustomerAccount() {
   };
 
   const statusColors = {
-    pending: "bg-yellow-100 text-yellow-800 border-yellow-200",
+    pending_confirmation: "bg-yellow-100 text-yellow-800 border-yellow-200",
     confirmed: "bg-blue-100 text-blue-800 border-blue-200",
     picking: "bg-purple-100 text-purple-800 border-purple-200",
     ready: "bg-indigo-100 text-indigo-800 border-indigo-200",
@@ -84,13 +111,13 @@ export default function CustomerAccount() {
   };
 
   const statusIcons = {
-    pending: Clock,
+    pending_confirmation: Clock,
     confirmed: CheckCircle,
     picking: Package,
     ready: CheckCircle,
     dispatched: Truck,
     delivered: CheckCircle,
-    cancelled: null
+    cancelled: XCircle
   };
 
   if (loading) {
@@ -333,6 +360,20 @@ export default function CustomerAccount() {
                           <p className="text-sm text-gray-700">{order.notes}</p>
                         </div>
                       )}
+
+                      {!['delivered', 'cancelled', 'dispatched'].includes(order.status) && (
+                        <div className="mt-4 pt-3 border-t border-gray-200">
+                          <Button
+                            onClick={() => setCancellingOrder(order)}
+                            variant="outline"
+                            size="sm"
+                            className="border-red-300 text-red-700 hover:bg-red-50"
+                          >
+                            <XCircle className="w-4 h-4 mr-2" />
+                            Cancel Order
+                          </Button>
+                        </div>
+                      )}
                     </div>
                   );
                 })}
@@ -375,6 +416,32 @@ export default function CustomerAccount() {
             </div>
           </CardContent>
         </Card>
+
+        <AlertDialog open={!!cancellingOrder} onOpenChange={() => setCancellingOrder(null)}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Cancel Order?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to cancel order <strong>{cancellingOrder?.order_number}</strong>?
+                {cancellingOrder?.stripe_payment_intent_id && (
+                  <span className="block mt-2 text-green-700 font-medium">
+                    ✓ A full refund of £{cancellingOrder?.total_amount?.toFixed(2)} will be processed automatically.
+                  </span>
+                )}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Keep Order</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => cancelOrderMutation.mutate(cancellingOrder.id)}
+                className="bg-red-600 hover:bg-red-700"
+                disabled={cancelOrderMutation.isPending}
+              >
+                {cancelOrderMutation.isPending ? 'Cancelling...' : 'Yes, Cancel Order'}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );
