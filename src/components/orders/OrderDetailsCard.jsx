@@ -1,9 +1,14 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { Package, CheckCircle, Truck } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   Table,
   TableBody,
@@ -24,11 +29,11 @@ export default function OrderDetailsCard({ order, items, onClose, onStatusChange
     cancelled: "bg-red-100 text-red-800 border-red-200"
   };
   return (
-    <Card className="shadow-lg">
-      <CardHeader className="border-b bg-gradient-to-r from-indigo-50 to-purple-50">
-        <div className="flex items-center justify-between">
+    <Dialog open={!!order} onOpenChange={onClose}>
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader className="border-b pb-4 mb-4">
           <div>
-            <CardTitle className="text-xl">Order Details</CardTitle>
+            <DialogTitle className="text-2xl">Order Details</DialogTitle>
             <div className="flex items-center gap-3 mt-2">
               <p className="text-sm text-gray-600">{order.order_number}</p>
               <Badge className={`${statusColors[order.status]} border`}>
@@ -36,12 +41,8 @@ export default function OrderDetailsCard({ order, items, onClose, onStatusChange
               </Badge>
             </div>
           </div>
-          <Button variant="outline" onClick={onClose}>
-            Close
-          </Button>
-        </div>
-      </CardHeader>
-      <CardContent className="p-6">
+        </DialogHeader>
+        <div className="space-y-6">
         <div className="grid md:grid-cols-2 gap-6 mb-6">
           <div>
             <h3 className="font-semibold mb-3">Customer Information</h3>
@@ -185,7 +186,8 @@ export default function OrderDetailsCard({ order, items, onClose, onStatusChange
             </div>
           </div>
         )}
-      </CardContent>
-    </Card>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }
