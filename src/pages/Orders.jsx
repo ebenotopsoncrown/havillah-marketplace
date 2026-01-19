@@ -194,7 +194,7 @@ export default function Orders() {
                         <div className="flex items-center gap-3 mb-2">
                           <h3 className="font-bold text-lg">{order.order_number}</h3>
                           <Badge className={`${statusColors[order.status]} border`}>
-                            {order.status}
+                            {order.status === 'pending_confirmation' ? 'pending' : order.status}
                           </Badge>
                           {order.delivery_type === "delivery" ? (
                             <Badge variant="outline" className="flex items-center gap-1">
