@@ -4,15 +4,22 @@ import { DollarSign, TrendingUp, TrendingDown, ArrowRightLeft, MousePointer } fr
 import { format } from "date-fns";
 import TransactionDrilldownModal from "./TransactionDrilldownModal";
 
-export default function CashFlowStatement({ sales, expenses, purchaseOrders, startDate, endDate }) {
+export default function CashFlowStatement({ sales, orders = [], expenses, purchaseOrders, startDate, endDate }) {
   const [drilldownModal, setDrilldownModal] = useState({ open: false, title: '', transactions: [], type: '' });
 
-  // OPERATING ACTIVITIES (FROM ACTUAL TRANSACTIONS)
+  // OPERATING ACTIVITIES (FROM ACTUAL TRANSACTIONS - combining POS and online)
   const cashFromSales = sales
     .filter(sale => sale.payment_method !== 'account') // Exclude credit sales
     .reduce((sum, sale) => sum + (sale.total_amount || 0), 0);
   
+  const cashFromOrders = orders
+    .filter(order => order.payment_method !== 'account') // Exclude credit orders
+    .reduce((sum, order) => sum + (order.total_amount || 0), 0);
+  
+  const totalCashReceived = cashFromSales + cashFromOrders;
+  
   const cashSalesTransactions = sales.filter(sale => sale.payment_method !== 'account');
+  const cashOrdersTransactions = orders.filter(order => order.payment_method !== 'account');
   
   const cashPaidForExpenses = expenses
     .filter(exp => exp.status === 'paid')
@@ -20,7 +27,7 @@ export default function CashFlowStatement({ sales, expenses, purchaseOrders, sta
   
   const paidExpensesTransactions = expenses.filter(exp => exp.status === 'paid');
   
-  const netCashFromOperations = cashFromSales - cashPaidForExpenses;
+  const netCashFromOperations = totalCashReceived - cashPaidForExpenses;
   
   // NO HARDCODED VALUES - Only show actual transaction-based cash flow
   
@@ -59,13 +66,23 @@ export default function CashFlowStatement({ sales, expenses, purchaseOrders, sta
             <div className="space-y-2 py-3">
               <div 
                 className="flex justify-between items-center py-1 px-4 text-gray-700 hover:bg-gray-50 cursor-pointer transition-colors"
-                onClick={() => showDrilldown('Cash Received from Customers', cashSalesTransactions, 'sales')}
+                onClick={() => showDrilldown('Cash from POS Sales', cashSalesTransactions, 'sales')}
               >
                 <div className="flex items-center gap-2">
                   <TrendingUp className="w-4 h-4 text-green-600" />
-                  <span>Cash received from customers ({cashSalesTransactions.length} transactions)</span>
+                  <span>Cash from POS ({cashSalesTransactions.length} transactions)</span>
                 </div>
                 <span className="text-green-600 font-medium">£{cashFromSales.toFixed(2)}</span>
+              </div>
+              <div 
+                className="flex justify-between items-center py-1 px-4 text-gray-700 hover:bg-gray-50 cursor-pointer transition-colors"
+                onClick={() => showDrilldown('Cash from Online Orders', cashOrdersTransactions, 'orders')}
+              >
+                <div className="flex items-center gap-2">
+                  <TrendingUp className="w-4 h-4 text-green-600" />
+                  <span>Cash from Online ({cashOrdersTransactions.length} orders)</span>
+                </div>
+                <span className="text-green-600 font-medium">£{cashFromOrders.toFixed(2)}</span>
               </div>
               <div 
                 className="flex justify-between items-center py-1 px-4 text-gray-700 hover:bg-gray-50 cursor-pointer transition-colors"

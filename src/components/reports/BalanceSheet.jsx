@@ -4,7 +4,7 @@ import { Building2, Package, Users, CreditCard, MousePointer } from "lucide-reac
 import { format } from "date-fns";
 import TransactionDrilldownModal from "./TransactionDrilldownModal";
 
-export default function BalanceSheet({ products, customers, suppliers, sales, expenses, asOfDate }) {
+export default function BalanceSheet({ products, customers, suppliers, sales, orders = [], expenses, asOfDate }) {
   const [drilldownModal, setDrilldownModal] = useState({ open: false, title: '', transactions: [], type: '' });
 
   // ASSETS
@@ -23,8 +23,10 @@ export default function BalanceSheet({ products, customers, suppliers, sales, ex
   
   const customersWithCredit = customers.filter(c => (c.credit_balance || 0) > 0);
   
-  // Current Assets - Cash (FROM SALES - EXPENSES)
-  const totalRevenue = sales.reduce((sum, sale) => sum + (sale.total_amount || 0), 0);
+  // Current Assets - Cash (FROM SALES + ORDERS - EXPENSES)
+  const salesRevenue = sales.reduce((sum, sale) => sum + (sale.total_amount || 0), 0);
+  const ordersRevenue = orders.reduce((sum, order) => sum + (order.total_amount || 0), 0);
+  const totalRevenue = salesRevenue + ordersRevenue;
   const totalExpenses = expenses.reduce((sum, exp) => sum + (exp.amount || 0), 0);
   const cashOnHand = totalRevenue - totalExpenses;
   
@@ -92,11 +94,11 @@ export default function BalanceSheet({ products, customers, suppliers, sales, ex
               <div className="space-y-2 py-2">
                 <div 
                   className="flex justify-between items-center py-1 px-4 ml-4 text-gray-700 hover:bg-gray-50 cursor-pointer transition-colors"
-                  onClick={() => showDrilldown('Cash & Bank - From Sales Revenue', sales, 'sales')}
+                  onClick={() => showDrilldown('Cash & Bank - From Revenue', [...sales, ...orders], 'mixed')}
                 >
                   <div className="flex items-center gap-2">
                     <CreditCard className="w-4 h-4 text-green-600" />
-                    <span>Cash & Bank (from {sales.length} sales)</span>
+                    <span>Cash & Bank (from {sales.length} sales + {orders.length} orders)</span>
                   </div>
                   <span className="font-medium text-green-600">£{cashOnHand.toFixed(2)}</span>
                 </div>

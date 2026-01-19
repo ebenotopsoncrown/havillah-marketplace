@@ -4,11 +4,13 @@ import { TrendingUp, TrendingDown, MousePointer } from "lucide-react";
 import { format } from "date-fns";
 import TransactionDrilldownModal from "./TransactionDrilldownModal";
 
-export default function ProfitLossStatement({ sales, expenses, startDate, endDate }) {
+export default function ProfitLossStatement({ sales, orders = [], expenses, startDate, endDate }) {
   const [drilldownModal, setDrilldownModal] = useState({ open: false, title: '', transactions: [], type: '' });
 
-  // Calculate Revenue
-  const totalRevenue = sales.reduce((sum, sale) => sum + (sale.total_amount || 0), 0);
+  // Calculate Revenue (combining POS sales and online orders)
+  const salesRevenue = sales.reduce((sum, sale) => sum + (sale.total_amount || 0), 0);
+  const ordersRevenue = orders.reduce((sum, order) => sum + (order.total_amount || 0), 0);
+  const totalRevenue = salesRevenue + ordersRevenue;
   
   // Calculate Cost of Goods Sold (from sale items and their cost prices)
   // For simplicity, assuming 60% margin (40% COGS) if cost price not available
@@ -77,10 +79,17 @@ export default function ProfitLossStatement({ sales, expenses, startDate, endDat
             </div>
             <div 
               className="flex justify-between items-center py-2 px-4 text-gray-700 cursor-pointer hover:bg-gray-50 transition-colors"
-              onClick={() => showDrilldown('Sales Transactions', sales, 'sales')}
+              onClick={() => showDrilldown('POS Sales Transactions', sales, 'sales')}
             >
-              <span className="ml-4">Sales ({sales.length} transactions)</span>
-              <span>£{totalRevenue.toFixed(2)}</span>
+              <span className="ml-4">POS Sales ({sales.length} transactions)</span>
+              <span>£{salesRevenue.toFixed(2)}</span>
+            </div>
+            <div 
+              className="flex justify-between items-center py-2 px-4 text-gray-700 cursor-pointer hover:bg-gray-50 transition-colors"
+              onClick={() => showDrilldown('Online Orders', orders, 'orders')}
+            >
+              <span className="ml-4">Online Orders ({orders.length} orders)</span>
+              <span>£{ordersRevenue.toFixed(2)}</span>
             </div>
           </div>
 
