@@ -69,31 +69,42 @@ export default function Reports() {
     return saleDate >= startDate && saleDate <= endDate;
   });
 
+  const filteredOrders = orders.filter(order => {
+    const orderDate = new Date(order.order_date);
+    return orderDate >= startDate && orderDate <= endDate && order.status !== 'cancelled';
+  });
+
   const filteredExpenses = expenses.filter(expense => {
     const expenseDate = new Date(expense.expense_date);
     return expenseDate >= startDate && expenseDate <= endDate;
   });
 
-  // Calculate key metrics
-  const totalRevenue = filteredSales.reduce((sum, sale) => sum + (sale.total_amount || 0), 0);
-  const totalTransactions = filteredSales.length;
+  // Calculate key metrics (combining POS sales and online orders)
+  const salesRevenue = filteredSales.reduce((sum, sale) => sum + (sale.total_amount || 0), 0);
+  const ordersRevenue = filteredOrders.reduce((sum, order) => sum + (order.total_amount || 0), 0);
+  const totalRevenue = salesRevenue + ordersRevenue;
+  const totalTransactions = filteredSales.length + filteredOrders.length;
   const avgTransaction = totalTransactions > 0 ? totalRevenue / totalTransactions : 0;
   const inventoryValue = products.reduce((sum, product) => {
     return sum + ((product.stock_quantity || 0) * (product.cost_price || 0));
   }, 0);
 
-  // Sales trend data (last 30 days)
+  // Sales trend data (last 30 days) - combining POS and online orders
   const salesTrendData = Array.from({ length: 30 }, (_, i) => {
     const date = subDays(new Date(), 29 - i);
     const dateStr = format(date, 'yyyy-MM-dd');
     const daySales = sales.filter(sale => 
       format(new Date(sale.sale_date), 'yyyy-MM-dd') === dateStr
     );
-    const dayRevenue = daySales.reduce((sum, sale) => sum + (sale.total_amount || 0), 0);
+    const dayOrders = orders.filter(order => 
+      format(new Date(order.order_date), 'yyyy-MM-dd') === dateStr && order.status !== 'cancelled'
+    );
+    const salesRevenue = daySales.reduce((sum, sale) => sum + (sale.total_amount || 0), 0);
+    const ordersRevenue = dayOrders.reduce((sum, order) => sum + (order.total_amount || 0), 0);
     return {
       date: format(date, 'MMM dd'),
-      revenue: dayRevenue,
-      transactions: daySales.length
+      revenue: salesRevenue + ordersRevenue,
+      transactions: daySales.length + dayOrders.length
     };
   });
 
@@ -116,12 +127,17 @@ export default function Reports() {
     .sort((a, b) => b.revenue - a.revenue)
     .slice(0, 10);
 
-  // Payment method distribution
+  // Payment method distribution (combining POS sales and online orders)
   const paymentMethods = sales.reduce((acc, sale) => {
     const method = sale.payment_method || 'unknown';
     acc[method] = (acc[method] || 0) + (sale.total_amount || 0);
     return acc;
   }, {});
+  
+  orders.filter(o => o.status !== 'cancelled').forEach(order => {
+    const method = order.payment_method || 'unknown';
+    paymentMethods[method] = (paymentMethods[method] || 0) + (order.total_amount || 0);
+  });
 
   const paymentData = Object.entries(paymentMethods).map(([method, amount]) => ({
     name: method.charAt(0).toUpperCase() + method.slice(1),
@@ -236,7 +252,8 @@ export default function Reports() {
           {/* Financial Statements Tab */}
           <TabsContent value="financial" className="space-y-6">
             <ProfitLossStatement 
-              sales={filteredSales} 
+              sales={filteredSales}
+              orders={filteredOrders}
               expenses={filteredExpenses}
               startDate={startDate}
               endDate={endDate}
@@ -246,11 +263,13 @@ export default function Reports() {
               customers={customers}
               suppliers={suppliers}
               sales={filteredSales}
+              orders={filteredOrders}
               expenses={filteredExpenses}
               asOfDate={endDate}
             />
             <CashFlowStatement 
               sales={filteredSales}
+              orders={filteredOrders}
               expenses={filteredExpenses}
               purchaseOrders={purchaseOrders}
               startDate={startDate}
