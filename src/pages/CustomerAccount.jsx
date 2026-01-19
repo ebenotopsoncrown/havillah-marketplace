@@ -63,6 +63,20 @@ export default function CustomerAccount() {
     enabled: !!user?.email,
   });
 
+  // Real-time subscription for order status updates
+  React.useEffect(() => {
+    if (!user?.email) return;
+
+    const unsubscribe = base44.entities.Order.subscribe((event) => {
+      // Only update if the order belongs to this customer
+      if (event.data?.customer_email === user.email) {
+        queryClient.invalidateQueries({ queryKey: ['customer-orders'] });
+      }
+    });
+
+    return unsubscribe;
+  }, [user?.email, queryClient]);
+
   const cancelOrderMutation = useMutation({
     mutationFn: async (orderId) => {
       return base44.functions.invoke('cancelOrder', {
