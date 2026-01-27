@@ -188,7 +188,7 @@ export default function CustomerStore() {
               />
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">Havillah Marketplace</h1>
-                <p className="text-sm text-gray-600">Quality Wholesale & Retail</p>
+                <p className="text-sm text-gray-600">Your one-stop marketplace for Afro-Asian groceries, fashion, beauty, fabrics & more</p>
               </div>
             </div>
             
