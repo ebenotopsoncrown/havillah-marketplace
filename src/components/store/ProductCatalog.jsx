@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Package } from "lucide-react";
+import { ShoppingCart, Package, Eye } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import ProductDetailsModal from "./ProductDetailsModal";
 
 export default function ProductCatalog({ products, onAddToCart }) {
+  const [selectedProduct, setSelectedProduct] = useState(null);
   if (products.length === 0) {
     return (
       <div className="text-center py-20">
@@ -50,17 +52,41 @@ export default function ProductCatalog({ products, onAddToCart }) {
               <span className="text-xs text-gray-500">{product.unit_type}</span>
             </div>
 
-            <Button
-              onClick={() => onAddToCart(product)}
-              className="w-full bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 h-9 sm:h-10 text-xs sm:text-sm"
+            <div className="flex gap-2">
+              <Button
+                onClick={() => onAddToCart(product)}
+                className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 h-9 sm:h-10 text-xs sm:text-sm"
+              >
+                <ShoppingCart className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">Add to Cart</span>
+                <span className="sm:hidden">Add</span>
+              </Button>
+              <Button
+                onClick={() => setSelectedProduct(product)}
+                variant="outline"
+                className="h-9 sm:h-10 px-2 sm:px-3"
+                title="View details"
+              >
+                <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
+              </Button>
+            </div>
+
+            <button
+              onClick={() => setSelectedProduct(product)}
+              className="w-full text-xs text-green-600 hover:text-green-700 underline mt-2"
             >
-              <ShoppingCart className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-              <span className="hidden sm:inline">Add to Cart</span>
-              <span className="sm:hidden">Add</span>
-            </Button>
+              Click here for full product description
+            </button>
           </div>
         </Card>
       ))}
+
+      <ProductDetailsModal
+        product={selectedProduct}
+        open={!!selectedProduct}
+        onClose={() => setSelectedProduct(null)}
+        onAddToCart={onAddToCart}
+      />
     </div>
   );
 }
