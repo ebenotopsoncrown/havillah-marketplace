@@ -185,7 +185,7 @@ export default function CustomerStore() {
                 <Store className="w-7 h-7 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Coriander Cash & Carry</h1>
+                <h1 className="text-2xl font-bold text-gray-900">Havillah Marketplace</h1>
                 <p className="text-sm text-gray-600">Quality Wholesale & Retail</p>
               </div>
             </div>
@@ -275,7 +275,7 @@ export default function CustomerStore() {
                 <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center">
                   <Store className="w-6 h-6" />
                 </div>
-                <span className="text-xl font-bold">Coriander</span>
+                <span className="text-xl font-bold">Havillah</span>
               </div>
               <p className="text-gray-400 text-sm">
                 Your trusted partner for wholesale and retail ethnic food products in the UK
@@ -301,7 +301,7 @@ export default function CustomerStore() {
                 </p>
                 <p className="flex items-center gap-2">
                   <Mail className="w-4 h-4" />
-                  orders@coriander.co.uk
+                  orders@havillah.co.uk
                 </p>
                 <p className="flex items-center gap-2">
                   <MapPin className="w-4 h-4" />
@@ -322,7 +322,7 @@ export default function CustomerStore() {
           </div>
           
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-            <p>&copy; 2025 Coriander Cash & Carry. All rights reserved.</p>
+            <p>&copy; 2025 Havillah Marketplace. All rights reserved.</p>
             <div className="flex items-center justify-center gap-4 mt-3">
               <Link 
                 to={createPageUrl('PrivacyPolicy')} 
