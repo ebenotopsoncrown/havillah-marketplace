@@ -33,6 +33,7 @@ import SystemDocumentation from './pages/SystemDocumentation';
 import TermsAndConditions from './pages/TermsAndConditions';
 import TestGoogleMapsAPI from './pages/TestGoogleMapsAPI';
 import appInfographic from './pages/appInfographic';
+import Categories from './pages/Categories';
 import __Layout from './Layout.jsx';
 
 
@@ -72,6 +73,7 @@ export const PAGES = {
     "TermsAndConditions": TermsAndConditions,
     "TestGoogleMapsAPI": TestGoogleMapsAPI,
     "appInfographic": appInfographic,
+    "Categories": Categories,
 }
 
 export const pagesConfig = {

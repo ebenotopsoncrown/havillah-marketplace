@@ -60,6 +60,11 @@ const navigationItems = [
     icon: Package,
   },
   {
+    title: "Categories",
+    url: createPageUrl("Categories"),
+    icon: LayoutDashboard,
+  },
+  {
     title: "Sales",
     url: createPageUrl("Sales"),
     icon: Receipt,
