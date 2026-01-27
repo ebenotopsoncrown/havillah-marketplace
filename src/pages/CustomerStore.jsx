@@ -180,32 +180,32 @@ export default function CustomerStore() {
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-4">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4 flex-1">
               <img 
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/49e6f5db7_HavillahMarketplacelogo.jpg" 
                 alt="Havillah Marketplace" 
-                className="h-14 w-auto rounded-lg"
+                className="h-12 w-12 sm:h-14 sm:w-auto rounded-lg object-cover flex-shrink-0"
               />
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">Havillah Marketplace</h1>
-                <p className="text-sm text-gray-600">Your one-stop marketplace for Afro-Asian groceries, fashion, beauty, fabrics & more</p>
+              <div className="flex-1 min-w-0">
+                <h1 className="text-base sm:text-2xl font-bold text-gray-900 leading-tight">Havillah Marketplace</h1>
+                <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 sm:line-clamp-none">Your one-stop marketplace for Afro-Asian groceries, fashion, beauty, fabrics & more</p>
               </div>
             </div>
             
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
               <Link to={createPageUrl('CustomerAccount')}>
-                <Button variant="outline" className="border-2 hover:bg-gray-50">
-                  <User className="w-5 h-5" />
+                <Button variant="outline" className="border-2 hover:bg-gray-50 h-10 w-10 p-0 sm:h-auto sm:w-auto sm:px-4">
+                  <User className="w-4 h-4 sm:w-5 sm:h-5" />
                 </Button>
               </Link>
               <Button
                 onClick={() => setShowCart(true)}
-                className="relative bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800"
+                className="relative bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 h-10 px-3 sm:px-4"
               >
-                <ShoppingCart className="w-5 h-5 mr-2" />
-                Cart
+                <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5 sm:mr-2" />
+                <span className="hidden sm:inline">Cart</span>
                 {cartItemsCount > 0 && (
-                  <Badge className="absolute -top-2 -right-2 bg-orange-500 hover:bg-orange-600">
+                  <Badge className="absolute -top-2 -right-2 bg-orange-500 hover:bg-orange-600 h-5 min-w-[20px] px-1 text-xs flex items-center justify-center">
                     {cartItemsCount}
                   </Badge>
                 )}
