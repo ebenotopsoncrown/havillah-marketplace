@@ -31,7 +31,7 @@ export default function AppInfographic() {
               <Store className="w-10 h-10 text-white" />
             </div>
             <h1 className="text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              Coriander Business Suite
+              Havillah Marketplace
             </h1>
           </div>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -257,7 +257,7 @@ export default function AppInfographic() {
         {/* Footer */}
         <div className="text-center py-6">
           <p className="text-gray-600 mb-2">Built with modern web technologies for scalability and performance</p>
-          <p className="text-sm text-gray-500">© 2026 Coriander Business Suite - All-in-One Retail Management</p>
+          <p className="text-sm text-gray-500">© 2026 Havillah Marketplace - All-in-One Retail Management</p>
         </div>
       </div>
     </div>

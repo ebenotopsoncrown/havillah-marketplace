@@ -135,8 +135,8 @@ export default function Layout({ children, currentPageName }) {
                 <Store className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h2 className="font-bold text-gray-900 text-lg">Coriander</h2>
-                <p className="text-xs text-gray-500">Business Suite</p>
+                <h2 className="font-bold text-gray-900 text-lg">Havillah</h2>
+                <p className="text-xs text-gray-500">Marketplace</p>
               </div>
             </div>
           </SidebarHeader>
@@ -313,7 +313,7 @@ export default function Layout({ children, currentPageName }) {
           <header className="bg-white border-b border-gray-200 px-6 py-4 lg:hidden">
             <div className="flex items-center gap-4">
               <SidebarTrigger className="hover:bg-gray-100 p-2 rounded-lg transition-colors duration-200" />
-              <h1 className="text-xl font-semibold">Coriander Business Suite</h1>
+              <h1 className="text-xl font-semibold">Havillah Marketplace</h1>
             </div>
           </header>
 
