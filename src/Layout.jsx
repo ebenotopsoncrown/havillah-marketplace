@@ -131,13 +131,11 @@ export default function Layout({ children, currentPageName }) {
         <Sidebar className="border-r border-gray-200">
           <SidebarHeader className="border-b border-gray-200 p-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
-                <Store className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h2 className="font-bold text-gray-900 text-lg">Havillah</h2>
-                <p className="text-xs text-gray-500">Marketplace</p>
-              </div>
+              <img 
+                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/49e6f5db7_HavillahMarketplacelogo.jpg" 
+                alt="Havillah Marketplace" 
+                className="h-12 w-auto"
+              />
             </div>
           </SidebarHeader>
           

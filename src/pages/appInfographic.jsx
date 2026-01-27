@@ -27,9 +27,11 @@ export default function AppInfographic() {
         {/* Header */}
         <div className="text-center space-y-4 mb-12">
           <div className="flex items-center justify-center gap-4 mb-4">
-            <div className="w-16 h-16 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-xl">
-              <Store className="w-10 h-10 text-white" />
-            </div>
+            <img 
+              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/49e6f5db7_HavillahMarketplacelogo.jpg" 
+              alt="Havillah Marketplace" 
+              className="h-20 w-auto rounded-xl"
+            />
             <h1 className="text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
               Havillah Marketplace
             </h1>

@@ -181,13 +181,11 @@ export default function CustomerStore() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-4">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-xl flex items-center justify-center shadow-lg">
-                <Store className="w-7 h-7 text-white" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">Havillah Marketplace</h1>
-                <p className="text-sm text-gray-600">Quality Wholesale & Retail</p>
-              </div>
+              <img 
+                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/49e6f5db7_HavillahMarketplacelogo.jpg" 
+                alt="Havillah Marketplace" 
+                className="h-14 w-auto rounded-lg"
+              />
             </div>
             
             <div className="flex items-center gap-3">
@@ -272,10 +270,11 @@ export default function CustomerStore() {
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center">
-                  <Store className="w-6 h-6" />
-                </div>
-                <span className="text-xl font-bold">Havillah</span>
+                <img 
+                  src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/49e6f5db7_HavillahMarketplacelogo.jpg" 
+                  alt="Havillah Marketplace" 
+                  className="h-10 w-auto rounded-lg"
+                />
               </div>
               <p className="text-gray-400 text-sm">
                 Your trusted partner for wholesale and retail ethnic food products in the UK
