@@ -110,7 +110,11 @@ export default function Products() {
     setShowBulkImport(false);
   };
 
-  const lowStockCount = products.filter(p => p.stock_quantity <= (p.reorder_level || 10)).length;
+  const lowStockCount = products.filter(p => {
+    const category = categories.find(c => c.id === p.category_id);
+    const minStock = category?.minimum_stock_level || p.reorder_level || 10;
+    return p.stock_quantity <= minStock;
+  }).length;
   const noBarcodeCount = products.filter(p => !p.barcode).length;
 
   return (

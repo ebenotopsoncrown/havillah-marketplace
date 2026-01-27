@@ -2,6 +2,7 @@ import AccessControlGuide from './pages/AccessControlGuide';
 import AppSettings from './pages/AppSettings';
 import ArchitectureDiagram from './pages/ArchitectureDiagram';
 import BrandAssets from './pages/BrandAssets';
+import Categories from './pages/Categories';
 import ClickAndCollect from './pages/ClickAndCollect';
 import CustomerAccount from './pages/CustomerAccount';
 import CustomerStore from './pages/CustomerStore';
@@ -33,7 +34,6 @@ import SystemDocumentation from './pages/SystemDocumentation';
 import TermsAndConditions from './pages/TermsAndConditions';
 import TestGoogleMapsAPI from './pages/TestGoogleMapsAPI';
 import appInfographic from './pages/appInfographic';
-import Categories from './pages/Categories';
 import __Layout from './Layout.jsx';
 
 
@@ -42,6 +42,7 @@ export const PAGES = {
     "AppSettings": AppSettings,
     "ArchitectureDiagram": ArchitectureDiagram,
     "BrandAssets": BrandAssets,
+    "Categories": Categories,
     "ClickAndCollect": ClickAndCollect,
     "CustomerAccount": CustomerAccount,
     "CustomerStore": CustomerStore,
@@ -73,7 +74,6 @@ export const PAGES = {
     "TermsAndConditions": TermsAndConditions,
     "TestGoogleMapsAPI": TestGoogleMapsAPI,
     "appInfographic": appInfographic,
-    "Categories": Categories,
 }
 
 export const pagesConfig = {

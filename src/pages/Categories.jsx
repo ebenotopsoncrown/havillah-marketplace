@@ -42,6 +42,7 @@ export default function Categories() {
     description: "",
     display_order: 0,
     is_active: true,
+    minimum_stock_level: 10,
   });
 
   const queryClient = useQueryClient();
@@ -83,6 +84,7 @@ export default function Categories() {
       description: "",
       display_order: 0,
       is_active: true,
+      minimum_stock_level: 10,
     });
   };
 
@@ -101,6 +103,7 @@ export default function Categories() {
       description: category.description || "",
       display_order: category.display_order || 0,
       is_active: category.is_active ?? true,
+      minimum_stock_level: category.minimum_stock_level || 10,
     });
     setShowForm(true);
   };
@@ -127,6 +130,7 @@ export default function Categories() {
                 description: "",
                 display_order: 0,
                 is_active: true,
+                minimum_stock_level: 10,
               });
               setShowForm(true);
             }}
@@ -156,6 +160,7 @@ export default function Categories() {
                 <TableRow>
                   <TableHead>Name</TableHead>
                   <TableHead>Description</TableHead>
+                  <TableHead>Min Stock</TableHead>
                   <TableHead>Display Order</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
@@ -164,13 +169,13 @@ export default function Categories() {
               <TableBody>
                 {isLoading ? (
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center py-8 text-gray-500">
+                    <TableCell colSpan={6} className="text-center py-8 text-gray-500">
                       Loading categories...
                     </TableCell>
                   </TableRow>
                 ) : filteredCategories.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center py-8 text-gray-500">
+                    <TableCell colSpan={6} className="text-center py-8 text-gray-500">
                       No categories found. Add your first category to get started!
                     </TableCell>
                   </TableRow>
@@ -181,6 +186,7 @@ export default function Categories() {
                       <TableCell className="text-gray-600">
                         {category.description || "-"}
                       </TableCell>
+                      <TableCell>{category.minimum_stock_level || 10}</TableCell>
                       <TableCell>{category.display_order || 0}</TableCell>
                       <TableCell>
                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${
@@ -251,6 +257,16 @@ export default function Categories() {
                 value={formData.display_order}
                 onChange={(e) => setFormData({ ...formData, display_order: parseInt(e.target.value) || 0 })}
               />
+            </div>
+            <div>
+              <Label>Minimum Stock Level</Label>
+              <Input
+                type="number"
+                value={formData.minimum_stock_level}
+                onChange={(e) => setFormData({ ...formData, minimum_stock_level: parseInt(e.target.value) || 10 })}
+                placeholder="10"
+              />
+              <p className="text-xs text-gray-500 mt-1">Low stock alerts trigger when products reach this level</p>
             </div>
           </div>
           <DialogFooter>
