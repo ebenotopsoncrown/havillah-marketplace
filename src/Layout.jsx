@@ -122,10 +122,10 @@ export default function Layout({ children, currentPageName }) {
     <SidebarProvider>
       <style>{`
         :root {
-          --primary: 221 83% 53%;
-          --primary-foreground: 210 40% 98%;
-          --background: 35 20% 98%;
-        }
+              --primary: 142 71% 45%;
+              --primary-foreground: 0 0% 100%;
+              --background: 35 20% 98%;
+            }
       `}</style>
       <div className="min-h-screen flex w-full bg-[#FAFAF9]">
         <Sidebar className="border-r border-gray-200">

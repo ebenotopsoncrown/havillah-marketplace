@@ -166,7 +166,7 @@ export default function CustomerStore() {
   return (
     <div className="min-h-screen bg-white">
       {/* Top Banner */}
-      <div className="bg-gradient-to-r from-indigo-600 to-indigo-800 text-white text-center py-3 text-sm">
+      <div className="bg-gradient-to-r from-green-600 to-green-800 text-white text-center py-3 text-sm">
         <p className="flex items-center justify-center gap-2">
           <Clock className="w-4 h-4" />
           <span className="font-medium">Free Delivery on Orders Over £50</span>
@@ -186,6 +186,10 @@ export default function CustomerStore() {
                 alt="Havillah Marketplace" 
                 className="h-14 w-auto rounded-lg"
               />
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">Havillah Marketplace</h1>
+                <p className="text-sm text-gray-600">Quality Wholesale & Retail</p>
+              </div>
             </div>
             
             <div className="flex items-center gap-3">
@@ -196,7 +200,7 @@ export default function CustomerStore() {
               </Link>
               <Button
                 onClick={() => setShowCart(true)}
-                className="relative bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800"
+                className="relative bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800"
               >
                 <ShoppingCart className="w-5 h-5 mr-2" />
                 Cart
@@ -217,7 +221,7 @@ export default function CustomerStore() {
                 placeholder="Search for products..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-12 h-12 text-base border-2 border-gray-300 focus:border-indigo-500"
+                className="pl-12 h-12 text-base border-2 border-gray-300 focus:border-green-500"
               />
             </div>
           </div>

@@ -32,7 +32,7 @@ export default function AppInfographic() {
               alt="Havillah Marketplace" 
               className="h-20 w-auto rounded-xl"
             />
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            <h1 className="text-5xl font-bold bg-gradient-to-r from-green-600 to-green-700 bg-clip-text text-transparent">
               Havillah Marketplace
             </h1>
           </div>
@@ -56,9 +56,9 @@ export default function AppInfographic() {
         </div>
 
         {/* System Architecture */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 border-2 border-indigo-100">
+        <div className="bg-white rounded-2xl shadow-xl p-8 border-2 border-green-100">
           <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-            <Database className="w-8 h-8 text-indigo-600" />
+            <Database className="w-8 h-8 text-green-600" />
             System Architecture
           </h2>
           <div className="grid grid-cols-4 gap-6">
@@ -80,7 +80,7 @@ export default function AppInfographic() {
 
             {/* Application Layer */}
             <div className="col-span-2 space-y-3">
-              <div className="bg-gradient-to-br from-indigo-500 to-purple-600 text-white p-4 rounded-xl text-center">
+              <div className="bg-gradient-to-br from-green-500 to-green-600 text-white p-4 rounded-xl text-center">
                 <Settings className="w-8 h-8 mx-auto mb-2" />
                 <h3 className="font-bold">Application Layer</h3>
               </div>
@@ -119,9 +119,9 @@ export default function AppInfographic() {
         </div>
 
         {/* Core Modules */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 border-2 border-purple-100">
+        <div className="bg-white rounded-2xl shadow-xl p-8 border-2 border-green-100">
           <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-            <Package className="w-8 h-8 text-purple-600" />
+            <Package className="w-8 h-8 text-green-600" />
             Core Modules & Features
           </h2>
           <div className="grid md:grid-cols-4 gap-4">
@@ -201,8 +201,8 @@ export default function AppInfographic() {
           </div>
 
           {/* Real-time Updates */}
-          <div className="mt-6 bg-gradient-to-r from-indigo-50 to-purple-50 border-2 border-indigo-200 rounded-xl p-4">
-            <div className="flex items-center justify-center gap-3 text-indigo-900">
+          <div className="mt-6 bg-gradient-to-r from-green-50 to-green-100 border-2 border-green-200 rounded-xl p-4">
+            <div className="flex items-center justify-center gap-3 text-green-900">
               <Bell className="w-5 h-5" />
               <p className="font-semibold">Real-time notifications & status updates throughout the entire flow</p>
             </div>
@@ -229,7 +229,7 @@ export default function AppInfographic() {
         </div>
 
         {/* Key Benefits */}
-        <div className="bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl shadow-xl p-8 text-white">
+        <div className="bg-gradient-to-br from-green-600 to-green-700 rounded-2xl shadow-xl p-8 text-white">
           <h2 className="text-3xl font-bold mb-6 text-center">Key Benefits</h2>
           <div className="grid md:grid-cols-3 gap-6">
             <div className="text-center">
