@@ -85,16 +85,16 @@ export default function AppInfographic() {
                 <h3 className="font-bold">Application Layer</h3>
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <div className="bg-indigo-50 p-3 rounded-lg text-sm text-center">
+                <div className="bg-green-50 p-3 rounded-lg text-sm text-center">
                   <p className="font-semibold">Order Processing</p>
                 </div>
-                <div className="bg-indigo-50 p-3 rounded-lg text-sm text-center">
+                <div className="bg-green-50 p-3 rounded-lg text-sm text-center">
                   <p className="font-semibold">Inventory Control</p>
                 </div>
-                <div className="bg-purple-50 p-3 rounded-lg text-sm text-center">
+                <div className="bg-green-50 p-3 rounded-lg text-sm text-center">
                   <p className="font-semibold">Payment Gateway</p>
                 </div>
-                <div className="bg-purple-50 p-3 rounded-lg text-sm text-center">
+                <div className="bg-green-50 p-3 rounded-lg text-sm text-center">
                   <p className="font-semibold">Route Optimization</p>
                 </div>
               </div>
