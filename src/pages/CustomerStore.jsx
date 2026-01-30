@@ -163,6 +163,7 @@ export default function CustomerStore() {
 
   const cartItemsCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
+
   return (
     <div className="min-h-screen bg-white">
       {/* Top Banner */}
