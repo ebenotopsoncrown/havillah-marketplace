@@ -373,9 +373,9 @@ export default function CustomerStore() {
         cart={cart}
         onPlaceOrder={handlePlaceOrder}
         processing={createOrderMutation.isPending}
-        />
+      />
 
-        <CookieConsent />
-        </div>
-        );
-        }
+      <CookieConsent />
+    </div>
+  );
+}
