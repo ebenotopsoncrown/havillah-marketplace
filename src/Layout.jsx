@@ -20,7 +20,8 @@ import {
   UserPlus,
   Shield,
   Globe,
-  QrCode
+  QrCode,
+  Layers
 } from "lucide-react";
 import {
   Sidebar,
