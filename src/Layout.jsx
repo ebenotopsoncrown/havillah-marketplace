@@ -86,6 +86,11 @@ const navigationItems = [
     icon: Store,
   },
   {
+    title: "Service Requests",
+    url: createPageUrl("ServiceRequests"),
+    icon: Settings,
+  },
+  {
     title: "Purchases",
     url: createPageUrl("Purchases"),
     icon: ClipboardList,
@@ -117,7 +122,7 @@ export default function Layout({ children, currentPageName }) {
   const [settingsOpen, setSettingsOpen] = React.useState(false);
   
   // Pages without sidebar (public-facing)
-  const publicPages = ["CustomerStore", "Home", "StaffPortal", "CustomerAccount"];
+  const publicPages = ["CustomerStore", "Home", "StaffPortal", "CustomerAccount", "RepairService", "MyRepairRequests", "MyRepairJobs"];
   const isPublicPage = publicPages.includes(currentPageName);
   
   if (isPublicPage) {
