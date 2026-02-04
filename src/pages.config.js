@@ -84,6 +84,7 @@ import SystemDocumentation from './pages/SystemDocumentation';
 import TermsAndConditions from './pages/TermsAndConditions';
 import TestGoogleMapsAPI from './pages/TestGoogleMapsAPI';
 import appInfographic from './pages/appInfographic';
+import ServiceBusinessArchitecture from './pages/ServiceBusinessArchitecture';
 import __Layout from './Layout.jsx';
 
 
@@ -125,6 +126,7 @@ export const PAGES = {
     "TermsAndConditions": TermsAndConditions,
     "TestGoogleMapsAPI": TestGoogleMapsAPI,
     "appInfographic": appInfographic,
+    "ServiceBusinessArchitecture": ServiceBusinessArchitecture,
 }
 
 export const pagesConfig = {
