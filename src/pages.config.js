@@ -86,6 +86,8 @@ import TestGoogleMapsAPI from './pages/TestGoogleMapsAPI';
 import appInfographic from './pages/appInfographic';
 import RepairService from './pages/RepairService';
 import ServiceRequests from './pages/ServiceRequests';
+import MyRepairRequests from './pages/MyRepairRequests';
+import MyRepairJobs from './pages/MyRepairJobs';
 import __Layout from './Layout.jsx';
 
 
@@ -129,6 +131,8 @@ export const PAGES = {
     "appInfographic": appInfographic,
     "RepairService": RepairService,
     "ServiceRequests": ServiceRequests,
+    "MyRepairRequests": MyRepairRequests,
+    "MyRepairJobs": MyRepairJobs,
 }
 
 export const pagesConfig = {
