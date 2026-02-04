@@ -201,21 +201,12 @@ export default function CustomerAccount() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Quick Actions */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <Link to={createPageUrl('CustomerStore')}>
             <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-indigo-500">
               <CardContent className="p-6 text-center">
                 <Store className="w-8 h-8 text-indigo-600 mx-auto mb-2" />
                 <p className="font-semibold text-gray-900">Continue Shopping</p>
-              </CardContent>
-            </Card>
-          </Link>
-
-          <Link to={createPageUrl('MyRepairRequests')}>
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-purple-500">
-              <CardContent className="p-6 text-center">
-                <Package className="w-8 h-8 text-purple-600 mx-auto mb-2" />
-                <p className="font-semibold text-gray-900">My Repairs</p>
               </CardContent>
             </Card>
           </Link>

@@ -250,11 +250,6 @@ export default function CustomerStore() {
                 {cat.name}
               </Button>
             ))}
-            <Link to={createPageUrl('RepairService')}>
-              <Button variant="outline" className="whitespace-nowrap bg-gradient-to-r from-purple-600 to-indigo-600 text-white border-0">
-                📱 Repairs & Service
-              </Button>
-            </Link>
           </div>
         </div>
       </div>
@@ -297,7 +292,7 @@ export default function CustomerStore() {
                 <li>All Products</li>
                 <li>Wholesale Prices</li>
                 <li>Bulk Orders</li>
-                <li><Link to={createPageUrl('RepairService')} className="hover:text-white">Repairs & Service</Link></li>
+                <li>Special Offers</li>
               </ul>
             </div>
             
