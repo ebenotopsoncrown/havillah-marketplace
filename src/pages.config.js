@@ -79,11 +79,13 @@ import StaffLogin from './pages/StaffLogin';
 import StaffPortal from './pages/StaffPortal';
 import StoreQRCode from './pages/StoreQRCode';
 import Suppliers from './pages/Suppliers';
+import SystemArchitecture from './pages/SystemArchitecture';
 import SystemDocumentation from './pages/SystemDocumentation';
 import TermsAndConditions from './pages/TermsAndConditions';
 import TestGoogleMapsAPI from './pages/TestGoogleMapsAPI';
 import appInfographic from './pages/appInfographic';
-import SystemArchitecture from './pages/SystemArchitecture';
+import RepairService from './pages/RepairService';
+import ServiceRequests from './pages/ServiceRequests';
 import __Layout from './Layout.jsx';
 
 
@@ -120,11 +122,13 @@ export const PAGES = {
     "StaffPortal": StaffPortal,
     "StoreQRCode": StoreQRCode,
     "Suppliers": Suppliers,
+    "SystemArchitecture": SystemArchitecture,
     "SystemDocumentation": SystemDocumentation,
     "TermsAndConditions": TermsAndConditions,
     "TestGoogleMapsAPI": TestGoogleMapsAPI,
     "appInfographic": appInfographic,
-    "SystemArchitecture": SystemArchitecture,
+    "RepairService": RepairService,
+    "ServiceRequests": ServiceRequests,
 }
 
 export const pagesConfig = {
