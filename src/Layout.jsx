@@ -259,6 +259,15 @@ export default function Layout({ children, currentPageName }) {
                           </SidebarMenuButton>
                           <SidebarMenuButton asChild>
                             <Link 
+                              to={createPageUrl("ServiceBusinessArchitecture")} 
+                              className="flex items-center gap-3 px-3 py-2 hover:bg-purple-50 hover:text-purple-700 transition-colors duration-200 rounded-lg text-sm"
+                            >
+                              <Layers className="w-4 h-4" />
+                              <span>Service Business Architecture</span>
+                            </Link>
+                          </SidebarMenuButton>
+                          <SidebarMenuButton asChild>
+                            <Link 
                               to={createPageUrl("HardwareGuide")} 
                               className="flex items-center gap-3 px-3 py-2 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200 rounded-lg text-sm"
                             >
