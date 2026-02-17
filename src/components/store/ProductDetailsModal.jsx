@@ -56,7 +56,14 @@ export default function ProductDetailsModal({ product, open, onClose, onAddToCar
             <div className="relative aspect-square bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center overflow-hidden">
               {images.length > 0 ? (
                 <>
-                  <img src={images[currentImageIndex]} alt={product.name} className="w-full h-full object-cover" />
+                  <img 
+                    src={images[currentImageIndex]} 
+                    alt={product.name} 
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                    crossOrigin="anonymous"
+                    onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling && (e.target.nextSibling.style.display = 'flex'); }}
+                  />
                   {images.length > 1 && (
                     <>
                       <button
