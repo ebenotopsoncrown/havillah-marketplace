@@ -14,6 +14,11 @@ export default function ProductDetailsModal({ product, open, onClose, onAddToCar
   const [quantity, setQuantity] = useState(1);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  React.useEffect(() => {
+    setCurrentImageIndex(0);
+    setQuantity(1);
+  }, [product?.id]);
+
   if (!product) return null;
 
   const price = product.wholesale_price || product.retail_price;
