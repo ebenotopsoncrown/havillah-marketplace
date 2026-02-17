@@ -21,7 +21,9 @@ export default function ProductCatalog({ products, onAddToCart }) {
       {products.map(product => (
         <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow duration-300 border border-gray-200 scale-[0.6] sm:scale-100 origin-top-left">
           <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center overflow-hidden">
-            {product.image_url ? (
+            {(product.image_urls && product.image_urls.length > 0) ? (
+              <img src={product.image_urls[0]} alt={product.name} className="w-full h-full object-cover" />
+            ) : product.image_url ? (
               <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" />
             ) : (
               <span className="text-3xl sm:text-4xl font-bold text-gray-300">{product.name?.[0]}</span>
