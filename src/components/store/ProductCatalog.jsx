@@ -26,9 +26,9 @@ export default function ProductCatalog({ products, onAddToCart }) {
         >
           <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center overflow-hidden">
             {(product.image_urls && product.image_urls.length > 0) ? (
-              <img src={product.image_urls[0]} alt={product.name} className="w-full h-full object-cover" />
+              <img src={product.image_urls[0]} alt={product.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
             ) : product.image_url ? (
-              <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" />
+              <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
             ) : (
               <span className="text-3xl sm:text-4xl font-bold text-gray-300">{product.name?.[0]}</span>
             )}
