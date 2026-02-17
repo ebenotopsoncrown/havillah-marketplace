@@ -19,7 +19,11 @@ export default function ProductCatalog({ products, onAddToCart }) {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-4">
       {products.map(product => (
-        <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow duration-300 border border-gray-200 scale-[0.6] sm:scale-100 origin-top-left">
+        <Card 
+          key={product.id} 
+          className="overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-200 scale-[0.78] sm:scale-100 origin-top-left cursor-pointer hover:scale-[0.82] sm:hover:scale-105"
+          onClick={() => setSelectedProduct(product)}
+        >
           <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center overflow-hidden">
             {(product.image_urls && product.image_urls.length > 0) ? (
               <img src={product.image_urls[0]} alt={product.name} className="w-full h-full object-cover" />
@@ -56,14 +60,20 @@ export default function ProductCatalog({ products, onAddToCart }) {
 
             <div className="flex gap-1 sm:gap-2">
               <Button
-                onClick={() => onAddToCart(product)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onAddToCart(product);
+                }}
                 className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 h-8 sm:h-9 text-xs"
               >
                 <ShoppingCart className="w-3 h-3 mr-1" />
                 <span className="hidden sm:inline">Add</span>
               </Button>
               <Button
-                onClick={() => setSelectedProduct(product)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedProduct(product);
+                }}
                 variant="outline"
                 className="h-8 sm:h-9 px-2"
                 title="View details"
@@ -72,12 +82,9 @@ export default function ProductCatalog({ products, onAddToCart }) {
               </Button>
             </div>
 
-            <button
-              onClick={() => setSelectedProduct(product)}
-              className="w-full text-xs text-green-600 hover:text-green-700 underline mt-1 sm:mt-2"
-            >
-              Details
-            </button>
+            <div className="text-xs text-gray-500 text-center mt-1 sm:mt-2">
+              Click card for details
+            </div>
           </div>
         </Card>
       ))}
