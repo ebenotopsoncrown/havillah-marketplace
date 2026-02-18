@@ -155,5 +155,6 @@ export default function Customers() {
         processing={createCustomerMutation.isPending || updateCustomerMutation.isPending}
       />
     </div>
+    </AdminGuard>
   );
 }

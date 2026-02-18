@@ -232,5 +232,6 @@ export default function Expenses() {
         processing={createExpenseMutation.isPending || updateExpenseMutation.isPending}
       />
     </div>
+    </AdminGuard>
   );
 }

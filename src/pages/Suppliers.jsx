@@ -145,5 +145,6 @@ export default function Suppliers() {
         processing={createSupplierMutation.isPending || updateSupplierMutation.isPending}
       />
     </div>
+    </AdminGuard>
   );
 }

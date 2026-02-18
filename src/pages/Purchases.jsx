@@ -199,5 +199,6 @@ export default function Purchases() {
         products={products}
       />
     </div>
+    </AdminGuard>
   );
 }
