@@ -53,6 +53,7 @@ export default function Dashboard() {
   };
 
   return (
+    <AdminGuard>
     <>
       <div className="p-6 lg:p-8 bg-gradient-to-br from-[#FAFAF9] to-gray-50 min-h-screen">
         <div className="max-w-[1600px] mx-auto space-y-8">
@@ -123,5 +124,6 @@ export default function Dashboard() {
         type={drilldownModal.type}
       />
     </>
+    </AdminGuard>
   );
 }
