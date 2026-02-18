@@ -107,7 +107,7 @@ export default function PrivacyPolicy() {
                   <li><strong>Object:</strong> Object to processing for direct marketing</li>
                 </ul>
                 <p className="mt-4 text-gray-700">
-                  To exercise these rights, contact us at: <a href="mailto:privacy@coriander.co.uk" className="text-indigo-600 underline">privacy@coriander.co.uk</a>
+                  To exercise these rights, contact us at: <a href="mailto:info@havillahmarketplace.com" className="text-indigo-600 underline">info@havillahmarketplace.com</a>
                 </p>
               </CardContent>
             </Card>
@@ -159,10 +159,10 @@ export default function PrivacyPolicy() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-2 text-gray-700">
-                  <p><strong>Data Controller:</strong> Coriander Cash & Carry</p>
-                  <p><strong>Address:</strong> 846-848 Wimborne Rd, Bournemouth BH9 2DS, UK</p>
-                  <p><strong>Email:</strong> <a href="mailto:privacy@coriander.co.uk" className="text-indigo-600 underline">privacy@coriander.co.uk</a></p>
-                  <p><strong>Phone:</strong> 020 XXXX XXXX</p>
+                  <p><strong>Data Controller:</strong> Havillah Marketplace</p>
+                  <p><strong>Address:</strong> Flat 2, 30 The Triangle, BH2 5SE Bournemouth, United Kingdom</p>
+                  <p><strong>Email:</strong> <a href="mailto:info@havillahmarketplace.com" className="text-indigo-600 underline">info@havillahmarketplace.com</a></p>
+                  <p><strong>Phone:</strong> +4407389170496</p>
                   <p className="mt-4">
                     <strong>ICO Registration:</strong> [Your ICO registration number once registered]
                   </p>
