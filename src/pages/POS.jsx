@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
+import AdminGuard from "../components/AdminGuard";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 import POSHeader from "../components/pos/POSHeader";
