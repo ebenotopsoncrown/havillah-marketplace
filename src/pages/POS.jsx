@@ -202,5 +202,6 @@ export default function POS() {
         processing={processSaleMutation.isPending}
       />
     </div>
+    </AdminGuard>
   );
 }
