@@ -105,6 +105,7 @@ export default function Orders() {
   const completedOrders = orders.filter(o => o.status === 'delivered');
 
   return (
+    <AdminGuard>
     <div className="p-6 lg:p-8 bg-gray-50 min-h-screen">
       <div className="max-w-[1800px] mx-auto space-y-6">
         <div>

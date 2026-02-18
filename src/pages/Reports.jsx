@@ -148,6 +148,7 @@ export default function Reports() {
   const COLORS = ['#4F46E5', '#10B981', '#F59E0B', '#EF4444'];
 
   return (
+    <AdminGuard>
     <div className="p-6 lg:p-8 bg-gray-50 min-h-screen">
       <div className="max-w-[1800px] mx-auto space-y-6">
         <div className="flex justify-between items-start">

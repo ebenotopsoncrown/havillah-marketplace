@@ -49,6 +49,7 @@ export default function Purchases() {
   const receivedPOs = purchaseOrders.filter(po => po.status === 'received');
 
   return (
+    <AdminGuard>
     <div className="p-6 lg:p-8 bg-gray-50 min-h-screen">
       <div className="max-w-[1800px] mx-auto space-y-6">
         <div className="flex justify-between items-start">

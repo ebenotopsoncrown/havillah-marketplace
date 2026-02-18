@@ -69,6 +69,7 @@ export default function Customers() {
   const totalCreditBalance = customers.reduce((sum, c) => sum + (c.credit_balance || 0), 0);
 
   return (
+    <AdminGuard>
     <div className="p-6 lg:p-8 bg-gray-50 min-h-screen">
       <div className="max-w-[1800px] mx-auto space-y-6">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">

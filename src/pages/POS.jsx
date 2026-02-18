@@ -135,6 +135,7 @@ export default function POS() {
   };
 
   return (
+    <AdminGuard>
     <div className="h-screen flex flex-col bg-gray-50">
       <POSHeader />
       
