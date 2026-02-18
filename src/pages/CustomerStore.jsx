@@ -352,7 +352,7 @@ export default function CustomerStore() {
                 My Data
               </Link>
               <Link 
-                to={createPageUrl('Dashboard')} 
+                to={createPageUrl('StaffLogin')} 
                 className="text-gray-500 hover:text-gray-300 underline text-xs"
               >
                 Staff Login
