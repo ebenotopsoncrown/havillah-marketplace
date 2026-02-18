@@ -67,8 +67,7 @@ export default function Suppliers() {
   const totalPayables = suppliers.reduce((sum, s) => sum + (s.account_balance || 0), 0);
 
   return (
-    <AdminGuard>
-    <div className="p-6 lg:p-8 bg-gray-50 min-h-screen">
+    <AdminGuard><div className="p-6 lg:p-8 bg-gray-50 min-h-screen">
       <div className="max-w-[1800px] mx-auto space-y-6">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
           <div>
@@ -144,7 +143,6 @@ export default function Suppliers() {
         onSave={handleSave}
         processing={createSupplierMutation.isPending || updateSupplierMutation.isPending}
       />
-    </div>
-    </AdminGuard>
+    </div></AdminGuard>
   );
 }

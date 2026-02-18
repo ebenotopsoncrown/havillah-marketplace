@@ -81,8 +81,7 @@ export default function Expenses() {
   }).reduce((sum, exp) => sum + (exp.amount || 0), 0);
 
   return (
-    <AdminGuard>
-    <div className="p-6 lg:p-8 bg-gray-50 min-h-screen">
+    <AdminGuard><div className="p-6 lg:p-8 bg-gray-50 min-h-screen">
       <div className="max-w-[1800px] mx-auto space-y-6">
         <div className="flex justify-between items-start">
           <div>
@@ -231,7 +230,6 @@ export default function Expenses() {
         onSave={handleSave}
         processing={createExpenseMutation.isPending || updateExpenseMutation.isPending}
       />
-    </div>
-    </AdminGuard>
+    </div></AdminGuard>
   );
 }

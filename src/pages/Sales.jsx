@@ -56,8 +56,7 @@ export default function Sales() {
   };
 
   return (
-    <AdminGuard>
-    <div className="p-6 lg:p-8 bg-gray-50 min-h-screen">
+    <AdminGuard><div className="p-6 lg:p-8 bg-gray-50 min-h-screen">
       <div className="max-w-[1800px] mx-auto space-y-6">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Sales History</h1>
@@ -288,7 +287,6 @@ export default function Sales() {
           </Card>
         )}
       </div>
-    </div>
-    </AdminGuard>
+    </div></AdminGuard>
   );
 }
