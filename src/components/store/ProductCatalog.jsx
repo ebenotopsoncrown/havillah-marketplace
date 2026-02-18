@@ -17,11 +17,11 @@ export default function ProductCatalog({ products, onAddToCart }) {
   }
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-4">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
       {products.map(product => (
         <Card 
           key={product.id} 
-          className="overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-200 scale-[0.78] sm:scale-100 origin-top-left cursor-pointer hover:scale-[0.82] sm:hover:scale-105"
+          className="overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-200 cursor-pointer sm:hover:scale-105"
           onClick={() => setSelectedProduct(product)}
         >
           <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center overflow-hidden">
