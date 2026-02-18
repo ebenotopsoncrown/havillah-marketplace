@@ -173,7 +173,7 @@ export default function CustomerStore() {
           <span className="font-medium">Free Delivery on Orders Over £50</span>
           <span className="mx-2">|</span>
           <Phone className="w-4 h-4" />
-          <span>Call Us: 020 XXXX XXXX</span>
+          <span>Call Us: +4407389170496</span>
         </p>
       </div>
 
@@ -287,13 +287,18 @@ export default function CustomerStore() {
             </div>
             
             <div>
-              <h3 className="font-bold mb-4">Shop</h3>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li>All Products</li>
-                <li>Wholesale Prices</li>
-                <li>Bulk Orders</li>
-                <li>Special Offers</li>
-              </ul>
+              <h3 className="font-bold mb-4">Want to chat with us?</h3>
+              <div className="space-y-2 text-sm text-gray-400">
+                <p>Message us on WhatsApp:</p>
+                <a 
+                  href="https://wa.me/4407389170996" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-green-400 hover:text-green-300 font-semibold"
+                >
+                  +4407389170996
+                </a>
+              </div>
             </div>
             
             <div>
@@ -301,15 +306,15 @@ export default function CustomerStore() {
               <div className="space-y-3 text-sm text-gray-400">
                 <p className="flex items-center gap-2">
                   <Phone className="w-4 h-4" />
-                  020 XXXX XXXX
+                  +4407389170496
                 </p>
                 <p className="flex items-center gap-2">
                   <Mail className="w-4 h-4" />
-                  orders@havillah.co.uk
+                  info@havillahmarketplace.com
                 </p>
                 <p className="flex items-center gap-2">
                   <MapPin className="w-4 h-4" />
-                  Bournemouth, UK
+                  Flat 2, 30 The Triangle, BH2 5SE Bournemouth, UK
                 </p>
               </div>
             </div>

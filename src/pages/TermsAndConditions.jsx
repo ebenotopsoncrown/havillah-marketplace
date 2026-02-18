@@ -23,7 +23,7 @@ export default function TermsAndConditions() {
               </CardHeader>
               <CardContent className="text-gray-700">
                 <p>
-                  By accessing and using Coriander Cash & Carry services, you agree to be bound by 
+                  By accessing and using Havillah Marketplace services, you agree to be bound by 
                   these Terms and Conditions and our Privacy Policy. If you do not agree, please do not use our services.
                 </p>
               </CardContent>
@@ -34,7 +34,7 @@ export default function TermsAndConditions() {
                 <CardTitle>2. Services</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3 text-gray-700">
-                <p>Coriander Cash & Carry provides:</p>
+                <p>Havillah Marketplace provides:</p>
                 <ul className="list-disc list-inside space-y-1 ml-4">
                   <li>Retail and wholesale food products</li>
                   <li>Home delivery services</li>
@@ -158,7 +158,7 @@ export default function TermsAndConditions() {
               <CardContent className="space-y-3 text-gray-700">
                 <p>
                   All content on our website and platform, including logos, images, and text, 
-                  is the property of Coriander Cash & Carry and protected by copyright laws.
+                  is the property of Havillah Marketplace and protected by copyright laws.
                 </p>
               </CardContent>
             </Card>
@@ -192,10 +192,10 @@ export default function TermsAndConditions() {
                 <CardTitle>12. Contact Information</CardTitle>
               </CardHeader>
               <CardContent className="text-gray-700">
-                <p className="mb-2"><strong>Company:</strong> Coriander Cash & Carry</p>
-                <p className="mb-2"><strong>Address:</strong> 846-848 Wimborne Rd, Bournemouth BH9 2DS, UK</p>
-                <p className="mb-2"><strong>Email:</strong> <a href="mailto:info@coriander.co.uk" className="text-indigo-600 underline">info@coriander.co.uk</a></p>
-                <p className="mb-2"><strong>Phone:</strong> 020 XXXX XXXX</p>
+                <p className="mb-2"><strong>Company:</strong> Havillah Marketplace</p>
+                <p className="mb-2"><strong>Address:</strong> Flat 2, 30 The Triangle, BH2 5SE Bournemouth, United Kingdom</p>
+                <p className="mb-2"><strong>Email:</strong> <a href="mailto:info@havillahmarketplace.com" className="text-indigo-600 underline">info@havillahmarketplace.com</a></p>
+                <p className="mb-2"><strong>Phone:</strong> +4407389170496</p>
                 <p className="mt-4 text-sm text-gray-600">
                   For complaints or concerns, please contact us using the details above. 
                   We aim to respond within 48 hours.

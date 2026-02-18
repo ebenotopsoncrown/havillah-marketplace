@@ -75,6 +75,7 @@ import Purchases from './pages/Purchases';
 import Reports from './pages/Reports';
 import Sales from './pages/Sales';
 import SecurityDashboard from './pages/SecurityDashboard';
+import ServiceBusinessArchitecture from './pages/ServiceBusinessArchitecture';
 import StaffLogin from './pages/StaffLogin';
 import StaffPortal from './pages/StaffPortal';
 import StoreQRCode from './pages/StoreQRCode';
@@ -84,7 +85,6 @@ import SystemDocumentation from './pages/SystemDocumentation';
 import TermsAndConditions from './pages/TermsAndConditions';
 import TestGoogleMapsAPI from './pages/TestGoogleMapsAPI';
 import appInfographic from './pages/appInfographic';
-import ServiceBusinessArchitecture from './pages/ServiceBusinessArchitecture';
 import __Layout from './Layout.jsx';
 
 
@@ -117,6 +117,7 @@ export const PAGES = {
     "Reports": Reports,
     "Sales": Sales,
     "SecurityDashboard": SecurityDashboard,
+    "ServiceBusinessArchitecture": ServiceBusinessArchitecture,
     "StaffLogin": StaffLogin,
     "StaffPortal": StaffPortal,
     "StoreQRCode": StoreQRCode,
@@ -126,7 +127,6 @@ export const PAGES = {
     "TermsAndConditions": TermsAndConditions,
     "TestGoogleMapsAPI": TestGoogleMapsAPI,
     "appInfographic": appInfographic,
-    "ServiceBusinessArchitecture": ServiceBusinessArchitecture,
 }
 
 export const pagesConfig = {
