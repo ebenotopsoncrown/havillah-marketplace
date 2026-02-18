@@ -320,5 +320,6 @@ export default function Orders() {
         </AlertDialog>
       </div>
     </div>
+    </AdminGuard>
   );
 }
