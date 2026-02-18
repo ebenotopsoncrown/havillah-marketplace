@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
+import AdminGuard from "../components/AdminGuard";
 import { useQuery } from "@tanstack/react-query";
 import { TrendingUp, Package, ShoppingCart, Users } from "lucide-react";
 
