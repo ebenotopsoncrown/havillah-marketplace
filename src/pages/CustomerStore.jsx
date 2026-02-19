@@ -360,6 +360,13 @@ export default function CustomerStore() {
       />
 
       <CookieConsent />
+
+      {showImageSearch && (
+        <ImageSearchModal
+          onClose={() => setShowImageSearch(false)}
+          onResults={(query) => setSearchTerm(query)}
+        />
+      )}
     </div>
   );
 }
