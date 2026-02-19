@@ -2,46 +2,10 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-const DEFAULT_SLIDES = [
-  {
-    id: 'default-1',
-    image_url: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200&q=80',
-    title: 'Fresh Afro-Asian Groceries',
-    subtitle: 'Delivered to your door across the UK',
-    cta_text: 'Shop Now',
-    cta_link: '',
-    overlay_opacity: 0.4,
-    is_active: true,
-    display_order: 0
-  },
-  {
-    id: 'default-2',
-    image_url: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=1200&q=80',
-    title: 'Wholesale & Retail',
-    subtitle: 'Best prices on bulk orders over £50',
-    cta_text: 'View Deals',
-    cta_link: '',
-    overlay_opacity: 0.35,
-    is_active: true,
-    display_order: 1
-  },
-  {
-    id: 'default-3',
-    image_url: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80',
-    title: 'Spices, Sauces & More',
-    subtitle: 'Authentic ingredients from around the world',
-    cta_text: 'Explore',
-    cta_link: '',
-    overlay_opacity: 0.4,
-    is_active: true,
-    display_order: 2
-  }
-];
-
 export default function HeroSlider({ slides: propSlides, settings = {} }) {
-  const slides = (propSlides && propSlides.length > 0)
+  const slides = propSlides
     ? [...propSlides].filter(s => s.is_active).sort((a, b) => (a.display_order || 0) - (b.display_order || 0))
-    : DEFAULT_SLIDES;
+    : [];
 
   const {
     animation_type = 'fade',
