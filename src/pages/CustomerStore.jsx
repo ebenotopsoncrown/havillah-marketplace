@@ -257,8 +257,8 @@ export default function CustomerStore() {
           </div>
 
           {/* Search Bar with voice + image buttons */}
-          <div className="pb-3 md:pb-[13px] flex items-center gap-2">
-            <div className="relative flex-1">
+          <div className="pb-3 md:pb-[15px] flex items-center gap-2">
+            <div className="relative flex-1 md:flex-none md:w-[64%]">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
                 type="text"
