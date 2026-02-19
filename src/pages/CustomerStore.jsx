@@ -79,10 +79,26 @@ export default function CustomerStore() {
   const activeProducts = products.filter(p => p.is_active && (p.stock_quantity - (p.reserved_quantity || 0)) > 0);
 
   const filteredProducts = activeProducts.filter(product => {
-    const matchesSearch = searchTerm === "" || 
-      product.name?.toLowerCase().includes(searchTerm.toLowerCase());
+    if (searchTerm !== "") {
+      const query = searchTerm.toLowerCase().replace(/\s+/g, "");
+      const name = (product.name || "").toLowerCase();
+      const nameNoSpaces = name.replace(/\s+/g, "");
+      const brand = (product.brand || "").toLowerCase();
+      const brandNoSpaces = brand.replace(/\s+/g, "");
+
+      // Match if: normal includes, or merged words match merged name/brand
+      const matchesSearch =
+        name.includes(searchTerm.toLowerCase()) ||
+        brand.includes(searchTerm.toLowerCase()) ||
+        nameNoSpaces.includes(query) ||
+        brandNoSpaces.includes(query) ||
+        // Also split query into words and check each word appears in name
+        searchTerm.toLowerCase().split(/\s+/).every(w => name.includes(w) || brand.includes(w));
+
+      if (!matchesSearch) return false;
+    }
     const matchesCategory = selectedCategory === "all" || product.category_id === selectedCategory;
-    return matchesSearch && matchesCategory;
+    return matchesCategory;
   });
 
   const addToCart = (product, quantity = 1) => {
