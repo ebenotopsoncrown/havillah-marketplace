@@ -206,29 +206,30 @@ export default function CustomerStore() {
       {/* ── Sticky Header ── */}
       <header className="bg-white sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between py-[13px] md:py-3">
+          {/* Top bar — taller on mobile */}
+          <div className="flex items-center justify-between py-4 md:py-3">
             {/* Logo + Name */}
-            <div className="flex items-center gap-2 flex-1 min-w-0">
+            <div className="flex items-center gap-2.5 flex-1 min-w-0">
               <img
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/49e6f5db7_HavillahMarketplacelogo.jpg"
                 alt="Havillah Marketplace"
-                className="h-10 w-10 rounded-lg object-cover flex-shrink-0"
+                className="h-11 w-11 md:h-10 md:w-10 rounded-lg object-cover flex-shrink-0"
               />
               <span className="text-base font-bold text-gray-900 truncate leading-tight">Havillah Marketplace</span>
             </div>
 
             {/* Actions */}
-            <div className="flex items-center gap-2 flex-shrink-0">
+            <div className="flex items-center gap-2.5 flex-shrink-0">
               <Link to={createPageUrl('CustomerAccount')}>
-                <button className="w-9 h-9 flex items-center justify-center rounded-full border border-gray-200 hover:bg-gray-50 transition-colors">
-                  <User className="w-4 h-4 text-gray-600" />
+                <button className="w-10 h-10 md:w-9 md:h-9 flex items-center justify-center rounded-full border border-gray-200 hover:bg-gray-50 transition-colors">
+                  <User className="w-5 h-5 md:w-4 md:h-4 text-gray-600" />
                 </button>
               </Link>
               <button
                 onClick={() => setShowCart(true)}
-                className="relative flex items-center gap-1.5 bg-green-700 hover:bg-green-800 text-white text-sm font-medium px-3 h-9 rounded-full transition-colors"
+                className="relative flex items-center gap-1.5 bg-green-700 hover:bg-green-800 text-white text-sm font-medium px-3 h-10 md:h-9 rounded-full transition-colors"
               >
-                <ShoppingCart className="w-4 h-4" />
+                <ShoppingCart className="w-5 h-5 md:w-4 md:h-4" />
                 <span className="hidden sm:inline">Cart</span>
                 {cartItemsCount > 0 && (
                   <span className="absolute -top-1.5 -right-1.5 bg-orange-500 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">
@@ -239,9 +240,9 @@ export default function CustomerStore() {
             </div>
           </div>
 
-          {/* Search Bar */}
-          <div className="pb-3">
-            <div className="relative">
+          {/* Search Bar with voice + image buttons */}
+          <div className="pb-3 flex items-center gap-2">
+            <div className="relative flex-1">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
                 type="text"
@@ -251,6 +252,22 @@ export default function CustomerStore() {
                 className="w-full pl-10 pr-4 h-11 bg-[#F2F2F2] rounded-2xl text-sm text-gray-800 placeholder-gray-400 outline-none focus:ring-2 focus:ring-green-500/30 shadow-sm"
               />
             </div>
+            {/* Voice search */}
+            <button
+              onClick={handleVoiceSearch}
+              className={`flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-xl transition-colors ${isListening ? 'bg-red-500 text-white animate-pulse' : 'bg-green-600 text-white hover:bg-green-700'}`}
+              title="Search by voice"
+            >
+              <Mic className="w-5 h-5" />
+            </button>
+            {/* Image / barcode search */}
+            <button
+              onClick={() => setShowImageSearch(true)}
+              className="flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-xl bg-green-600 text-white hover:bg-green-700 transition-colors"
+              title="Search by image"
+            >
+              <ScanLine className="w-5 h-5" />
+            </button>
           </div>
         </div>
       </header>
