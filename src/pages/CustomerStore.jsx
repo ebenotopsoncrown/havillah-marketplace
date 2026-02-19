@@ -213,9 +213,9 @@ export default function CustomerStore() {
               <img
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/49e6f5db7_HavillahMarketplacelogo.jpg"
                 alt="Havillah Marketplace"
-                className="h-11 w-11 md:h-10 md:w-10 rounded-lg object-cover flex-shrink-0"
+                className="h-11 w-11 md:h-11 md:w-11 rounded-lg object-cover flex-shrink-0"
               />
-              <span className="text-base font-bold text-gray-900 truncate leading-tight">Havillah Marketplace</span>
+              <span className="text-base md:text-[17px] font-bold text-gray-900 truncate leading-tight">Havillah Marketplace</span>
             </div>
 
             {/* Actions */}
