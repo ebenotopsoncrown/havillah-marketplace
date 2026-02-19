@@ -227,7 +227,7 @@ export default function CustomerStore() {
               </Link>
               <button
                 onClick={() => setShowCart(true)}
-                className="relative flex items-center gap-1.5 bg-green-700 hover:bg-green-800 text-white text-sm font-medium px-3 h-10 md:h-9 rounded-full transition-colors"
+                className="relative flex items-center gap-1.5 bg-green-700 hover:bg-green-800 text-white text-sm md:text-[15px] font-medium px-3 md:px-4 h-10 md:h-10 rounded-full transition-colors"
               >
                 <ShoppingCart className="w-5 h-5 md:w-4 md:h-4" />
                 <span className="hidden sm:inline">Cart</span>
