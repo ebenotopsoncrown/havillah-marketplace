@@ -84,7 +84,18 @@ Your job is to find the BEST matching product from the catalogue above.
           <div className="flex flex-col items-center gap-3 py-8">
             {preview && <img src={preview} className="w-24 h-24 object-cover rounded-xl" alt="preview" />}
             <Loader2 className="w-6 h-6 animate-spin text-green-600" />
-            <p className="text-sm text-gray-500">Identifying product…</p>
+            <p className="text-sm text-gray-500">{loadingMsg}</p>
+          </div>
+        ) : noMatch ? (
+          <div className="flex flex-col items-center gap-3 py-6">
+            {preview && <img src={preview} className="w-24 h-24 object-cover rounded-xl" alt="preview" />}
+            <p className="text-sm text-gray-600 text-center">We couldn't find a matching product. Try a clearer photo showing the label or packaging.</p>
+            <button
+              onClick={() => { setNoMatch(false); setPreview(null); }}
+              className="w-full bg-green-600 hover:bg-green-700 text-white rounded-xl px-4 py-3 font-medium transition-colors"
+            >
+              Try Again
+            </button>
           </div>
         ) : (
           <div className="flex flex-col gap-3">
