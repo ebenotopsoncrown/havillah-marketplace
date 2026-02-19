@@ -145,25 +145,27 @@ export default function HeroSlider({ slides: propSlides, settings = {} }) {
             />
             {/* Text content */}
             {(s.title || s.subtitle || s.cta_text) && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center md:items-start md:text-left md:px-16 md:max-w-[60%]">
-                {s.title && (
-                  <h2 className="text-white font-bold text-2xl md:text-4xl leading-tight mb-2 drop-shadow-lg">
-                    {s.title}
-                  </h2>
-                )}
-                {s.subtitle && (
-                  <p className="text-white/90 text-sm md:text-lg mb-4 drop-shadow">
-                    {s.subtitle}
-                  </p>
-                )}
+              <div className="absolute inset-0 flex flex-col justify-end pb-6 px-6 md:justify-center md:items-start md:text-left md:px-16 md:max-w-[60%] md:pb-0">
+                <div className="text-center md:text-left">
+                  {s.title && (
+                    <h2 className="text-white font-bold text-2xl md:text-4xl leading-tight mb-2 drop-shadow-lg">
+                      {s.title}
+                    </h2>
+                  )}
+                  {s.subtitle && (
+                    <p className="text-white/90 text-sm md:text-lg mb-4 drop-shadow">
+                      {s.subtitle}
+                    </p>
+                  )}
+                </div>
                 {s.cta_text && (
-                  <a href={s.cta_link || '#'}>
-                    <button
-                      className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2.5 rounded-xl shadow-lg hover:-translate-y-0.5 transition-all duration-200 text-sm md:text-base"
-                    >
-                      {s.cta_text}
-                    </button>
-                  </a>
+                  <div className="flex justify-end md:justify-start">
+                    <a href={s.cta_link || '#'}>
+                      <button className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2.5 rounded-xl shadow-lg hover:-translate-y-0.5 transition-all duration-200 text-sm md:text-base">
+                        {s.cta_text}
+                      </button>
+                    </a>
+                  </div>
                 )}
               </div>
             )}
