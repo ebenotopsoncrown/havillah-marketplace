@@ -184,7 +184,7 @@ export default function CustomerStore() {
       {/* ── Sticky Header ── */}
       <header className="bg-white sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between py-[13px]">
+          <div className="flex items-center justify-between py-3">
             {/* Logo + Name */}
             <div className="flex items-center gap-2 flex-1 min-w-0">
               <img
