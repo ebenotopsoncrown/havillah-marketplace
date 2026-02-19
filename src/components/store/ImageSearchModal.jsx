@@ -25,6 +25,7 @@ export default function ImageSearchModal({ onClose, onResults, onAddToCart }) {
       const response = await base44.functions.invoke('imageSearch', { image_url: file_url });
       const found = response.data?.matches || [];
       setMatches(found);
+      setDetected(response.data?.detected || null);
     } catch (e) {
       console.error(e);
       setMatches([]);
