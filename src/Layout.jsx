@@ -284,6 +284,15 @@ export default function Layout({ children, currentPageName }) {
                               <span>Security Dashboard</span>
                             </Link>
                           </SidebarMenuButton>
+                          <SidebarMenuButton asChild>
+                            <Link 
+                              to={createPageUrl("HeroManager")} 
+                              className="flex items-center gap-3 px-3 py-2 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 rounded-lg text-sm"
+                            >
+                              <SlidersHorizontal className="w-4 h-4" />
+                              <span>Hero Slider Manager</span>
+                            </Link>
+                          </SidebarMenuButton>
                         </div>
                       </CollapsibleContent>
                     </SidebarMenuItem>
