@@ -5,6 +5,7 @@ import { Download, Printer, FileText, Copy, Check, Image, File, ExternalLink } f
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import CorianderLogo, { LetterheadLogo, DocumentFooter, LOGO_URL, BUSINESS_INFO } from "../components/branding/CorianderLogo";
+import HavillahLogoSVG, { downloadHavillahSVG } from "../components/branding/HavillahLogoSVG";
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 
