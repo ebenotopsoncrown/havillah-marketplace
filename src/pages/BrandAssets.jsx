@@ -80,6 +80,62 @@ export default function BrandAssets() {
           </Button>
         </div>
 
+        {/* SVG Logo Download */}
+        <Card className="shadow-lg border-2 border-green-200">
+          <CardHeader className="border-b bg-green-50 flex flex-row items-center justify-between">
+            <div>
+              <CardTitle className="text-green-800">Havillah Marketplace Logo (SVG)</CardTitle>
+              <p className="text-sm text-green-600 mt-1">High-quality vector logo with transparent background</p>
+            </div>
+            <Button
+              onClick={downloadHavillahSVG}
+              className="bg-green-700 hover:bg-green-800 text-white gap-2"
+            >
+              <Download className="w-4 h-4" />
+              Download SVG
+            </Button>
+          </CardHeader>
+          <CardContent className="p-8">
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* On light background */}
+              <div className="text-center">
+                <div className="bg-white border-2 border-gray-200 rounded-xl p-8 mb-3 flex items-center justify-center min-h-[160px]">
+                  <HavillahLogoSVG width={280} />
+                </div>
+                <p className="text-sm font-medium text-gray-700">Light / White Background</p>
+                <p className="text-xs text-gray-500">Transparent background SVG</p>
+              </div>
+              {/* On dark background */}
+              <div className="text-center">
+                <div className="bg-gray-900 border-2 border-gray-700 rounded-xl p-8 mb-3 flex items-center justify-center min-h-[160px]">
+                  <HavillahLogoSVG width={280} />
+                </div>
+                <p className="text-sm font-medium text-gray-700">Dark Background</p>
+                <p className="text-xs text-gray-500">Transparent — works on any colour</p>
+              </div>
+            </div>
+
+            {/* Size variants */}
+            <div className="mt-8 pt-6 border-t">
+              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">Size Variants</h3>
+              <div className="flex flex-wrap items-end gap-8 bg-gray-50 rounded-xl p-6">
+                <div className="text-center">
+                  <HavillahLogoSVG width={100} />
+                  <p className="text-xs text-gray-500 mt-2">Small</p>
+                </div>
+                <div className="text-center">
+                  <HavillahLogoSVG width={200} />
+                  <p className="text-xs text-gray-500 mt-2">Medium</p>
+                </div>
+                <div className="text-center">
+                  <HavillahLogoSVG width={320} />
+                  <p className="text-xs text-gray-500 mt-2">Large</p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Official Logo */}
         <Card className="shadow-lg">
           <CardHeader className="border-b">
