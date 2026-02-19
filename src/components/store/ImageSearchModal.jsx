@@ -7,6 +7,7 @@ export default function ImageSearchModal({ onClose, onResults, onAddToCart }) {
   const [loadingMsg, setLoadingMsg] = useState("Analysing image…");
   const [preview, setPreview] = useState(null);
   const [matches, setMatches] = useState(null); // null = not searched yet
+  const [detected, setDetected] = useState(null);
   const fileRef = useRef();
   const cameraRef = useRef();
 
