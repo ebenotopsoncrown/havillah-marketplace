@@ -37,6 +37,7 @@ export default function ImageSearchModal({ onClose, onResults, onAddToCart }) {
   const handleReset = () => {
     setPreview(null);
     setMatches(null);
+    setDetected(null);
   };
 
   return (
