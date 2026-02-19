@@ -223,29 +223,29 @@ export default function CustomerStore() {
       <header className="bg-white sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4">
           {/* Top bar — taller on mobile */}
-          <div className="flex items-center justify-between py-4 md:py-[13px]">
+          <div className="flex items-center justify-between py-4 md:py-[15px]">
             {/* Logo + Name */}
             <div className="flex items-center gap-2.5 flex-1 min-w-0">
               <img
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/49e6f5db7_HavillahMarketplacelogo.jpg"
                 alt="Havillah Marketplace"
-                className="h-11 w-11 md:h-11 md:w-11 rounded-lg object-cover flex-shrink-0"
+                className="h-11 w-11 md:h-[49px] md:w-[49px] rounded-lg object-cover flex-shrink-0"
               />
-              <span className="text-base md:text-[17px] font-bold text-gray-900 truncate leading-tight">Havillah Marketplace</span>
+              <span className="text-base md:text-[19px] font-bold text-gray-900 truncate leading-tight">Havillah Marketplace</span>
             </div>
 
             {/* Actions */}
             <div className="flex items-center gap-2.5 flex-shrink-0">
               <Link to={createPageUrl('CustomerAccount')}>
-                <button className="w-10 h-10 md:w-[40px] md:h-[40px] flex items-center justify-center rounded-full border border-gray-200 hover:bg-gray-50 transition-colors">
-                  <User className="w-5 h-5 md:w-[18px] md:h-[18px] text-gray-600" />
+                <button className="w-10 h-10 md:w-[44px] md:h-[44px] flex items-center justify-center rounded-full border border-gray-200 hover:bg-gray-50 transition-colors">
+                  <User className="w-5 h-5 md:w-[20px] md:h-[20px] text-gray-600" />
                 </button>
               </Link>
               <button
                 onClick={() => setShowCart(true)}
-                className="relative flex items-center gap-1.5 bg-green-700 hover:bg-green-800 text-white text-sm md:text-[15px] font-medium px-3 md:px-4 h-10 md:h-10 rounded-full transition-colors"
+                className="relative flex items-center gap-1.5 bg-green-700 hover:bg-green-800 text-white text-sm md:text-[16px] font-medium px-3 md:px-5 h-10 md:h-[44px] rounded-full transition-colors"
               >
-                <ShoppingCart className="w-5 h-5 md:w-[18px] md:h-[18px]" />
+                <ShoppingCart className="w-5 h-5 md:w-[20px] md:h-[20px]" />
                 <span className="hidden sm:inline">Cart</span>
                 {cartItemsCount > 0 && (
                   <span className="absolute -top-1.5 -right-1.5 bg-orange-500 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">
