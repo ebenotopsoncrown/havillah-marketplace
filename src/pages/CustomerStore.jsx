@@ -381,6 +381,7 @@ export default function CustomerStore() {
         <ImageSearchModal
           onClose={() => setShowImageSearch(false)}
           onResults={(query) => setSearchTerm(query)}
+          onAddToCart={addToCart}
         />
       )}
     </div>
