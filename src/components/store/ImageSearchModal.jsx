@@ -1,127 +1,141 @@
 import React, { useState, useRef } from "react";
-import { Camera, X, Upload, Loader2 } from "lucide-react";
+import { Camera, X, Upload, Loader2, ShoppingCart } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 
-export default function ImageSearchModal({ onClose, onResults }) {
+export default function ImageSearchModal({ onClose, onResults, onAddToCart }) {
   const [loading, setLoading] = useState(false);
-  const [loadingMsg, setLoadingMsg] = useState("Identifying product…");
+  const [loadingMsg, setLoadingMsg] = useState("Analysing image…");
   const [preview, setPreview] = useState(null);
-  const [noMatch, setNoMatch] = useState(false);
+  const [matches, setMatches] = useState(null); // null = not searched yet
   const fileRef = useRef();
   const cameraRef = useRef();
 
   const handleFile = async (file) => {
     if (!file) return;
     setPreview(URL.createObjectURL(file));
-    setNoMatch(false);
+    setMatches(null);
     setLoading(true);
+
     try {
-      // 1. Upload image + fetch products in parallel
       setLoadingMsg("Uploading image…");
-      const [{ file_url }, products] = await Promise.all([
-        base44.integrations.Core.UploadFile({ file }),
-        base44.entities.Product.list()
-      ]);
+      const { file_url } = await base44.integrations.Core.UploadFile({ file });
 
-      // 2. Build a compact catalogue list for the LLM
-      setLoadingMsg("Matching against your products…");
-      const activeProducts = products.filter(p => p.is_active);
-      const catalogue = activeProducts.map(p => ({
-        id: p.id,
-        name: p.name,
-        brand: p.brand || ""
-      }));
-
-      const catalogueText = catalogue.map(p => `- ${p.name}${p.brand ? ` (${p.brand})` : ""}`).join("\n");
-
-      const result = await base44.integrations.Core.InvokeLLM({
-        prompt: `You are a product matching assistant for a grocery store app.
-
-Here is our full product catalogue:
-${catalogueText}
-
-Look carefully at the product in the attached image — examine its packaging, label, brand name, colour and any visible text.
-
-Your job is to find the BEST matching product from the catalogue above.
-- If you can find a match (even partial — e.g. same brand or same product type), return it.
-- Return the shortest search term (1-3 words) that would uniquely find that product from the catalogue.
-- If there is absolutely no match at all, return an empty string for best_match.`,
-        file_urls: [file_url],
-        response_json_schema: {
-          type: "object",
-          properties: {
-            best_match: { type: "string", description: "The product name or brand from the catalogue that best matches the image, or empty string if no match" },
-            confidence: { type: "string", enum: ["high", "medium", "low", "none"] }
-          }
-        }
-      });
-
-      const match = (result.best_match || "").trim();
-      if (match && result.confidence !== "none") {
-        onResults(match);
-        onClose();
-      } else {
-        setNoMatch(true);
-        setLoading(false);
-      }
+      setLoadingMsg("Visually comparing against your products…");
+      const response = await base44.functions.invoke('imageSearch', { image_url: file_url });
+      const found = response.data?.matches || [];
+      setMatches(found);
     } catch (e) {
       console.error(e);
+      setMatches([]);
+    } finally {
       setLoading(false);
     }
   };
 
+  const handleReset = () => {
+    setPreview(null);
+    setMatches(null);
+  };
+
   return (
     <div className="fixed inset-0 z-[100] bg-black/60 flex items-end md:items-center justify-center p-4" onClick={onClose}>
-      <div className="bg-white rounded-2xl w-full max-w-sm p-5 shadow-xl" onClick={e => e.stopPropagation()}>
-        <div className="flex items-center justify-between mb-4">
+      <div className="bg-white rounded-2xl w-full max-w-sm shadow-xl overflow-hidden" onClick={e => e.stopPropagation()}>
+        {/* Header */}
+        <div className="flex items-center justify-between px-5 pt-5 pb-4 border-b border-gray-100">
           <h2 className="font-bold text-gray-900 text-base">Search by Image</h2>
           <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        {loading ? (
-          <div className="flex flex-col items-center gap-3 py-8">
-            {preview && <img src={preview} className="w-24 h-24 object-cover rounded-xl" alt="preview" />}
-            <Loader2 className="w-6 h-6 animate-spin text-green-600" />
-            <p className="text-sm text-gray-500">{loadingMsg}</p>
-          </div>
-        ) : noMatch ? (
-          <div className="flex flex-col items-center gap-3 py-6">
-            {preview && <img src={preview} className="w-24 h-24 object-cover rounded-xl" alt="preview" />}
-            <p className="text-sm text-gray-600 text-center">We couldn't find a matching product. Try a clearer photo showing the label or packaging.</p>
-            <button
-              onClick={() => { setNoMatch(false); setPreview(null); }}
-              className="w-full bg-green-600 hover:bg-green-700 text-white rounded-xl px-4 py-3 font-medium transition-colors"
-            >
-              Try Again
-            </button>
-          </div>
-        ) : (
-          <div className="flex flex-col gap-3">
-            <p className="text-sm text-gray-500 mb-1">Take a photo or upload an image of the product you're looking for.</p>
+        <div className="p-5">
+          {/* Loading state */}
+          {loading && (
+            <div className="flex flex-col items-center gap-3 py-8">
+              {preview && <img src={preview} className="w-28 h-28 object-cover rounded-xl shadow" alt="preview" />}
+              <Loader2 className="w-6 h-6 animate-spin text-green-600 mt-1" />
+              <p className="text-sm text-gray-500 text-center">{loadingMsg}</p>
+            </div>
+          )}
 
-            {/* Camera capture (mobile) */}
-            <button
-              onClick={() => cameraRef.current.click()}
-              className="flex items-center gap-3 w-full bg-green-600 hover:bg-green-700 text-white rounded-xl px-4 py-3 font-medium transition-colors"
-            >
-              <Camera className="w-5 h-5" />
-              Open Camera
-            </button>
-            <input ref={cameraRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={e => handleFile(e.target.files[0])} />
+          {/* Results */}
+          {!loading && matches !== null && (
+            <div>
+              {preview && (
+                <div className="flex items-center gap-3 mb-4">
+                  <img src={preview} className="w-14 h-14 object-cover rounded-lg shadow flex-shrink-0" alt="your photo" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-800">Your photo</p>
+                    <p className="text-xs text-gray-500">{matches.length > 0 ? `${matches.length} match${matches.length > 1 ? 'es' : ''} found` : 'No matches found'}</p>
+                  </div>
+                </div>
+              )}
 
-            {/* Gallery upload */}
-            <button
-              onClick={() => fileRef.current.click()}
-              className="flex items-center gap-3 w-full border border-gray-200 hover:bg-gray-50 text-gray-700 rounded-xl px-4 py-3 font-medium transition-colors"
-            >
-              <Upload className="w-5 h-5" />
-              Upload from Gallery
-            </button>
-            <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={e => handleFile(e.target.files[0])} />
-          </div>
-        )}
+              {matches.length > 0 ? (
+                <div className="flex flex-col gap-3 max-h-72 overflow-y-auto pr-1">
+                  {matches.map((product) => (
+                    <div key={product.id} className="flex items-center gap-3 p-2.5 rounded-xl border border-gray-100 hover:border-green-200 hover:bg-green-50/30 transition-colors">
+                      {product.image_urls?.[0] ? (
+                        <img src={product.image_urls[0]} alt={product.name} className="w-14 h-14 object-cover rounded-lg flex-shrink-0" />
+                      ) : (
+                        <div className="w-14 h-14 bg-gray-100 rounded-lg flex-shrink-0 flex items-center justify-center text-gray-400 text-xs">No img</div>
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-gray-900 truncate">{product.name}</p>
+                        {product.brand && <p className="text-xs text-gray-500 truncate">{product.brand}</p>}
+                        <p className="text-sm font-bold text-green-700 mt-0.5">£{(product.retail_price || 0).toFixed(2)}</p>
+                      </div>
+                      {onAddToCart && (
+                        <button
+                          onClick={() => { onAddToCart(product); onClose(); }}
+                          className="flex-shrink-0 w-9 h-9 bg-green-600 hover:bg-green-700 text-white rounded-full flex items-center justify-center transition-colors"
+                        >
+                          <ShoppingCart className="w-4 h-4" />
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="py-6 text-center">
+                  <p className="text-sm text-gray-500">No matching products found. Try a clearer photo showing the label or packaging.</p>
+                </div>
+              )}
+
+              <button
+                onClick={handleReset}
+                className="mt-4 w-full border border-gray-200 hover:bg-gray-50 text-gray-700 rounded-xl px-4 py-2.5 text-sm font-medium transition-colors"
+              >
+                Try Another Image
+              </button>
+            </div>
+          )}
+
+          {/* Initial state - pick source */}
+          {!loading && matches === null && (
+            <div className="flex flex-col gap-3">
+              <p className="text-sm text-gray-500 mb-1">Take a photo or upload an image — we'll find exact or similar products.</p>
+
+              <button
+                onClick={() => cameraRef.current.click()}
+                className="flex items-center gap-3 w-full bg-green-600 hover:bg-green-700 text-white rounded-xl px-4 py-3 font-medium transition-colors"
+              >
+                <Camera className="w-5 h-5" />
+                Open Camera
+              </button>
+              <input ref={cameraRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={e => handleFile(e.target.files[0])} />
+
+              <button
+                onClick={() => fileRef.current.click()}
+                className="flex items-center gap-3 w-full border border-gray-200 hover:bg-gray-50 text-gray-700 rounded-xl px-4 py-3 font-medium transition-colors"
+              >
+                <Upload className="w-5 h-5" />
+                Upload from Gallery
+              </button>
+              <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={e => handleFile(e.target.files[0])} />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
