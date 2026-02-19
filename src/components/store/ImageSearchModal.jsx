@@ -70,6 +70,7 @@ export default function ImageSearchModal({ onClose, onResults, onAddToCart }) {
                   <div>
                     <p className="text-sm font-medium text-gray-800">Your photo</p>
                     <p className="text-xs text-gray-500">{matches.length > 0 ? `${matches.length} match${matches.length > 1 ? 'es' : ''} found` : 'No matches found'}</p>
+                  {detected && <p className="text-xs text-green-700 mt-0.5">Detected: {detected.product_type}{detected.color ? ` · ${detected.color}` : ''}{detected.pattern && detected.pattern !== 'plain' ? ` · ${detected.pattern}` : ''}</p>}
                   </div>
                 </div>
               )}
