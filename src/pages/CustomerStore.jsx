@@ -33,6 +33,18 @@ export default function CustomerStore() {
     queryFn: () => base44.entities.Category.list(),
   });
 
+  const { data: heroSlides = [] } = useQuery({
+    queryKey: ['hero-slides'],
+    queryFn: () => base44.entities.HeroSlide.list('display_order'),
+  });
+
+  const { data: heroSettingsArr = [] } = useQuery({
+    queryKey: ['hero-settings'],
+    queryFn: () => base44.entities.HeroSettings.list(),
+  });
+
+  const heroSettings = heroSettingsArr[0] || {};
+
   const createOrderMutation = useMutation({
     mutationFn: async (orderData) => {
       const order = await base44.entities.Order.create(orderData.order);
