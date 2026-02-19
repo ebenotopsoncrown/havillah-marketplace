@@ -207,7 +207,7 @@ export default function CustomerStore() {
       <header className="bg-white sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4">
           {/* Top bar — taller on mobile */}
-          <div className="flex items-center justify-between py-4 md:py-3">
+          <div className="flex items-center justify-between py-4 md:py-[13px]">
             {/* Logo + Name */}
             <div className="flex items-center gap-2.5 flex-1 min-w-0">
               <img
