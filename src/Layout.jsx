@@ -5,7 +5,6 @@ import {
   LayoutDashboard,
   ShoppingCart,
   Package,
-  FileText,
   ShoppingBag,
   Users,
   TruckIcon,
@@ -21,7 +20,8 @@ import {
   Shield,
   Globe,
   QrCode,
-  Layers
+  Layers,
+  SlidersHorizontal
 } from "lucide-react";
 import {
   Sidebar,
