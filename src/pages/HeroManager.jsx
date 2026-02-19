@@ -224,6 +224,16 @@ export default function HeroManager() {
     queryFn: () => base44.entities.HeroSettings.list()
   });
 
+  const { data: categories = [] } = useQuery({
+    queryKey: ['categories'],
+    queryFn: () => base44.entities.Category.list()
+  });
+
+  const updateCategory = useMutation({
+    mutationFn: ({ id, data }) => base44.entities.Category.update(id, data),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['categories'] })
+  });
+
   const settings = settingsArr[0] || DEFAULT_SETTINGS;
 
   const createSlide = useMutation({
