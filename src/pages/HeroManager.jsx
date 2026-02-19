@@ -212,6 +212,7 @@ export default function HeroManager() {
   const [editingSlide, setEditingSlide] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [settingsForm, setSettingsForm] = useState(null);
+  const [editingCategory, setEditingCategory] = useState(null);
 
   const { data: slides = [] } = useQuery({
     queryKey: ['hero-slides'],
