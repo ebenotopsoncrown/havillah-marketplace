@@ -7,10 +7,94 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import AdminGuard from "../components/AdminGuard";
 import {
-  Plus, Trash2, Pencil, GripVertical, Eye, EyeOff,
-  Image, Settings, ChevronUp, ChevronDown, Save, X, Upload
+  Plus, Trash2, Pencil, Eye, EyeOff,
+  Image, Settings, ChevronUp, ChevronDown, Save, X, Upload, LayoutGrid
 } from 'lucide-react';
 import HeroSlider from "../components/store/HeroSlider";
+
+const BG_COLOR_OPTIONS = [
+  { label: 'Green', value: 'bg-green-100' },
+  { label: 'Orange', value: 'bg-orange-100' },
+  { label: 'Purple', value: 'bg-purple-100' },
+  { label: 'Blue', value: 'bg-blue-100' },
+  { label: 'Pink', value: 'bg-pink-100' },
+  { label: 'Yellow', value: 'bg-yellow-100' },
+  { label: 'Teal', value: 'bg-teal-100' },
+  { label: 'Red', value: 'bg-red-100' },
+];
+
+function CategoryIconModal({ category, onSave, onClose }) {
+  const [iconUrl, setIconUrl] = useState(category.icon_url || '');
+  const [bgColor, setBgColor] = useState(category.bg_color || 'bg-green-100');
+  const [uploading, setUploading] = useState(false);
+
+  const handleUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setUploading(true);
+    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    setIconUrl(file_url);
+    setUploading(false);
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md">
+        <div className="flex items-center justify-between p-5 border-b">
+          <h2 className="text-lg font-bold">Edit Category Icon — {category.name}</h2>
+          <button onClick={onClose}><X className="w-5 h-5 text-gray-400" /></button>
+        </div>
+        <div className="p-5 space-y-5">
+          {/* Preview */}
+          <div className="flex justify-center">
+            <div className={`w-20 h-20 rounded-full flex items-center justify-center text-3xl overflow-hidden ${bgColor}`}>
+              {iconUrl ? <img src={iconUrl} alt={category.name} className="w-full h-full object-cover rounded-full" /> : '🛒'}
+            </div>
+          </div>
+
+          {/* Icon upload/URL */}
+          <div>
+            <label className="text-sm font-semibold text-gray-700 mb-1 block">Icon Image</label>
+            <div className="flex gap-2">
+              <Input placeholder="Paste image URL..." value={iconUrl} onChange={e => setIconUrl(e.target.value)} className="flex-1" />
+              <label className="cursor-pointer">
+                <input type="file" accept="image/*" className="hidden" onChange={handleUpload} />
+                <Button variant="outline" className="gap-1 pointer-events-none" disabled={uploading}>
+                  <Upload className="w-4 h-4" />
+                  {uploading ? '...' : 'Upload'}
+                </Button>
+              </label>
+            </div>
+            {iconUrl && (
+              <button onClick={() => setIconUrl('')} className="text-xs text-red-500 mt-1 hover:underline">Remove image (use emoji)</button>
+            )}
+          </div>
+
+          {/* Background colour */}
+          <div>
+            <label className="text-sm font-semibold text-gray-700 mb-2 block">Background Colour</label>
+            <div className="flex flex-wrap gap-2">
+              {BG_COLOR_OPTIONS.map(opt => (
+                <button
+                  key={opt.value}
+                  onClick={() => setBgColor(opt.value)}
+                  className={`w-8 h-8 rounded-full border-2 ${opt.value} ${bgColor === opt.value ? 'border-gray-800 scale-110' : 'border-transparent'} transition-all`}
+                  title={opt.label}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="p-5 border-t flex gap-2 justify-end">
+          <Button variant="outline" onClick={onClose}>Cancel</Button>
+          <Button className="bg-green-700 hover:bg-green-800" onClick={() => onSave({ icon_url: iconUrl, bg_color: bgColor })}>
+            <Save className="w-4 h-4 mr-1" /> Save
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const DEFAULT_SETTINGS = {
   animation_type: 'fade',
