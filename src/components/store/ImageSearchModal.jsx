@@ -88,6 +88,9 @@ export default function ImageSearchModal({ onClose, onResults, onAddToCart }) {
                         <p className="text-sm font-semibold text-gray-900 truncate">{product.name}</p>
                         {product.brand && <p className="text-xs text-gray-500 truncate">{product.brand}</p>}
                         <p className="text-sm font-bold text-green-700 mt-0.5">£{(product.retail_price || 0).toFixed(2)}</p>
+                        {product.similarity_score >= 40 && (
+                          <p className="text-xs text-blue-600 mt-0.5">{product.similarity_score}% match</p>
+                        )}
                       </div>
                       {onAddToCart && (
                         <button
