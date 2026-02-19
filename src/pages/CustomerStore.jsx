@@ -241,7 +241,7 @@ export default function CustomerStore() {
           </div>
 
           {/* Search Bar with voice + image buttons */}
-          <div className="pb-3 flex items-center gap-2">
+          <div className="pb-3 md:pb-[13px] flex items-center gap-2">
             <div className="relative flex-1">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
@@ -249,13 +249,13 @@ export default function CustomerStore() {
                 placeholder="Search products..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 h-11 bg-[#F2F2F2] rounded-2xl text-sm text-gray-800 placeholder-gray-400 outline-none focus:ring-2 focus:ring-green-500/30 shadow-sm"
+                className="w-full pl-10 pr-4 h-11 md:h-12 bg-[#F2F2F2] rounded-2xl text-sm text-gray-800 placeholder-gray-400 outline-none focus:ring-2 focus:ring-green-500/30 shadow-sm"
               />
             </div>
             {/* Voice search */}
             <button
               onClick={handleVoiceSearch}
-              className={`flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-xl transition-colors ${isListening ? 'bg-red-500 text-white animate-pulse' : 'bg-green-600 text-white hover:bg-green-700'}`}
+              className={`flex-shrink-0 w-11 h-11 md:w-12 md:h-12 flex items-center justify-center rounded-xl transition-colors ${isListening ? 'bg-red-500 text-white animate-pulse' : 'bg-green-600 text-white hover:bg-green-700'}`}
               title="Search by voice"
             >
               <Mic className="w-5 h-5" />
@@ -263,7 +263,7 @@ export default function CustomerStore() {
             {/* Image / barcode search */}
             <button
               onClick={() => setShowImageSearch(true)}
-              className="flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-xl bg-green-600 text-white hover:bg-green-700 transition-colors"
+              className="flex-shrink-0 w-11 h-11 md:w-12 md:h-12 flex items-center justify-center rounded-xl bg-green-600 text-white hover:bg-green-700 transition-colors"
               title="Search by image"
             >
               <ScanLine className="w-5 h-5" />
