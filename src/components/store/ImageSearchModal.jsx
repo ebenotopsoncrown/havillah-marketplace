@@ -4,32 +4,68 @@ import { base44 } from "@/api/base44Client";
 
 export default function ImageSearchModal({ onClose, onResults }) {
   const [loading, setLoading] = useState(false);
+  const [loadingMsg, setLoadingMsg] = useState("Identifying product…");
   const [preview, setPreview] = useState(null);
+  const [noMatch, setNoMatch] = useState(false);
   const fileRef = useRef();
   const cameraRef = useRef();
 
   const handleFile = async (file) => {
     if (!file) return;
     setPreview(URL.createObjectURL(file));
+    setNoMatch(false);
     setLoading(true);
     try {
-      const { file_url } = await base44.integrations.Core.UploadFile({ file });
+      // 1. Upload image + fetch products in parallel
+      setLoadingMsg("Uploading image…");
+      const [{ file_url }, products] = await Promise.all([
+        base44.integrations.Core.UploadFile({ file }),
+        base44.entities.Product.list()
+      ]);
+
+      // 2. Build a compact catalogue list for the LLM
+      setLoadingMsg("Matching against your products…");
+      const activeProducts = products.filter(p => p.is_active);
+      const catalogue = activeProducts.map(p => ({
+        id: p.id,
+        name: p.name,
+        brand: p.brand || ""
+      }));
+
+      const catalogueText = catalogue.map(p => `- ${p.name}${p.brand ? ` (${p.brand})` : ""}`).join("\n");
+
       const result = await base44.integrations.Core.InvokeLLM({
-        prompt: "Look at this product image. Extract the product name, brand, and any other identifying information visible. Return a short search query (2-5 words) that would best find this product or similar products in a grocery store.",
+        prompt: `You are a product matching assistant for a grocery store app.
+
+Here is our full product catalogue:
+${catalogueText}
+
+Look carefully at the product in the attached image — examine its packaging, label, brand name, colour and any visible text.
+
+Your job is to find the BEST matching product from the catalogue above.
+- If you can find a match (even partial — e.g. same brand or same product type), return it.
+- Return the shortest search term (1-3 words) that would uniquely find that product from the catalogue.
+- If there is absolutely no match at all, return an empty string for best_match.`,
         file_urls: [file_url],
         response_json_schema: {
           type: "object",
           properties: {
-            search_query: { type: "string" },
-            product_name: { type: "string" }
+            best_match: { type: "string", description: "The product name or brand from the catalogue that best matches the image, or empty string if no match" },
+            confidence: { type: "string", enum: ["high", "medium", "low", "none"] }
           }
         }
       });
-      onResults(result.search_query || result.product_name || "");
-      onClose();
+
+      const match = (result.best_match || "").trim();
+      if (match && result.confidence !== "none") {
+        onResults(match);
+        onClose();
+      } else {
+        setNoMatch(true);
+        setLoading(false);
+      }
     } catch (e) {
       console.error(e);
-    } finally {
       setLoading(false);
     }
   };
