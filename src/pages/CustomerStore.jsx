@@ -181,6 +181,24 @@ export default function CustomerStore() {
 
   const cartItemsCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
+  const handleVoiceSearch = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) return alert("Voice search is not supported on this browser.");
+    if (isListening) {
+      recognitionRef.current?.stop();
+      setIsListening(false);
+      return;
+    }
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-GB";
+    recognition.interimResults = false;
+    recognition.onresult = (e) => setSearchTerm(e.results[0][0].transcript);
+    recognition.onend = () => setIsListening(false);
+    recognition.start();
+    recognitionRef.current = recognition;
+    setIsListening(true);
+  };
+
 
   return (
     <div className="min-h-screen bg-[#FAFAFA]">
