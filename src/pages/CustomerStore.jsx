@@ -221,8 +221,8 @@ export default function CustomerStore() {
             {/* Actions */}
             <div className="flex items-center gap-2.5 flex-shrink-0">
               <Link to={createPageUrl('CustomerAccount')}>
-                <button className="w-10 h-10 md:w-9 md:h-9 flex items-center justify-center rounded-full border border-gray-200 hover:bg-gray-50 transition-colors">
-                  <User className="w-5 h-5 md:w-4 md:h-4 text-gray-600" />
+                <button className="w-10 h-10 md:w-[40px] md:h-[40px] flex items-center justify-center rounded-full border border-gray-200 hover:bg-gray-50 transition-colors">
+                  <User className="w-5 h-5 md:w-[18px] md:h-[18px] text-gray-600" />
                 </button>
               </Link>
               <button
