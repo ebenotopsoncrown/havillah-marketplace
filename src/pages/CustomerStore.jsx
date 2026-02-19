@@ -179,109 +179,92 @@ export default function CustomerStore() {
 
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Top Banner */}
-      <div className="bg-gradient-to-r from-green-600 to-green-800 text-white text-center py-3 text-sm">
-        <p className="flex items-center justify-center gap-2">
-          <Clock className="w-4 h-4" />
-          <span className="font-medium">Free Delivery on Orders Over £50</span>
-          <span className="mx-2">|</span>
-          <Phone className="w-4 h-4" />
-          <span>Call Us: +4407389170496</span>
-        </p>
-      </div>
+    <div className="min-h-screen bg-[#FAFAFA]">
 
-      {/* Main Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-4">
-            <div className="flex items-center gap-2 sm:gap-4 flex-1">
-              <img 
-                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/49e6f5db7_HavillahMarketplacelogo.jpg" 
-                alt="Havillah Marketplace" 
-                className="h-12 w-12 sm:h-14 sm:w-auto rounded-lg object-cover flex-shrink-0"
+      {/* ── Sticky Header ── */}
+      <header className="bg-white sticky top-0 z-50 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between py-3">
+            {/* Logo + Name */}
+            <div className="flex items-center gap-2 flex-1 min-w-0">
+              <img
+                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/49e6f5db7_HavillahMarketplacelogo.jpg"
+                alt="Havillah Marketplace"
+                className="h-10 w-10 rounded-lg object-cover flex-shrink-0"
               />
-              <div className="flex-1 min-w-0">
-                <h1 className="text-base sm:text-2xl font-bold text-gray-900 leading-tight">Havillah Marketplace</h1>
-                <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 sm:line-clamp-none">Your one-stop marketplace for Afro-Asian groceries, fashion, beauty, fabrics & more</p>
-              </div>
+              <span className="text-base font-bold text-gray-900 truncate leading-tight">Havillah Marketplace</span>
             </div>
-            
-            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+
+            {/* Actions */}
+            <div className="flex items-center gap-2 flex-shrink-0">
               <Link to={createPageUrl('CustomerAccount')}>
-                <Button variant="outline" className="border-2 hover:bg-gray-50 h-10 w-10 p-0 sm:h-auto sm:w-auto sm:px-4">
-                  <User className="w-4 h-4 sm:w-5 sm:h-5" />
-                </Button>
+                <button className="w-9 h-9 flex items-center justify-center rounded-full border border-gray-200 hover:bg-gray-50 transition-colors">
+                  <User className="w-4 h-4 text-gray-600" />
+                </button>
               </Link>
-              <Button
+              <button
                 onClick={() => setShowCart(true)}
-                className="relative bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 h-10 px-3 sm:px-4"
+                className="relative flex items-center gap-1.5 bg-green-700 hover:bg-green-800 text-white text-sm font-medium px-3 h-9 rounded-full transition-colors"
               >
-                <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5 sm:mr-2" />
+                <ShoppingCart className="w-4 h-4" />
                 <span className="hidden sm:inline">Cart</span>
                 {cartItemsCount > 0 && (
-                  <Badge className="absolute -top-2 -right-2 bg-orange-500 hover:bg-orange-600 h-5 min-w-[20px] px-1 text-xs flex items-center justify-center">
+                  <span className="absolute -top-1.5 -right-1.5 bg-orange-500 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">
                     {cartItemsCount}
-                  </Badge>
+                  </span>
                 )}
-              </Button>
+              </button>
             </div>
           </div>
 
           {/* Search Bar */}
-          <div className="pb-4">
-            <div className="relative max-w-2xl mx-auto">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <Input
-                placeholder="Search for products..."
+          <div className="pb-3">
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <input
+                type="text"
+                placeholder="Search products..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-12 h-12 text-base border-2 border-gray-300 focus:border-green-500"
+                className="w-full pl-10 pr-4 h-11 bg-[#F2F2F2] rounded-2xl text-sm text-gray-800 placeholder-gray-400 outline-none focus:ring-2 focus:ring-green-500/30 shadow-sm"
               />
             </div>
           </div>
         </div>
       </header>
 
-      {/* Category Pills */}
-      <div className="bg-gray-50 border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-            <Button
-              variant={selectedCategory === "all" ? "default" : "outline"}
-              onClick={() => setSelectedCategory("all")}
-              className="whitespace-nowrap"
-            >
-              All Products
-            </Button>
-            {categories.filter(c => c.is_active).map(cat => (
-              <Button
-                key={cat.id}
-                variant={selectedCategory === cat.id ? "default" : "outline"}
-                onClick={() => setSelectedCategory(cat.id)}
-                className="whitespace-nowrap"
-              >
-                {cat.name}
-              </Button>
-            ))}
-          </div>
-        </div>
-      </div>
+      {/* ── Main scrollable content ── */}
+      <main className="max-w-7xl mx-auto">
 
-      {/* Products Grid */}
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8">
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            {selectedCategory === "all" ? "All Products" : categories.find(c => c.id === selectedCategory)?.name}
-          </h2>
-          <p className="text-gray-600">{filteredProducts.length} products available</p>
+        {/* Hero Slider */}
+        <div className="pt-4">
+          <HeroSlider slides={heroSlides} settings={heroSettings} />
         </div>
 
-        <ProductCatalog
-          products={filteredProducts}
-          onAddToCart={addToCart}
+        {/* Category Row */}
+        <CategoryRow
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onSelect={setSelectedCategory}
         />
-      </div>
+
+        {/* Products Section */}
+        <div className="px-4 md:px-6 pb-16">
+          <div className="flex items-baseline justify-between mb-4">
+            <div>
+              <h2 className="text-lg font-bold text-gray-900">
+                {selectedCategory === "all" ? "All Products" : categories.find(c => c.id === selectedCategory)?.name || "Products"}
+              </h2>
+              <p className="text-xs text-gray-500 mt-0.5">{filteredProducts.length} products available</p>
+            </div>
+          </div>
+
+          <ProductCatalog
+            products={filteredProducts}
+            onAddToCart={addToCart}
+          />
+        </div>
+      </main>
 
       {/* Footer */}
       <footer className="bg-gray-900 text-white mt-16">
