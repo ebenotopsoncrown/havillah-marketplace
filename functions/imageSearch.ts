@@ -9,118 +9,159 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'image_url is required' }, { status: 400 });
     }
 
-    // Fetch all active products with images
-    const allProducts = await base44.asServiceRole.entities.Product.list();
-    const products = allProducts.filter(p => p.is_active && p.image_urls && p.image_urls.length > 0);
+    // ── STEP 1: Analyse the query image to extract visual attributes ──
+    const analysisResult = await base44.asServiceRole.integrations.Core.InvokeLLM({
+      prompt: `Carefully examine this product image and extract detailed visual attributes.
+Be as specific and precise as possible.
 
-    if (products.length === 0) {
-      return Response.json({ matches: [] });
-    }
-
-    // Build a detailed catalogue with image URLs for the AI to compare visually
-    const catalogue = products.map(p => ({
-      id: p.id,
-      name: p.name,
-      brand: p.brand || '',
-      image_url: p.image_urls[0]
-    }));
-
-    // Pass the catalogue as text description + the query image to the vision LLM
-    // We send the first image of each product alongside the query image for direct visual comparison
-    const catalogueForPrompt = catalogue.map((p, i) =>
-      `${i + 1}. ID: ${p.id} | Name: ${p.name}${p.brand ? ` | Brand: ${p.brand}` : ''} | Image: ${p.image_url}`
-    ).join('\n');
-
-    // Collect all image URLs: query image first, then product images (up to 15 to stay within limits)
-    const productSample = catalogue.slice(0, 15);
-    const allImageUrls = [image_url, ...productSample.map(p => p.image_url)];
-    const sampleCatalogueText = productSample.map((p, i) =>
-      `Image ${i + 2}: ID=${p.id} | "${p.name}"${p.brand ? ` by ${p.brand}` : ''}`
-    ).join('\n');
-
-    const result = await base44.asServiceRole.integrations.Core.InvokeLLM({
-      prompt: `You are an expert visual product matching assistant.
-
-Image 1 is the QUERY IMAGE — the product the user is searching for.
-Images 2 onwards are products from our store catalogue:
-${sampleCatalogueText}
-
-Your task:
-1. Examine the query image (Image 1) carefully: note the exact colour, pattern, shape, material, style, text/branding, and product type.
-2. Compare it visually against every catalogue product image.
-3. Return up to 5 product IDs that are the CLOSEST visual match, ranked by similarity (most similar first).
-4. Only include a product if it genuinely looks similar — same category, similar colour/pattern/style. Do NOT include unrelated products.
-5. If fewer than 5 match, return only the ones that actually match. If none match, return an empty array.
-
-Be strict: colour, pattern and product type must be similar for a match.`,
-      file_urls: allImageUrls,
+Return a JSON object with these fields:
+- product_type: what kind of product is this? (e.g. "men's shirt", "rice bag", "cooking oil bottle", "dress", "trousers")
+- color: the primary/dominant colour(s) — be specific (e.g. "navy blue", "white with red stripes", "olive green")
+- pattern: the pattern or texture (e.g. "plain", "striped", "floral", "checkered", "geometric", "solid")
+- material_or_style: any visible material or style (e.g. "cotton", "silk", "linen", "formal", "casual", "traditional")
+- brand_text: any visible brand name or text on the product (e.g. "Nike", "Tilda", "Uncle Ben's"). Empty string if none.
+- keywords: a comma-separated list of 5-10 search keywords that best describe this product for finding an exact match`,
+      file_urls: [image_url],
       response_json_schema: {
         type: 'object',
         properties: {
-          matches: {
-            type: 'array',
-            items: {
-              type: 'object',
-              properties: {
-                id: { type: 'string' },
-                reason: { type: 'string' }
-              }
-            }
-          }
+          product_type: { type: 'string' },
+          color: { type: 'string' },
+          pattern: { type: 'string' },
+          material_or_style: { type: 'string' },
+          brand_text: { type: 'string' },
+          keywords: { type: 'string' }
         }
       }
     });
 
-    // If we have more than 15 products, do a second pass with remaining products
-    let allMatches = result.matches || [];
+    const attrs = analysisResult;
+    const searchKeywords = [
+      attrs.brand_text,
+      attrs.product_type,
+      attrs.color,
+      attrs.keywords
+    ].filter(Boolean).join(' ').toLowerCase();
 
-    if (catalogue.length > 15) {
-      const remainingSample = catalogue.slice(15, 30);
-      if (remainingSample.length > 0) {
-        const remainingImageUrls = [image_url, ...remainingSample.map(p => p.image_url)];
-        const remainingCatalogueText = remainingSample.map((p, i) =>
-          `Image ${i + 2}: ID=${p.id} | "${p.name}"${p.brand ? ` by ${p.brand}` : ''}`
-        ).join('\n');
+    // ── STEP 2: Fetch all active products ──
+    const allProducts = await base44.asServiceRole.entities.Product.list();
+    const activeProducts = allProducts.filter(p => p.is_active);
 
-        const result2 = await base44.asServiceRole.integrations.Core.InvokeLLM({
-          prompt: `You are an expert visual product matching assistant.
+    if (activeProducts.length === 0) {
+      return Response.json({ matches: [], attributes: attrs });
+    }
 
-Image 1 is the QUERY IMAGE — the product the user is searching for.
-Images 2 onwards are products from our store catalogue:
-${remainingCatalogueText}
+    // ── STEP 3: Pre-filter products by keyword matching to narrow candidates ──
+    const queryWords = searchKeywords.split(/\s+/).filter(w => w.length > 2);
 
-Examine the query image carefully: note exact colour, pattern, shape, material, style, text/branding, product type.
-Compare against each catalogue product image.
-Return up to 5 product IDs that are the CLOSEST visual match. Only include genuinely similar products. Be strict about colour, pattern and product type.`,
-          file_urls: remainingImageUrls,
-          response_json_schema: {
-            type: 'object',
-            properties: {
-              matches: {
-                type: 'array',
-                items: {
-                  type: 'object',
-                  properties: {
-                    id: { type: 'string' },
-                    reason: { type: 'string' }
-                  }
+    const scoredProducts = activeProducts.map(product => {
+      const haystack = [
+        product.name || '',
+        product.brand || '',
+        product.description || '',
+      ].join(' ').toLowerCase();
+
+      let score = 0;
+      for (const word of queryWords) {
+        if (haystack.includes(word)) score += 1;
+      }
+      // Bonus: brand text exact match
+      if (attrs.brand_text && haystack.includes(attrs.brand_text.toLowerCase())) score += 5;
+      // Bonus: product type match
+      if (attrs.product_type && haystack.includes(attrs.product_type.toLowerCase().split(/\s+/)[0])) score += 3;
+
+      return { product, score };
+    });
+
+    // Sort by score descending, take top candidates (those with images first)
+    const sorted = scoredProducts.sort((a, b) => {
+      // Prefer products with images
+      const aHasImg = (a.product.image_urls?.length > 0) ? 1 : 0;
+      const bHasImg = (b.product.image_urls?.length > 0) ? 1 : 0;
+      if (b.score !== a.score) return b.score - a.score;
+      return bHasImg - aHasImg;
+    });
+
+    // Take top 15 candidates for visual comparison
+    const candidates = sorted.slice(0, 15).map(s => s.product);
+
+    // ── STEP 4: Visual comparison — send query image + candidate images to LLM ──
+    const candidatesWithImages = candidates.filter(p => p.image_urls?.length > 0);
+    const candidatesWithoutImages = candidates.filter(p => !p.image_urls?.length);
+
+    let visualMatches = [];
+
+    if (candidatesWithImages.length > 0) {
+      // Build image URL list: [query image, ...product images]
+      const imageUrls = [image_url, ...candidatesWithImages.map(p => p.image_urls[0])];
+      const productList = candidatesWithImages.map((p, i) =>
+        `Image ${i + 2}: ID="${p.id}" Name="${p.name}"${p.brand ? ` Brand="${p.brand}"` : ''}`
+      ).join('\n');
+
+      const visualResult = await base44.asServiceRole.integrations.Core.InvokeLLM({
+        prompt: `You are a precise product matching expert.
+
+Image 1 is the SEARCH IMAGE provided by the customer.
+Based on visual analysis, this appears to be: ${attrs.product_type}, colour: ${attrs.color}, pattern: ${attrs.pattern}${attrs.brand_text ? `, brand: ${attrs.brand_text}` : ''}.
+
+The following images are from our product catalogue:
+${productList}
+
+Compare Image 1 against each catalogue product image carefully.
+Focus on: product type, colour, pattern, brand text visible on packaging, size/shape.
+
+Return an array of matches. For each product image that is a close or exact match to Image 1:
+- Include it with a similarity_score from 0-100 (100 = identical match)
+- Explain briefly why it matches
+- ONLY include products with similarity_score >= 40
+- Return empty array if nothing matches well`,
+        file_urls: imageUrls,
+        response_json_schema: {
+          type: 'object',
+          properties: {
+            matches: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  id: { type: 'string' },
+                  similarity_score: { type: 'number' },
+                  reason: { type: 'string' }
                 }
               }
             }
           }
-        });
+        }
+      });
 
-        allMatches = [...allMatches, ...(result2.matches || [])];
-      }
+      visualMatches = (visualResult.matches || [])
+        .sort((a, b) => (b.similarity_score || 0) - (a.similarity_score || 0));
     }
 
-    // Enrich matches with full product data and limit to top 5
-    const enrichedMatches = allMatches.slice(0, 5).map(m => {
-      const product = products.find(p => p.id === m.id);
-      return product ? { ...product, match_reason: m.reason } : null;
+    // ── STEP 5: Build final results — visual matches first, then text matches ──
+    const matchedIds = new Set(visualMatches.map(m => m.id));
+
+    // Enrich visual matches
+    const enrichedVisual = visualMatches.slice(0, 5).map(m => {
+      const product = activeProducts.find(p => p.id === m.id);
+      return product ? { ...product, match_reason: m.reason, similarity_score: m.similarity_score } : null;
     }).filter(Boolean);
 
-    return Response.json({ matches: enrichedMatches });
+    // If we have fewer than 5 visual matches, fill with text-scored candidates
+    let finalMatches = enrichedVisual;
+    if (finalMatches.length < 5) {
+      const textFallbacks = sorted
+        .filter(s => !matchedIds.has(s.product.id) && s.score > 0)
+        .slice(0, 5 - finalMatches.length)
+        .map(s => ({ ...s.product, match_reason: `Matched keywords: ${attrs.product_type} ${attrs.color}`, similarity_score: Math.min(s.score * 10, 39) }));
+      finalMatches = [...finalMatches, ...textFallbacks];
+    }
+
+    return Response.json({
+      matches: finalMatches,
+      detected: attrs
+    });
+
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
