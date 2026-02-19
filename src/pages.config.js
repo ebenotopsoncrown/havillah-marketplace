@@ -62,6 +62,7 @@ import DriverPortal from './pages/DriverPortal';
 import Expenses from './pages/Expenses';
 import ExpressionOfInterestLetter from './pages/ExpressionOfInterestLetter';
 import HardwareGuide from './pages/HardwareGuide';
+import HeroManager from './pages/HeroManager';
 import Home from './pages/Home';
 import MyData from './pages/MyData';
 import OnlineStore from './pages/OnlineStore';
@@ -85,7 +86,6 @@ import SystemDocumentation from './pages/SystemDocumentation';
 import TermsAndConditions from './pages/TermsAndConditions';
 import TestGoogleMapsAPI from './pages/TestGoogleMapsAPI';
 import appInfographic from './pages/appInfographic';
-import HeroManager from './pages/HeroManager';
 import __Layout from './Layout.jsx';
 
 
@@ -105,6 +105,7 @@ export const PAGES = {
     "Expenses": Expenses,
     "ExpressionOfInterestLetter": ExpressionOfInterestLetter,
     "HardwareGuide": HardwareGuide,
+    "HeroManager": HeroManager,
     "Home": Home,
     "MyData": MyData,
     "OnlineStore": OnlineStore,
@@ -128,7 +129,6 @@ export const PAGES = {
     "TermsAndConditions": TermsAndConditions,
     "TestGoogleMapsAPI": TestGoogleMapsAPI,
     "appInfographic": appInfographic,
-    "HeroManager": HeroManager,
 }
 
 export const pagesConfig = {

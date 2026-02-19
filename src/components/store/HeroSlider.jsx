@@ -109,7 +109,7 @@ export default function HeroSlider({ slides: propSlides, settings = {} }) {
   return (
     <div
       className="relative overflow-hidden rounded-2xl mx-4 md:mx-6"
-      style={{ height: '260px', marginBottom: '24px' }}
+      style={{ height: '234px', marginBottom: '24px' }}
       onMouseEnter={() => { isPaused.current = true; }}
       onMouseLeave={() => { isPaused.current = false; }}
       onTouchStart={handleTouchStart}

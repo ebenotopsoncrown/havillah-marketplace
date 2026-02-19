@@ -184,7 +184,7 @@ export default function CustomerStore() {
       {/* ── Sticky Header ── */}
       <header className="bg-white sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between py-3">
+          <div className="flex items-center justify-between py-[13px]">
             {/* Logo + Name */}
             <div className="flex items-center gap-2 flex-1 min-w-0">
               <img
@@ -268,93 +268,35 @@ export default function CustomerStore() {
 
       {/* Footer */}
       <footer className="bg-gray-900 text-white mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <img 
-                  src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/49e6f5db7_HavillahMarketplacelogo.jpg" 
-                  alt="Havillah Marketplace" 
-                  className="h-10 w-auto rounded-lg"
-                />
-              </div>
-              <p className="text-gray-400 text-sm">
-                Your trusted partner for wholesale and retail ethnic food products in the UK
-              </p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            {/* Contact */}
+            <div className="flex flex-col sm:flex-row gap-4 text-sm text-gray-400">
+              <a href="https://wa.me/4407389170996" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-green-400 transition-colors">
+                <Phone className="w-4 h-4" />
+                +44 07389 170996
+              </a>
+              <a href="mailto:info@havillahmarketplace.com" className="flex items-center gap-2 hover:text-green-400 transition-colors">
+                <Mail className="w-4 h-4" />
+                info@havillahmarketplace.com
+              </a>
+              <span className="flex items-center gap-2">
+                <MapPin className="w-4 h-4" />
+                Bournemouth, UK
+              </span>
             </div>
-            
-            <div>
-              <h3 className="font-bold mb-4">Want to chat with us?</h3>
-              <div className="space-y-2 text-sm text-gray-400">
-                <p>Message us on WhatsApp:</p>
-                <a 
-                  href="https://wa.me/4407389170996" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-green-400 hover:text-green-300 font-semibold"
-                >
-                  +4407389170996
-                </a>
-              </div>
-            </div>
-            
-            <div>
-              <h3 className="font-bold mb-4">Contact</h3>
-              <div className="space-y-3 text-sm text-gray-400">
-                <p className="flex items-center gap-2">
-                  <Phone className="w-4 h-4" />
-                  +4407389170496
-                </p>
-                <p className="flex items-center gap-2">
-                  <Mail className="w-4 h-4" />
-                  info@havillahmarketplace.com
-                </p>
-                <p className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4" />
-                  Flat 2, 30 The Triangle, BH2 5SE Bournemouth, UK
-                </p>
-              </div>
-            </div>
-            
-            <div>
-              <h3 className="font-bold mb-4">Opening Hours</h3>
-              <div className="text-sm text-gray-400 space-y-1">
-                <p>Monday - Saturday</p>
-                <p className="font-semibold text-white">8:00 AM - 8:00 PM</p>
-                <p className="mt-3">Sunday</p>
-                <p className="font-semibold text-white">10:00 AM - 6:00 PM</p>
-              </div>
+
+            {/* Links */}
+            <div className="flex items-center gap-4 text-xs text-gray-500">
+              <Link to={createPageUrl('PrivacyPolicy')} className="hover:text-gray-300 transition-colors">Privacy Policy</Link>
+              <Link to={createPageUrl('TermsAndConditions')} className="hover:text-gray-300 transition-colors">Terms</Link>
+              <Link to={createPageUrl('MyData')} className="hover:text-gray-300 transition-colors">My Data</Link>
+              <Link to={createPageUrl('StaffLogin')} className="hover:text-gray-300 transition-colors">Staff Login</Link>
             </div>
           </div>
-          
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-            <p>&copy; 2025 Havillah Marketplace. All rights reserved.</p>
-            <div className="flex items-center justify-center gap-4 mt-3">
-              <Link 
-                to={createPageUrl('PrivacyPolicy')} 
-                className="text-gray-400 hover:text-gray-300 underline text-xs"
-              >
-                Privacy Policy
-              </Link>
-              <Link 
-                to={createPageUrl('TermsAndConditions')} 
-                className="text-gray-400 hover:text-gray-300 underline text-xs"
-              >
-                Terms & Conditions
-              </Link>
-              <Link 
-                to={createPageUrl('MyData')} 
-                className="text-gray-400 hover:text-gray-300 underline text-xs"
-              >
-                My Data
-              </Link>
-              <Link 
-                to={createPageUrl('StaffLogin')} 
-                className="text-gray-500 hover:text-gray-300 underline text-xs"
-              >
-                Staff Login
-              </Link>
-            </div>
+
+          <div className="border-t border-gray-800 mt-6 pt-5 text-center text-xs text-gray-600">
+            &copy; {new Date().getFullYear()} Havillah Marketplace. All rights reserved.
           </div>
         </div>
       </footer>
