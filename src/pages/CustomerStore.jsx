@@ -22,6 +22,9 @@ export default function CustomerStore() {
   const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
+  const [showImageSearch, setShowImageSearch] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef(null);
   const queryClient = useQueryClient();
 
   const { data: products = [] } = useQuery({
