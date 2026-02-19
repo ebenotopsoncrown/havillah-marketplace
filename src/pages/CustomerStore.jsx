@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { ShoppingCart, Search, Store, Phone, Mail, MapPin, Clock, User } from "lucide-react";
+import { ShoppingCart, Search, Phone, Mail, MapPin, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -12,6 +12,8 @@ import ProductCatalog from "../components/store/ProductCatalog";
 import ShoppingCartDrawer from "../components/store/ShoppingCartDrawer";
 import CheckoutModal from "../components/store/CheckoutModal";
 import CookieConsent from "../components/security/CookieConsent";
+import HeroSlider from "../components/store/HeroSlider";
+import CategoryRow from "../components/store/CategoryRow";
 
 export default function CustomerStore() {
   const [searchTerm, setSearchTerm] = useState("");
