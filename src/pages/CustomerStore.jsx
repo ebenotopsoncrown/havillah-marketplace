@@ -229,7 +229,7 @@ export default function CustomerStore() {
                 onClick={() => setShowCart(true)}
                 className="relative flex items-center gap-1.5 bg-green-700 hover:bg-green-800 text-white text-sm md:text-[15px] font-medium px-3 md:px-4 h-10 md:h-10 rounded-full transition-colors"
               >
-                <ShoppingCart className="w-5 h-5 md:w-4 md:h-4" />
+                <ShoppingCart className="w-5 h-5 md:w-[18px] md:h-[18px]" />
                 <span className="hidden sm:inline">Cart</span>
                 {cartItemsCount > 0 && (
                   <span className="absolute -top-1.5 -right-1.5 bg-orange-500 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">
