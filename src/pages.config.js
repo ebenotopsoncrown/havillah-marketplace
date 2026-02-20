@@ -71,6 +71,7 @@ import Orders from './pages/Orders';
 import POS from './pages/POS';
 import PickingAndPacking from './pages/PickingAndPacking';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import ProductPage from './pages/ProductPage';
 import Products from './pages/Products';
 import Purchases from './pages/Purchases';
 import Reports from './pages/Reports';
@@ -86,7 +87,6 @@ import SystemDocumentation from './pages/SystemDocumentation';
 import TermsAndConditions from './pages/TermsAndConditions';
 import TestGoogleMapsAPI from './pages/TestGoogleMapsAPI';
 import appInfographic from './pages/appInfographic';
-import ProductPage from './pages/ProductPage';
 import __Layout from './Layout.jsx';
 
 
@@ -115,6 +115,7 @@ export const PAGES = {
     "POS": POS,
     "PickingAndPacking": PickingAndPacking,
     "PrivacyPolicy": PrivacyPolicy,
+    "ProductPage": ProductPage,
     "Products": Products,
     "Purchases": Purchases,
     "Reports": Reports,
@@ -130,7 +131,6 @@ export const PAGES = {
     "TermsAndConditions": TermsAndConditions,
     "TestGoogleMapsAPI": TestGoogleMapsAPI,
     "appInfographic": appInfographic,
-    "ProductPage": ProductPage,
 }
 
 export const pagesConfig = {
