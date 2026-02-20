@@ -11,12 +11,14 @@ import {
   Link as LinkIcon,
   Shield,
   Clock,
-  Activity
+  Activity,
+  Image
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import StorefrontImagesManager from "../components/settings/StorefrontImagesManager";
 
 export default function AppSettings() {
   const [copied, setCopied] = useState(false);
@@ -42,10 +44,11 @@ export default function AppSettings() {
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:inline-grid">
+          <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-grid">
             <TabsTrigger value="users">User Management</TabsTrigger>
             <TabsTrigger value="sharing">App Sharing</TabsTrigger>
             <TabsTrigger value="activity">Activity Monitor</TabsTrigger>
+            <TabsTrigger value="storefront">Storefront Images</TabsTrigger>
           </TabsList>
 
           {/* USER MANAGEMENT TAB */}
