@@ -9,35 +9,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-const FASHION_COLLECTIONS = [
-  {
-    label: "Women Fashion",
-    desc: "Elegant styles for every occasion",
-    image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=700&fit=crop&q=85",
-    color: "from-rose-100 to-pink-50",
-    query: "women"
-  },
-  {
-    label: "Kids Fashion",
-    desc: "Adorable looks for little ones",
-    image: "https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?w=600&h=700&fit=crop&q=85",
-    color: "from-purple-100 to-pink-50",
-    query: "kids"
-  },
-  {
-    label: "Beauty & Skincare",
-    desc: "Glow essentials & self-care",
-    image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&h=700&fit=crop&q=85",
-    color: "from-amber-100 to-rose-50",
-    query: "beauty"
-  },
-  {
-    label: "Accessories",
-    desc: "The finishing touch",
-    image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&h=700&fit=crop&q=85",
-    color: "from-teal-100 to-blue-50",
-    query: "accessories"
-  }
+const DEFAULT_COLLECTIONS = [
+  { slot: "collection_women", label: "Women Fashion", desc: "Elegant styles for every occasion", image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=700&fit=crop&q=85", query: "women" },
+  { slot: "collection_men", label: "Men Fashion", desc: "Sharp looks for every man", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=700&fit=crop&q=85", query: "men" },
+  { slot: "collection_kids", label: "Kids Fashion", desc: "Adorable looks for little ones", image: "https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?w=600&h=700&fit=crop&q=85", query: "kids" },
+  { slot: "collection_beauty", label: "Beauty & Skincare", desc: "Glow essentials & self-care", image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&h=700&fit=crop&q=85", query: "beauty" },
+  { slot: "collection_accessories", label: "Accessories", desc: "The finishing touch", image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&h=700&fit=crop&q=85", query: "accessories" },
 ];
 
 const TRUST_BADGES = [
