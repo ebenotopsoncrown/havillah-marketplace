@@ -187,10 +187,10 @@ export default function Home() {
               <div className="relative">
                 <div className="absolute inset-0 rounded-3xl" style={{ background: "linear-gradient(135deg, #E8CFCF 0%, #f8d7da 100%)", transform: "rotate(3deg)", opacity: 0.4 }}></div>
                 <img
-                  src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=600&h=700&fit=crop&q=85"
+                  src={heroImage}
                   alt="Fashion lifestyle"
                   className="relative rounded-3xl shadow-2xl w-full max-w-md object-cover"
-                  style={{ height: "480px" }}
+                  style={{ height: "360px" }}
                 />
                 <div className="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow-xl p-4 flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: "#fce8ee" }}>
@@ -310,10 +310,10 @@ export default function Home() {
           <h2 className="playfair text-3xl sm:text-4xl font-bold text-gray-900 mb-6">About Havillah</h2>
           <div className="w-16 h-0.5 mx-auto mb-8" style={{ background: "#D88C9A" }}></div>
           <p className="text-gray-600 text-lg leading-relaxed mb-6">
-            Havillah Marketplace was created to bring together carefully selected beauty and fashion products for women and children across the UK. We focus on quality, style, and reliability — making shopping effortless and enjoyable.
+            Havillah Marketplace was created to bring together carefully selected beauty and fashion products for women, men, and children across the UK. We focus on quality, style, and reliability — making shopping effortless and enjoyable.
           </p>
           <p className="text-gray-500 leading-relaxed">
-            Every item in our collection is handpicked to ensure it meets our standards of quality and style. We believe every woman and child deserves to look and feel their best.
+            Every item in our collection is handpicked to ensure it meets our standards of quality and style. We believe every woman, man, and child deserves to look and feel their best.
           </p>
         </div>
       </section>
