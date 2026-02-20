@@ -102,39 +102,54 @@ export default function Home() {
 
       {/* HEADER */}
       <header className="bg-white border-b border-rose-100 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-3">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-14 sm:h-16">
+            {/* Logo + Brand text (always visible on mobile) */}
+            <div className="flex items-center gap-2">
               <img
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/49e6f5db7_HavillahMarketplacelogo.jpg"
                 alt="Havillah Marketplace"
-                className="h-10 w-auto"
+                className="h-9 w-9 sm:h-10 sm:w-10 rounded-lg object-cover flex-shrink-0"
               />
-              <div className="hidden sm:block">
-                <span className="playfair text-lg font-bold text-gray-900">Havillah</span>
-                <p className="text-xs text-rose-400 tracking-widest uppercase">Beauty & Fashion</p>
+              <div>
+                <span className="playfair text-sm sm:text-lg font-bold text-gray-900 block leading-none">Havillah</span>
+                <p className="text-[10px] sm:text-xs tracking-widest uppercase" style={{ color: "#D88C9A" }}>Beauty & Fashion</p>
               </div>
             </div>
+            {/* Desktop nav */}
             <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
               <Link to={createPageUrl("CustomerStore")} className="hover:text-rose-500 transition-colors">Women</Link>
+              <Link to={createPageUrl("CustomerStore")} className="hover:text-rose-500 transition-colors">Men</Link>
               <Link to={createPageUrl("CustomerStore")} className="hover:text-rose-500 transition-colors">Kids</Link>
               <Link to={createPageUrl("CustomerStore")} className="hover:text-rose-500 transition-colors">Beauty</Link>
               <Link to={createPageUrl("CustomerStore")} className="hover:text-rose-500 transition-colors">Accessories</Link>
             </nav>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <Link to={createPageUrl("CustomerStore")}>
-                <button className="rose-btn text-white px-5 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all">
+                <button className="rose-btn text-white px-3 sm:px-5 py-2 rounded-lg text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition-all">
                   <ShoppingBag className="w-4 h-4" />
-                  <span className="hidden sm:inline">Shop Now</span>
+                  <span>Shop Now</span>
                 </button>
               </Link>
               <Link to={createPageUrl("StaffPortal")}>
-                <button className="border border-gray-200 text-gray-600 hover:bg-gray-50 px-3 py-2 rounded-lg text-sm flex items-center gap-1.5 transition-all">
+                <button className="border border-gray-200 text-gray-600 hover:bg-gray-50 px-2 sm:px-3 py-2 rounded-lg text-xs sm:text-sm flex items-center gap-1 transition-all">
                   <Lock className="w-3.5 h-3.5" />
                   <span className="hidden sm:inline">Staff</span>
                 </button>
               </Link>
             </div>
+          </div>
+        </div>
+        {/* Mobile category nav — shown only on small screens */}
+        <div className="md:hidden border-t border-rose-50 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
+          <div className="flex items-center gap-0 px-3 py-2 min-w-max">
+            {["Women","Men","Kids","Beauty","Accessories"].map(cat => (
+              <Link key={cat} to={createPageUrl("CustomerStore")}
+                className="text-xs font-semibold px-3 py-1.5 rounded-full transition-colors whitespace-nowrap"
+                style={{ color: "#D88C9A" }}>
+                {cat}
+              </Link>
+            ))}
           </div>
         </div>
       </header>
@@ -144,20 +159,20 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left order-2 lg:order-1">
-              <p className="text-rose-400 uppercase tracking-widest text-xs font-semibold mb-4">✦ New Collection 2025</p>
+              <p className="text-rose-400 uppercase tracking-widest text-xs font-semibold mb-4">✦ New Collection 2026</p>
               <h1 className="playfair text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
                 Curated Beauty &<br />
-                <span style={{ color: "#D88C9A" }}>Fashion for Women</span><br />
-                & Children in the UK
+                <span style={{ color: "#D88C9A" }}>Fashion for Women,</span><br />
+                Men & Children in the UK
               </h1>
               <p className="text-gray-600 text-lg mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed">
-                Discover trusted styles and beauty essentials delivered nationwide. Every piece, carefully selected for you.
+                Discover trusted styles and beauty essentials for the whole family, delivered nationwide. Every piece, carefully selected for you.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Link to={createPageUrl("CustomerStore")}>
                   <button className="rose-btn text-white px-8 py-4 rounded-lg text-base font-semibold flex items-center gap-2 transition-all w-full sm:w-auto justify-center shadow-lg">
                     <ShoppingBag className="w-5 h-5" />
-                    Shop Women
+                    Shop Now
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </Link>
