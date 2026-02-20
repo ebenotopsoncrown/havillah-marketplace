@@ -321,6 +321,11 @@ export default function AppSettings() {
             </Card>
           </TabsContent>
 
+          {/* STOREFRONT IMAGES TAB */}
+          <TabsContent value="storefront" className="space-y-6">
+            <StorefrontImagesManager />
+          </TabsContent>
+
           {/* ACTIVITY MONITOR TAB */}
           <TabsContent value="activity" className="space-y-6">
             <Card className="border-2 border-purple-200 bg-gradient-to-br from-purple-50 to-pink-50">
