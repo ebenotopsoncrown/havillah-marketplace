@@ -3,6 +3,8 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Package, Eye } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
+import { createPageUrl } from "@/utils";
 import ProductDetailsModal from "./ProductDetailsModal";
 
 export default function ProductCatalog({ products, onAddToCart }) {
