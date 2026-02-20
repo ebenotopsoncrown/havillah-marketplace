@@ -71,17 +71,18 @@ export default function ProductCatalog({ products, onAddToCart }) {
                 <ShoppingCart className="w-3 h-3 mr-1" />
                 <span className="hidden sm:inline">Add</span>
               </Button>
-              <Button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedProduct(product);
-                }}
-                variant="outline"
-                className="h-8 sm:h-9 px-2"
-                title="View details"
+              <Link
+                to={createPageUrl(`ProductPage?id=${product.id}`)}
+                onClick={(e) => e.stopPropagation()}
+                title="View product page"
               >
-                <Eye className="w-3 h-3" />
-              </Button>
+                <Button
+                  variant="outline"
+                  className="h-8 sm:h-9 px-2"
+                >
+                  <Eye className="w-3 h-3" />
+                </Button>
+              </Link>
             </div>
 
             <div className="text-xs text-gray-500 text-center mt-1 sm:mt-2">
