@@ -55,6 +55,23 @@ export default function Home() {
     queryFn: () => base44.entities.Product.list('-created_date', 20),
   });
 
+  const { data: storefrontImages = [] } = useQuery({
+    queryKey: ['storefront-images'],
+    queryFn: () => base44.entities.StorefrontImage.list(),
+  });
+
+  const getImage = (slot, defaultImg) => {
+    const found = storefrontImages.find(i => i.slot === slot);
+    return found ? found.image_url : defaultImg;
+  };
+
+  const heroImage = getImage("hero_main", "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=600&h=700&fit=crop&q=85");
+
+  const FASHION_COLLECTIONS = DEFAULT_COLLECTIONS.map(col => ({
+    ...col,
+    image: getImage(col.slot, col.image)
+  }));
+
   const featuredProducts = products
     .filter(p => p.is_active && p.stock_quantity > 0)
     .slice(0, 8);
