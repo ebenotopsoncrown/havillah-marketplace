@@ -411,6 +411,7 @@ export default function Home() {
               <h5 className="font-semibold mb-5 text-sm uppercase tracking-wider" style={{ color: "#E8CFCF" }}>Shop</h5>
               <ul className="space-y-3 text-sm text-gray-400">
                 <li><Link to={createPageUrl("CustomerStore")} className="hover:text-white transition-colors">Women Fashion</Link></li>
+                <li><Link to={createPageUrl("CustomerStore")} className="hover:text-white transition-colors">Men Fashion</Link></li>
                 <li><Link to={createPageUrl("CustomerStore")} className="hover:text-white transition-colors">Kids Fashion</Link></li>
                 <li><Link to={createPageUrl("CustomerStore")} className="hover:text-white transition-colors">Beauty & Skincare</Link></li>
                 <li><Link to={createPageUrl("CustomerStore")} className="hover:text-white transition-colors">Accessories</Link></li>
@@ -431,8 +432,8 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-gray-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-3 text-sm text-gray-500">
-            <p>© 2025 Havillah Marketplace. All rights reserved.</p>
-            <p>Made with ♥ for women & children across the UK</p>
+            <p>© 2026 Havillah Marketplace. All rights reserved.</p>
+            <p>Made with ♥ for everyone across the UK</p>
           </div>
         </div>
       </footer>
