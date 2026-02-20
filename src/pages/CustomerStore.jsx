@@ -217,38 +217,47 @@ export default function CustomerStore() {
 
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA]">
+    <div className="min-h-screen" style={{ background: "#fdf9f9", fontFamily: "'Inter', 'Poppins', sans-serif" }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        .playfair { font-family: 'Playfair Display', serif; }
+      `}</style>
 
       {/* ── Sticky Header ── */}
-      <header className="bg-white sticky top-0 z-50 shadow-sm">
+      <header className="bg-white sticky top-0 z-50 border-b border-rose-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4">
-          {/* Top bar — taller on mobile */}
-          <div className="flex items-center justify-between py-4 md:py-[15px]">
+          {/* Top bar */}
+          <div className="flex items-center justify-between py-3 md:py-4">
             {/* Logo + Name */}
             <div className="flex items-center gap-2.5 flex-1 min-w-0">
               <img
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/49e6f5db7_HavillahMarketplacelogo.jpg"
                 alt="Havillah Marketplace"
-                className="h-11 w-11 md:h-[49px] md:w-[49px] rounded-lg object-cover flex-shrink-0"
+                className="h-10 w-10 md:h-12 md:w-12 rounded-xl object-cover flex-shrink-0"
               />
-              <span className="text-base md:text-[19px] font-bold text-gray-900 truncate leading-tight">Havillah Marketplace</span>
+              <div className="hidden sm:block">
+                <span className="playfair text-lg font-bold text-gray-900 leading-tight block">Havillah</span>
+                <p className="text-xs tracking-widest uppercase" style={{ color: "#D88C9A" }}>Beauty & Fashion</p>
+              </div>
+              <span className="sm:hidden text-base font-bold text-gray-900 truncate leading-tight">Havillah</span>
             </div>
 
             {/* Actions */}
             <div className="flex items-center gap-2.5 flex-shrink-0">
               <Link to={createPageUrl('CustomerAccount')}>
-                <button className="w-10 h-10 md:w-[44px] md:h-[44px] flex items-center justify-center rounded-full border border-gray-200 hover:bg-gray-50 transition-colors">
-                  <User className="w-5 h-5 md:w-[20px] md:h-[20px] text-gray-600" />
+                <button className="w-10 h-10 md:w-11 md:h-11 flex items-center justify-center rounded-full border border-rose-200 hover:bg-rose-50 transition-colors">
+                  <User className="w-4 h-4 text-rose-400" />
                 </button>
               </Link>
               <button
                 onClick={() => setShowCart(true)}
-                className="relative flex items-center gap-1.5 bg-green-700 hover:bg-green-800 text-white text-sm md:text-[16px] font-medium px-3 md:px-5 h-10 md:h-[44px] rounded-full transition-colors"
+                className="relative flex items-center gap-1.5 text-white text-sm font-semibold px-3 md:px-5 h-10 md:h-11 rounded-lg transition-colors"
+                style={{ background: "#D88C9A" }}
               >
-                <ShoppingCart className="w-5 h-5 md:w-[20px] md:h-[20px]" />
+                <ShoppingCart className="w-4 h-4" />
                 <span className="hidden sm:inline">Cart</span>
                 {cartItemsCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 bg-orange-500 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                  <span className="absolute -top-1.5 -right-1.5 bg-rose-700 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">
                     {cartItemsCount}
                   </span>
                 )}
@@ -257,21 +266,23 @@ export default function CustomerStore() {
           </div>
 
           {/* Search Bar with voice + image buttons */}
-          <div className="pb-3 md:pb-[15px] flex items-center gap-2">
+          <div className="pb-3 md:pb-4 flex items-center gap-2">
             <div className="relative flex-1 md:flex-none md:w-[64%]">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: "#D88C9A" }} />
               <input
                 type="text"
-                placeholder="Search products..."
+                placeholder="Search beauty, fashion, accessories..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 h-11 md:h-12 bg-[#F2F2F2] rounded-2xl text-sm text-gray-800 placeholder-gray-400 outline-none focus:ring-2 focus:ring-green-500/30 shadow-sm"
+                className="w-full pl-10 pr-4 h-11 md:h-12 rounded-xl text-sm text-gray-800 placeholder-gray-400 outline-none border border-rose-100 focus:border-rose-300 focus:ring-2 transition-all"
+                style={{ background: "#fdf2f2" }}
               />
             </div>
             {/* Voice search */}
             <button
               onClick={handleVoiceSearch}
-              className={`flex-shrink-0 w-11 h-11 md:w-12 md:h-12 flex items-center justify-center rounded-xl transition-colors ${isListening ? 'bg-red-500 text-white animate-pulse' : 'bg-green-600 text-white hover:bg-green-700'}`}
+              className={`flex-shrink-0 w-11 h-11 md:w-12 md:h-12 flex items-center justify-center rounded-xl transition-colors ${isListening ? 'bg-red-400 text-white animate-pulse' : 'text-white hover:opacity-90'}`}
+              style={!isListening ? { background: "#D88C9A" } : {}}
               title="Search by voice"
             >
               <Mic className="w-5 h-5" />
@@ -279,7 +290,8 @@ export default function CustomerStore() {
             {/* Image / barcode search */}
             <button
               onClick={() => setShowImageSearch(true)}
-              className="flex-shrink-0 w-11 h-11 md:w-12 md:h-12 flex items-center justify-center rounded-xl bg-green-600 text-white hover:bg-green-700 transition-colors"
+              className="flex-shrink-0 w-11 h-11 md:w-12 md:h-12 flex items-center justify-center rounded-xl text-white hover:opacity-90 transition-colors"
+              style={{ background: "#D88C9A" }}
               title="Search by image"
             >
               <ScanLine className="w-5 h-5" />
@@ -307,10 +319,10 @@ export default function CustomerStore() {
         <div className="px-4 md:px-6 pb-16">
           <div className="flex items-baseline justify-between mb-4">
             <div>
-              <h2 className="text-lg font-bold text-gray-900">
+              <h2 className="playfair text-xl font-bold text-gray-900">
                 {selectedCategory === "all" ? "All Products" : categories.find(c => c.id === selectedCategory)?.name || "Products"}
               </h2>
-              <p className="text-xs text-gray-500 mt-0.5">{filteredProducts.length} products available</p>
+              <p className="text-xs mt-0.5" style={{ color: "#D88C9A" }}>{filteredProducts.length} products available</p>
             </div>
           </div>
 
@@ -323,26 +335,30 @@ export default function CustomerStore() {
 
       {/* Footer */}
       <footer className="bg-gray-900 text-white mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            {/* Contact */}
-            <div className="flex flex-col sm:flex-row gap-4 text-sm text-gray-400">
-              <a href="https://wa.me/4407389170996" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-green-400 transition-colors">
-                <Phone className="w-4 h-4" />
-                +44 07389 170996
-              </a>
-              <a href="mailto:info@havillahmarketplace.com" className="flex items-center gap-2 hover:text-green-400 transition-colors">
-                <Mail className="w-4 h-4" />
-                info@havillahmarketplace.com
-              </a>
-              <span className="flex items-center gap-2">
-                <MapPin className="w-4 h-4" />
-                Bournemouth, UK
-              </span>
+            {/* Brand */}
+            <div>
+              <p className="playfair text-lg font-semibold mb-1" style={{ color: "#E8CFCF" }}>Havillah Marketplace</p>
+              <p className="text-xs text-gray-500">Beauty & Fashion for Women & Children across the UK</p>
+              <div className="flex flex-col sm:flex-row gap-3 mt-3 text-sm text-gray-400">
+                <a href="https://wa.me/4407389170996" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-rose-300 transition-colors">
+                  <Phone className="w-4 h-4" />
+                  +44 07389 170996
+                </a>
+                <a href="mailto:info@havillahmarketplace.com" className="flex items-center gap-2 hover:text-rose-300 transition-colors">
+                  <Mail className="w-4 h-4" />
+                  info@havillahmarketplace.com
+                </a>
+                <span className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4" />
+                  Bournemouth, UK
+                </span>
+              </div>
             </div>
 
             {/* Links */}
-            <div className="flex items-center gap-4 text-xs text-gray-500">
+            <div className="flex flex-wrap items-center gap-4 text-xs text-gray-500">
               <Link to={createPageUrl('PrivacyPolicy')} className="hover:text-gray-300 transition-colors">Privacy Policy</Link>
               <Link to={createPageUrl('TermsAndConditions')} className="hover:text-gray-300 transition-colors">Terms</Link>
               <Link to={createPageUrl('MyData')} className="hover:text-gray-300 transition-colors">My Data</Link>
@@ -350,8 +366,8 @@ export default function CustomerStore() {
             </div>
           </div>
 
-          <div className="border-t border-gray-800 mt-6 pt-5 text-center text-xs text-gray-600">
-            &copy; {new Date().getFullYear()} Havillah Marketplace. All rights reserved.
+          <div className="border-t border-gray-800 mt-8 pt-5 text-center text-xs text-gray-600">
+            &copy; {new Date().getFullYear()} Havillah Marketplace. All rights reserved. Made with ♥ for women & children across the UK.
           </div>
         </div>
       </footer>
