@@ -294,6 +294,15 @@ export default function Layout({ children, currentPageName }) {
                               <span>Hero Slider Manager</span>
                             </Link>
                           </SidebarMenuButton>
+                          <SidebarMenuButton asChild>
+                            <Link 
+                              to={createPageUrl("ProductFeedManager")} 
+                              className="flex items-center gap-3 px-3 py-2 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200 rounded-lg text-sm"
+                            >
+                              <Rss className="w-4 h-4" />
+                              <span>Product Feed / Shopping.com</span>
+                            </Link>
+                          </SidebarMenuButton>
                         </div>
                       </CollapsibleContent>
                     </SidebarMenuItem>
