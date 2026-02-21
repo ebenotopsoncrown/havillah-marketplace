@@ -67,9 +67,11 @@ export default function CustomerStore() {
       
       return order;
     },
-    onSuccess: () => {
+    onSuccess: (order) => {
       queryClient.invalidateQueries({ queryKey: ['orders'] });
       queryClient.invalidateQueries({ queryKey: ['products'] });
+      // Send confirmation email immediately after order is placed
+      base44.functions.invoke('sendOrderConfirmation', { orderId: order.id }).catch(console.error);
       setCart([]);
       setShowCheckout(false);
       setShowCart(false);
