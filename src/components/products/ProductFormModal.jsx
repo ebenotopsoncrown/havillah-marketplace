@@ -40,6 +40,7 @@ export default function ProductFormModal({ open, onClose, product, categories, o
     is_active: true,
     expiry_tracking: false,
     image_urls: [],
+    badge: "",
   });
 
   const [uploading, setUploading] = useState(false);
@@ -68,6 +69,7 @@ export default function ProductFormModal({ open, onClose, product, categories, o
         is_active: true,
         expiry_tracking: false,
         image_urls: [],
+        badge: "",
       });
     }
   }, [product, open]);
