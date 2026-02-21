@@ -34,7 +34,7 @@ export default function ProductCatalog({ products, onAddToCart }) {
           onMouseLeave={e => { e.currentTarget.style.boxShadow = "0 2px 12px rgba(216,140,154,0.08)"; e.currentTarget.style.transform = "translateY(0)"; }}
           onClick={() => setSelectedProduct(product)}
         >
-          <div className="aspect-square bg-rose-50 flex items-center justify-center overflow-hidden relative">
+          <div className="aspect-[1/0.85] bg-rose-50 flex items-center justify-center overflow-hidden relative">
             {img ? (
               <img src={img} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
             ) : (
