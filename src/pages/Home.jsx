@@ -148,8 +148,8 @@ export default function Home() {
                 className="h-12 w-12 sm:h-12 sm:w-12 rounded-xl object-cover flex-shrink-0"
               />
               <div>
-                <span className="playfair text-base sm:text-base font-bold text-gray-900 block leading-tight">Havillah</span>
-                <p className="text-[11px] sm:text-xs tracking-widest uppercase whitespace-nowrap" style={{ color: ROSE }}>Afro-Asian Marketplace</p>
+                <span className="playfair text-base sm:text-base font-black text-gray-900 block leading-tight">Havillah</span>
+                <p className="text-[11px] sm:text-xs tracking-widest uppercase font-black whitespace-nowrap" style={{ color: ROSE }}>Afro-Asian Marketplace</p>
               </div>
             </div>
             {/* Desktop nav — Groceries, Beauty, Fashion, Accessories */}
