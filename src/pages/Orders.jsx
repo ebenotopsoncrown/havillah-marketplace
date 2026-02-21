@@ -43,6 +43,9 @@ export default function Orders() {
   const [cancellingOrder, setCancellingOrder] = useState(null);
   const queryClient = useQueryClient();
 
+  // Always derive selectedOrder live from the orders array so it's never stale
+  const selectedOrder = selectedOrderId ? orders.find(o => o.id === selectedOrderId) ?? null : null;
+
   const { data: orders = [], isLoading } = useQuery({
     queryKey: ['orders'],
     queryFn: () => base44.entities.Order.list('-created_date'),
