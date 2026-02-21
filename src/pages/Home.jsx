@@ -13,25 +13,25 @@ const COLLECTIONS = [
     slot: "collection_women",
     label: "Nigerian Groceries",
     desc: "Yam, palm oil, egusi & more",
-    image: "https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=600&h=700&fit=crop&q=85"
+    image: "https://images.unsplash.com/photo-1567337710282-00832b415979?w=600&h=700&fit=crop&q=90"
   },
   {
     slot: "collection_kids",
     label: "Indian Groceries",
     desc: "Spices, lentils, rice & staples",
-    image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=600&h=700&fit=crop&q=85"
+    image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600&h=700&fit=crop&q=90"
   },
   {
     slot: "collection_beauty",
     label: "Natural Hair & Beauty",
     desc: "Shea butter, natural oils & care",
-    image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&h=700&fit=crop&q=85"
+    image: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&h=700&fit=crop&q=90"
   },
   {
     slot: "collection_accessories",
     label: "Cultural Fashion",
     desc: "Traditional & modern wear",
-    image: "https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=600&h=700&fit=crop&q=85"
+    image: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&h=700&fit=crop&q=90"
   },
 ];
 
@@ -56,7 +56,7 @@ const TESTIMONIALS = [
   { name: "Adaeze O.",  location: "Leicester",  text: "Havillah feels like a community. Every order is packed with care. Authentic products that remind me of home.", stars: 5 },
 ];
 
-const PRODUCT_BADGES = ["Popular", "Best Seller", "Customer Favourite", "Top Pick", "Authentic", "Community Pick"];
+const PRODUCT_BADGES = ["Top Product", "Best Seller", "Popular", "Favourites"];
 
 export default function Home() {
   const [testimonialIndex, setTestimonialIndex] = useState(0);
@@ -79,7 +79,7 @@ export default function Home() {
     return found ? found.image_url : fallback;
   };
 
-  const heroImage = getImage("hero_main", "https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=900&h=700&fit=crop&q=85");
+  const heroImage = getImage("hero_main", "https://images.unsplash.com/photo-1542838132-92c53300491e?w=1400&h=800&fit=crop&q=95");
 
   const displayCollections = COLLECTIONS.map(col => ({
     ...col,
@@ -173,7 +173,7 @@ export default function Home() {
         {/* Mobile category strip */}
         <div className="md:hidden border-t border-rose-50 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
           <div className="flex px-3 py-1.5 gap-1 min-w-max">
-            {["🛒 Nigerian","🌶 Indian","💄 Beauty","👗 Fashion"].map(cat => (
+            {["🛒 Nigerian","🍛 Indian","💄 Beauty","👗 Fashion"].map(cat => (
               <Link key={cat} to={createPageUrl("CustomerStore")}
                 className="text-xs font-semibold px-3 py-1.5 rounded-full whitespace-nowrap"
                 style={{ color: ROSE }}>{cat}</Link>
@@ -396,14 +396,15 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-2 gap-3">
               {[
-                { emoji: "🍠", label: "Nigerian Yam & Root Vegetables" },
-                { emoji: "🌶", label: "Indian Spices & Masalas" },
-                { emoji: "🧴", label: "Natural African Beauty" },
-                { emoji: "🥣", label: "Authentic Grains & Pulses" },
+                { img: "https://images.unsplash.com/photo-1567337710282-00832b415979?w=300&h=240&fit=crop&q=90", label: "Nigerian Yam & Root Vegetables" },
+                { img: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=300&h=240&fit=crop&q=90", label: "Indian Spices & Masalas" },
+                { img: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=300&h=240&fit=crop&q=90", label: "Natural African Beauty" },
+                { img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=300&h=240&fit=crop&q=90", label: "Authentic Grains & Pulses" },
               ].map(item => (
-                <div key={item.label} className="rounded-2xl p-4 text-center" style={{ background: "rgba(255,255,255,0.06)" }}>
-                  <div className="text-3xl mb-2">{item.emoji}</div>
-                  <p className="text-white text-xs font-medium leading-snug">{item.label}</p>
+                <div key={item.label} className="rounded-2xl overflow-hidden relative" style={{ background: "rgba(255,255,255,0.06)" }}>
+                  <img src={item.img} alt={item.label} className="w-full h-28 object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                  <p className="absolute bottom-0 left-0 right-0 p-2 text-white text-xs font-medium leading-snug">{item.label}</p>
                 </div>
               ))}
             </div>
