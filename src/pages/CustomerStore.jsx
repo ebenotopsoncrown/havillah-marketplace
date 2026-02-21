@@ -67,11 +67,9 @@ export default function CustomerStore() {
       
       return order;
     },
-    onSuccess: (order) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['orders'] });
       queryClient.invalidateQueries({ queryKey: ['products'] });
-      // Send confirmation email immediately after order is placed
-      base44.functions.invoke('sendOrderConfirmation', { orderId: order.id }).catch(console.error);
       setCart([]);
       setShowCheckout(false);
       setShowCart(false);
@@ -191,6 +189,11 @@ export default function CustomerStore() {
     };
 
     const order = await createOrderMutation.mutateAsync(orderData);
+
+    // Send confirmation email immediately after order is created
+    base44.functions.invoke('sendOrderConfirmation', { orderId: order.id }).catch(err => {
+      console.error('Failed to send confirmation email:', err);
+    });
     
     if (returnOrderId) {
       return order.id;
