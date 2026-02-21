@@ -191,7 +191,7 @@ export default function Orders() {
                   <div
                     key={order.id}
                     className="border rounded-lg p-5 hover:shadow-md transition-shadow cursor-pointer bg-white"
-                    onClick={() => setSelectedOrder(order)}
+                    onClick={() => setSelectedOrderId(order.id)}
                   >
                     <div className="flex flex-col lg:flex-row justify-between gap-4">
                       <div className="flex-1">
