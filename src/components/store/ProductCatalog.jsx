@@ -34,11 +34,18 @@ export default function ProductCatalog({ products, onAddToCart }) {
           onMouseLeave={e => { e.currentTarget.style.boxShadow = "0 2px 12px rgba(216,140,154,0.08)"; e.currentTarget.style.transform = "translateY(0)"; }}
           onClick={() => setSelectedProduct(product)}
         >
-          <div className="aspect-square bg-rose-50 flex items-center justify-center overflow-hidden">
+          <div className="aspect-square bg-rose-50 flex items-center justify-center overflow-hidden relative">
             {img ? (
               <img src={img} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
             ) : (
               <span className="text-3xl sm:text-4xl font-bold" style={{ color: "#E8CFCF" }}>{product.name?.[0]}</span>
+            )}
+            {product.badge && (
+              <div className="absolute top-2 left-2">
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full text-white bg-orange-400">
+                  {product.badge}
+                </span>
+              </div>
             )}
           </div>
           
@@ -57,7 +64,7 @@ export default function ProductCatalog({ products, onAddToCart }) {
               )}
             </div>
 
-            {lowStock && <p className="text-xs text-orange-500 font-medium mb-1.5">Only {availableStock} left</p>}
+
 
             <div className="flex gap-1 sm:gap-2">
               <button
