@@ -132,6 +132,7 @@ export default function ProductFormModal({ open, onClose, product, categories, o
       cost_price: formData.cost_price ? parseFloat(formData.cost_price) : undefined,
       stock_quantity: parseInt(formData.stock_quantity) || 0,
       reorder_level: parseInt(formData.reorder_level) || 10,
+      discount_percent: formData.discount_percent ? parseFloat(formData.discount_percent) : 0,
     });
   };
 
