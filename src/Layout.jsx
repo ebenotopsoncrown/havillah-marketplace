@@ -21,7 +21,8 @@ import {
   Globe,
   QrCode,
   Layers,
-  SlidersHorizontal
+  SlidersHorizontal,
+  Rss
 } from "lucide-react";
 import {
   Sidebar,
