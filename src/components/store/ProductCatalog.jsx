@@ -44,7 +44,14 @@ export default function ProductCatalog({ products, onAddToCart }) {
             )}
             {product.badge && (
               <div className="absolute top-2 left-2">
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full text-white bg-orange-400">
+                <span
+                  className="text-[10px] font-bold px-2 py-0.5 rounded-full text-white"
+                  style={{
+                    background: product.badge.startsWith("New Arriv") ? "#7c3aed"
+                      : discountPercent > 0 ? "#ef4444"
+                      : "#f97316"
+                  }}
+                >
                   {product.badge}
                 </span>
               </div>
