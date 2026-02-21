@@ -41,6 +41,7 @@ export default function ProductFormModal({ open, onClose, product, categories, o
     expiry_tracking: false,
     image_urls: [],
     badge: "",
+    discount_percent: "",
   });
 
   const [uploading, setUploading] = useState(false);
@@ -49,7 +50,8 @@ export default function ProductFormModal({ open, onClose, product, categories, o
     if (product) {
       setFormData({
         ...product,
-        image_urls: product.image_urls || (product.image_url ? [product.image_url] : [])
+        image_urls: product.image_urls || (product.image_url ? [product.image_url] : []),
+        discount_percent: product.discount_percent || "",
       });
     } else {
       setFormData({
@@ -70,6 +72,7 @@ export default function ProductFormModal({ open, onClose, product, categories, o
         expiry_tracking: false,
         image_urls: [],
         badge: "",
+        discount_percent: "",
       });
     }
   }, [product, open]);
