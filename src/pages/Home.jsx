@@ -79,7 +79,7 @@ export default function Home() {
     return found ? found.image_url : fallback;
   };
 
-  const heroImage = getImage("hero_main", "https://images.unsplash.com/photo-1542838132-92c53300491e?w=1400&h=800&fit=crop&q=95");
+  const heroImage = getImage("hero_main", "https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=1400&h=800&fit=crop&q=95");
 
   const displayCollections = COLLECTIONS.map(col => ({
     ...col,
@@ -205,14 +205,14 @@ export default function Home() {
               <p className="text-white/85 text-base sm:text-lg mb-8 leading-relaxed max-w-lg">
                 Your trusted source for Afro-Asian food, beauty & cultural essentials.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-row gap-3">
                 <Link to={createPageUrl("CustomerStore")}>
-                  <button className="rose-btn text-white px-7 py-3.5 text-base font-semibold flex items-center gap-2 justify-center w-full sm:w-auto shadow-lg">
-                    <ShoppingBag className="w-5 h-5" /> Shop Groceries <ArrowRight className="w-4 h-4" />
+                  <button className="rose-btn text-white px-5 sm:px-7 py-3 sm:py-3.5 text-sm sm:text-base font-semibold flex items-center gap-2 justify-center shadow-lg whitespace-nowrap">
+                    <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" /> Shop Groceries <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </button>
                 </Link>
                 <Link to={createPageUrl("CustomerStore")}>
-                  <button className="bg-white/20 backdrop-blur-sm border border-white/40 text-white px-7 py-3.5 rounded-xl text-base font-semibold flex items-center gap-2 justify-center w-full sm:w-auto hover:bg-white/30 transition-all">
+                  <button className="bg-white/20 backdrop-blur-sm border border-white/40 text-white px-5 sm:px-7 py-3 sm:py-3.5 rounded-xl text-sm sm:text-base font-semibold flex items-center gap-2 justify-center hover:bg-white/30 transition-all whitespace-nowrap">
                     <Heart className="w-4 h-4" /> Explore Beauty
                   </button>
                 </Link>
