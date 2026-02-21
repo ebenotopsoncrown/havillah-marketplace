@@ -396,10 +396,10 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-2 gap-3">
               {[
-                { img: "https://images.unsplash.com/photo-1567337710282-00832b415979?w=300&h=240&fit=crop&q=90", label: "Nigerian Yam & Root Vegetables" },
-                { img: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=300&h=240&fit=crop&q=90", label: "Indian Spices & Masalas" },
-                { img: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=300&h=240&fit=crop&q=90", label: "Natural African Beauty" },
-                { img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=300&h=240&fit=crop&q=90", label: "Authentic Grains & Pulses" },
+                { img: "https://images.unsplash.com/photo-1547592180-85f173990554?w=300&h=240&fit=crop&q=90", label: "Nigerian Yam & Root Vegetables" },
+                { img: "https://images.unsplash.com/photo-1505253304499-671c55fb57fe?w=300&h=240&fit=crop&q=90", label: "Indian Spices & Masalas" },
+                { img: "https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=300&h=240&fit=crop&q=90", label: "Natural African Beauty" },
+                { img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=300&h=240&fit=crop&q=90", label: "Authentic Grains & Pulses" },
               ].map(item => (
                 <div key={item.label} className="rounded-2xl overflow-hidden relative" style={{ background: "rgba(255,255,255,0.06)" }}>
                   <img src={item.img} alt={item.label} className="w-full h-28 object-cover" />
