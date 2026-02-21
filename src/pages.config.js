@@ -88,6 +88,7 @@ import TermsAndConditions from './pages/TermsAndConditions';
 import TestGoogleMapsAPI from './pages/TestGoogleMapsAPI';
 import appInfographic from './pages/appInfographic';
 import ProductFeedManager from './pages/ProductFeedManager';
+import BrandBanners from './pages/BrandBanners';
 import __Layout from './Layout.jsx';
 
 
@@ -133,6 +134,7 @@ export const PAGES = {
     "TestGoogleMapsAPI": TestGoogleMapsAPI,
     "appInfographic": appInfographic,
     "ProductFeedManager": ProductFeedManager,
+    "BrandBanners": BrandBanners,
 }
 
 export const pagesConfig = {
