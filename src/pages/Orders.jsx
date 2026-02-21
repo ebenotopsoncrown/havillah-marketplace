@@ -274,17 +274,17 @@ export default function Orders() {
           <OrderDetailsCard
             order={selectedOrder}
             items={getOrderItems(selectedOrder.id)}
-            onClose={() => setSelectedOrder(null)}
+            onClose={() => setSelectedOrderId(null)}
             onStatusChange={(orderId, newStatus) => {
               handleStatusChange(orderId, newStatus);
-              setSelectedOrder(null);
+              // Keep modal open so user sees updated status — order ref auto-updates via live query
             }}
             onConfirmOrder={(order) => {
-              setSelectedOrder(null);
+              setSelectedOrderId(null);
               setConfirmingOrder(order);
             }}
             onCancelOrder={(order) => {
-              setSelectedOrder(null);
+              setSelectedOrderId(null);
               setCancellingOrder(order);
             }}
           />
