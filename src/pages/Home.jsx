@@ -328,8 +328,6 @@ export default function Home() {
                 {featuredProducts.map((product, idx) => {
                   const img = product.image_urls?.[0] || product.image_url;
                   const price = product.wholesale_price || product.retail_price;
-                  const lowStock = product.stock_quantity > 0 && product.stock_quantity <= 5;
-                  const badge = PRODUCT_BADGES[idx % PRODUCT_BADGES.length];
                   const added = cartAdded[product.id];
                   return (
                     <Link key={product.id} to={createPageUrl(`ProductPage?id=${product.id}`)}
@@ -344,14 +342,11 @@ export default function Home() {
                             <span className="text-4xl font-bold" style={{ color: "#E8CFCF" }}>{product.name?.[0]}</span>
                           </div>
                         )}
-                        <div className="absolute top-2 left-2">
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full text-white" style={{ background: ROSE }}>
-                            {badge}
-                          </span>
-                        </div>
-                        {lowStock && (
-                          <div className="absolute top-2 right-2">
-                            <span className="text-[10px] font-bold bg-orange-400 text-white px-2 py-0.5 rounded-full">Only {product.stock_quantity} left</span>
+                        {product.badge && (
+                          <div className="absolute top-2 left-2">
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full text-white bg-orange-400">
+                              {product.badge}
+                            </span>
                           </div>
                         )}
                       </div>
