@@ -180,7 +180,7 @@ export default function CustomerStore() {
         vat_amount: vatAmount,
         delivery_charge: deliveryCharge,
         total_amount: total,
-        status: "pending",
+        status: "pending_confirmation",
         payment_method: customerData.payment_method,
         payment_status: customerData.payment_method === "card" ? "paid" : "pending",
         notes: customerData.notes
