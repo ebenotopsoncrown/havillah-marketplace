@@ -5,31 +5,58 @@ import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import {
   ShoppingBag, MapPin, Lock, Star, ArrowRight, Shield, Truck, CheckCircle,
-  Flag, ChevronLeft, ChevronRight, Mail, ShoppingCart, Heart, Sparkles, Tag
+  Flag, ChevronLeft, ChevronRight, Mail, ShoppingCart, Heart, Users, Leaf
 } from "lucide-react";
 
 const COLLECTIONS = [
-  { slot: "collection_women", label: "Women's Fashion", desc: "Style you'll love", image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=700&fit=crop&q=85" },
-  { slot: "collection_kids",  label: "Kids' Fashion",   desc: "Adorable looks for little ones", image: "https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?w=600&h=700&fit=crop&q=85" },
-  { slot: "collection_beauty", label: "Beauty & Skincare", desc: "Glow essentials for every day", image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&h=700&fit=crop&q=85" },
-  { slot: "collection_accessories", label: "Accessories", desc: "The finishing touch", image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&h=700&fit=crop&q=85" },
+  {
+    slot: "collection_women",
+    label: "Nigerian Groceries",
+    desc: "Yam, palm oil, egusi & more",
+    image: "https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=600&h=700&fit=crop&q=85"
+  },
+  {
+    slot: "collection_kids",
+    label: "Indian Groceries",
+    desc: "Spices, lentils, rice & staples",
+    image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=600&h=700&fit=crop&q=85"
+  },
+  {
+    slot: "collection_beauty",
+    label: "Natural Hair & Beauty",
+    desc: "Shea butter, natural oils & care",
+    image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&h=700&fit=crop&q=85"
+  },
+  {
+    slot: "collection_accessories",
+    label: "Cultural Fashion",
+    desc: "Traditional & modern wear",
+    image: "https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=600&h=700&fit=crop&q=85"
+  },
 ];
 
 const WHY_SHOP = [
-  { icon: Flag,        label: "UK-Based Store",           desc: "Proudly serving customers across Britain" },
-  { icon: Truck,       label: "Fast Nationwide Delivery", desc: "Delivered in 2–4 working days" },
-  { icon: CheckCircle, label: "Quality You Can Trust",    desc: "Every product carefully checked" },
-  { icon: Tag,         label: "Affordable Prices",        desc: "Great style without the high price tag" },
+  { icon: Leaf,        label: "Authentic African & Indian Brands", desc: "Genuine products straight from trusted suppliers" },
+  { icon: Flag,        label: "UK-Based Online Store",             desc: "Proudly serving Afro-Asian communities in Britain" },
+  { icon: Truck,       label: "Fast Nationwide Delivery",          desc: "Delivered to your door in 2–4 working days" },
+  { icon: CheckCircle, label: "Quality Checked Products",          desc: "Every item verified before it reaches you" },
+];
+
+const FEATURED = [
+  { label: "West African Staples",    image: "https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=400&h=300&fit=crop&q=85" },
+  { label: "Indian Spices & Grains",  image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&h=300&fit=crop&q=85" },
+  { label: "Natural Hair Care",       image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&h=300&fit=crop&q=85" },
+  { label: "Shea Butter & Skincare",  image: "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=400&h=300&fit=crop&q=85" },
 ];
 
 const TESTIMONIALS = [
-  { name: "Amara O.",  location: "London",     text: "Amazing quality for the price! My dress arrived beautifully packaged and fits perfectly. Affordable style made easy.", stars: 5 },
-  { name: "Sarah M.",  location: "Birmingham", text: "Fast delivery and the kids' clothes are gorgeous. My daughter won't stop wearing her new outfit — great value!", stars: 5 },
-  { name: "Priya K.",  location: "Manchester", text: "The skincare is brilliant. Real brands, prices I can actually afford, and super quick delivery. Havillah is my go-to now!", stars: 5 },
-  { name: "Fatima R.", location: "Leeds",      text: "Finally a UK store that gets it — stylish, affordable, and actually ships quickly. Busy mum approved!", stars: 5 },
+  { name: "Ngozi A.",   location: "London",     text: "Finally a UK store with real Nigerian groceries! The egusi and palm oil are exactly what I grew up eating. Fast delivery too.", stars: 5 },
+  { name: "Priya S.",   location: "Birmingham", text: "The Indian spices are genuine — same brands I'd find back home. Saves me a long trip to the Asian supermarket. Brilliant!", stars: 5 },
+  { name: "Fatima D.",  location: "Manchester", text: "My whole family loves shopping here. The natural hair products are amazing quality and the groceries are always fresh.", stars: 5 },
+  { name: "Adaeze O.",  location: "Leicester",  text: "Havillah feels like a community. Every order is packed with care. Authentic products that remind me of home.", stars: 5 },
 ];
 
-const PRODUCT_BADGES = ["Popular", "Customer Favourite", "Best Seller", "Top Pick", "Popular", "Customer Favourite", "Best Seller", "Top Pick", "Popular", "Customer Favourite", "Best Seller", "Top Pick"];
+const PRODUCT_BADGES = ["Popular", "Best Seller", "Customer Favourite", "Top Pick", "Authentic", "Community Pick"];
 
 export default function Home() {
   const [testimonialIndex, setTestimonialIndex] = useState(0);
@@ -52,19 +79,17 @@ export default function Home() {
     return found ? found.image_url : fallback;
   };
 
-  const heroImage = getImage("hero_main", "https://images.unsplash.com/photo-1536450360099-5849c80ccb47?w=800&h=900&fit=crop&q=85");
+  const heroImage = getImage("hero_main", "https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=900&h=700&fit=crop&q=85");
 
   const displayCollections = COLLECTIONS.map(col => ({
     ...col,
     image: getImage(col.slot, col.image),
   }));
 
-  const featuredProducts = products
-    .filter(p => p.is_active && p.stock_quantity > 0)
-    .slice(0, 12);
+  const featuredProducts = products.filter(p => p.is_active && p.stock_quantity > 0).slice(0, 12);
 
   useEffect(() => {
-    const t = setInterval(() => setTestimonialIndex(i => (i + 1) % TESTIMONIALS.length), 5000);
+    const t = setInterval(() => setTestimonialIndex(i => (i + 1) % TESTIMONIALS.length), 5500);
     return () => clearInterval(t);
   }, []);
 
@@ -92,8 +117,13 @@ export default function Home() {
     setTimeout(() => setCartAdded(prev => ({ ...prev, [productId]: false })), 1500);
   };
 
+  // Brand colours
+  const ROSE = "#D88C9A";
+  const CREAM = "#F8F4F1";
+  const DEEP = "#7C3D52";
+
   return (
-    <div className="min-h-screen font-sans" style={{ background: "#F8F4F1", fontFamily: "'Inter', 'Poppins', sans-serif" }}>
+    <div className="min-h-screen font-sans" style={{ background: CREAM, fontFamily: "'Inter', 'Poppins', sans-serif" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
         .playfair { font-family: 'Playfair Display', serif; }
@@ -118,11 +148,11 @@ export default function Home() {
               />
               <div>
                 <span className="playfair text-sm sm:text-base font-bold text-gray-900 block leading-none">Havillah</span>
-                <p className="text-[10px] sm:text-xs tracking-widest uppercase" style={{ color: "#D88C9A" }}>Style Made Simple</p>
+                <p className="text-[10px] sm:text-xs tracking-widest uppercase" style={{ color: ROSE }}>Afro-Asian Marketplace</p>
               </div>
             </div>
             <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
-              {["Women","Kids","Beauty","Accessories"].map(cat => (
+              {["Nigerian Groceries","Indian Groceries","Beauty","Fashion"].map(cat => (
                 <Link key={cat} to={createPageUrl("CustomerStore")} className="hover:text-rose-500 transition-colors">{cat}</Link>
               ))}
             </nav>
@@ -140,98 +170,74 @@ export default function Home() {
             </div>
           </div>
         </div>
-        {/* Mobile nav strip */}
+        {/* Mobile category strip */}
         <div className="md:hidden border-t border-rose-50 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
           <div className="flex px-3 py-1.5 gap-1 min-w-max">
-            {["Women","Kids","Beauty","Accessories"].map(cat => (
+            {["🛒 Nigerian","🌶 Indian","💄 Beauty","👗 Fashion"].map(cat => (
               <Link key={cat} to={createPageUrl("CustomerStore")}
                 className="text-xs font-semibold px-3 py-1.5 rounded-full whitespace-nowrap"
-                style={{ color: "#D88C9A" }}>{cat}</Link>
+                style={{ color: ROSE }}>{cat}</Link>
             ))}
           </div>
         </div>
       </header>
 
       {/* ── SECTION 1: HERO ── */}
-      <section className="relative overflow-hidden" style={{ background: "linear-gradient(135deg, #fdf2f2 0%, #f8ede8 50%, #fce4ec 100%)" }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-24">
-          <div className="grid lg:grid-cols-2 gap-10 items-center">
-            {/* Text */}
-            <div className="text-center lg:text-left order-2 lg:order-1">
-              <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold mb-5" style={{ background: "#fce8ee", color: "#D88C9A" }}>
-                <Sparkles className="w-3 h-3" /> Style Made Simple · 2026 Collection
+      <section className="relative overflow-hidden">
+        {/* Full-width cultural hero image */}
+        <div className="relative h-[420px] sm:h-[520px] lg:h-[600px]">
+          <img
+            src={heroImage}
+            alt="Authentic African and Indian groceries"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.1) 100%)" }} />
+          <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
+            <div className="max-w-xl">
+              <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold mb-5 bg-white/20 text-white backdrop-blur-sm">
+                🌍 Nigerian · Indian · Cultural Essentials
               </div>
-              <h1 className="playfair text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight mb-4">
-                Affordable Beauty &<br />
-                <span style={{ color: "#D88C9A" }}>Fashion for Women</span><br />
-                & Kids in the UK
+              <h1 className="playfair text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4">
+                Authentic Nigerian &<br />
+                <span style={{ color: "#fce8ee" }}>Indian Groceries</span><br />
+                Delivered Across the UK
               </h1>
-              <p className="text-gray-600 text-base sm:text-lg mb-3 max-w-lg mx-auto lg:mx-0 leading-relaxed">
-                Discover stylish essentials at prices you'll love.
+              <p className="text-white/85 text-base sm:text-lg mb-8 leading-relaxed max-w-lg">
+                Your trusted source for Afro-Asian food, beauty & cultural essentials.
               </p>
-              <p className="text-gray-500 text-sm mb-8 max-w-md mx-auto lg:mx-0">
-                Great style without the high price tag — delivered to your door in 2–4 working days.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <Link to={createPageUrl("CustomerStore")}>
-                  <button className="rose-btn text-white px-8 py-3.5 text-base font-semibold flex items-center gap-2 justify-center w-full sm:w-auto shadow-lg hover:shadow-xl transition-all">
-                    <ShoppingBag className="w-5 h-5" /> Shop Women <ArrowRight className="w-4 h-4" />
+                  <button className="rose-btn text-white px-7 py-3.5 text-base font-semibold flex items-center gap-2 justify-center w-full sm:w-auto shadow-lg">
+                    <ShoppingBag className="w-5 h-5" /> Shop Groceries <ArrowRight className="w-4 h-4" />
                   </button>
                 </Link>
                 <Link to={createPageUrl("CustomerStore")}>
-                  <button className="border-2 border-rose-200 text-rose-600 bg-white hover:bg-rose-50 px-8 py-3.5 rounded-xl text-base font-semibold flex items-center gap-2 justify-center w-full sm:w-auto transition-all">
-                    <Heart className="w-4 h-4" /> Shop Kids
+                  <button className="bg-white/20 backdrop-blur-sm border border-white/40 text-white px-7 py-3.5 rounded-xl text-base font-semibold flex items-center gap-2 justify-center w-full sm:w-auto hover:bg-white/30 transition-all">
+                    <Heart className="w-4 h-4" /> Explore Beauty
                   </button>
                 </Link>
               </div>
-              {/* Mini trust strip */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mt-8 text-xs text-gray-500">
-                <span className="flex items-center gap-1"><CheckCircle className="w-3.5 h-3.5 text-green-500" /> Free returns</span>
-                <span className="flex items-center gap-1"><Shield className="w-3.5 h-3.5 text-green-500" /> Secure checkout</span>
-                <span className="flex items-center gap-1"><Truck className="w-3.5 h-3.5 text-green-500" /> 2–4 day delivery</span>
-              </div>
-            </div>
-            {/* Image */}
-            <div className="order-1 lg:order-2 flex justify-center">
-              <div className="relative">
-                <div className="absolute inset-0 rounded-3xl" style={{ background: "linear-gradient(135deg, #E8CFCF, #f8d7e8)", transform: "rotate(3deg)", opacity: 0.45 }}></div>
-                <img
-                  src={heroImage}
-                  alt="Affordable fashion for women and kids"
-                  className="relative rounded-3xl shadow-2xl w-full max-w-sm sm:max-w-md object-cover"
-                  style={{ height: "340px" }}
-                />
-                <div className="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow-xl p-3 flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: "#fce8ee" }}>
-                    <Star className="w-4 h-4 fill-current" style={{ color: "#D88C9A" }} />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-gray-900">1,000+ Happy Shoppers</p>
-                    <p className="text-[10px] text-gray-400">Across the UK ⭐⭐⭐⭐⭐</p>
-                  </div>
-                </div>
-                <div className="absolute -top-3 -right-3 bg-white rounded-2xl shadow-lg px-3 py-2 text-center">
-                  <p className="text-xs font-bold" style={{ color: "#D88C9A" }}>Prices</p>
-                  <p className="text-[11px] text-gray-500">You'll Love</p>
-                </div>
+              {/* Mini trust strip on hero */}
+              <div className="flex flex-wrap gap-4 mt-7">
+                {["UK-Based Store", "Fast Delivery", "Authentic Products"].map(t => (
+                  <span key={t} className="flex items-center gap-1.5 text-xs text-white/80">
+                    <CheckCircle className="w-3.5 h-3.5 text-green-400" /> {t}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── SECTION 2: WHY SHOP HAVILLAH ── */}
-      <section className="py-14 bg-white border-y border-rose-50">
+      {/* ── SECTION 2: TRUST BADGES ── */}
+      <section className="py-12 bg-white border-y border-rose-50">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <h2 className="playfair text-2xl sm:text-3xl font-bold text-gray-900">Why Shop at Havillah?</h2>
-            <p className="text-gray-500 text-sm mt-2">Everyday fashion that fits your budget — and your lifestyle</p>
-          </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {WHY_SHOP.map(({ icon: Icon, label, desc }) => (
-              <div key={label} className="flex flex-col items-center text-center gap-3 group">
+              <div key={label} className="flex flex-col items-center text-center gap-2.5 group">
                 <div className="w-14 h-14 rounded-2xl flex items-center justify-center transition-all group-hover:scale-110 shadow-sm" style={{ background: "#fce8ee" }}>
-                  <Icon className="w-6 h-6" style={{ color: "#D88C9A" }} />
+                  <Icon className="w-6 h-6" style={{ color: ROSE }} />
                 </div>
                 <p className="text-sm font-semibold text-gray-900 leading-snug">{label}</p>
                 <p className="text-xs text-gray-500 leading-relaxed">{desc}</p>
@@ -241,30 +247,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── SECTION 3: SHOP BY COLLECTION ── */}
-      <section className="py-16" style={{ background: "#F8F4F1" }}>
+      {/* ── SECTION 3: SHOP BY CATEGORY ── */}
+      <section className="py-16" style={{ background: CREAM }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#D88C9A" }}>Collections</p>
-            <h2 className="playfair text-3xl sm:text-4xl font-bold text-gray-900">Shop by Collection</h2>
-            <p className="text-gray-500 text-sm mt-2">Everyday style made easy</p>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: ROSE }}>Explore</p>
+            <h2 className="playfair text-3xl sm:text-4xl font-bold text-gray-900">Shop by Category</h2>
+            <p className="text-gray-500 text-sm mt-2">From your favourite African & Indian brands, to beauty and fashion</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
             {displayCollections.map((col) => (
               <Link key={col.label} to={createPageUrl("CustomerStore")} className="group block">
                 <div className="relative rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-white">
                   <div className="aspect-[3/4]">
-                    <img
-                      src={col.image}
-                      alt={col.label}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" />
+                    <img src={col.image} alt={col.label}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4">
                     <h3 className="text-white font-bold text-sm sm:text-base leading-snug">{col.label}</h3>
-                    <p className="text-white/80 text-xs mt-0.5 hidden sm:block">{col.desc}</p>
-                    <span className="inline-flex items-center gap-1 text-white/90 text-xs mt-1 font-medium">
+                    <p className="text-white/75 text-xs mt-0.5 hidden sm:block">{col.desc}</p>
+                    <span className="inline-flex items-center gap-1 text-white/90 text-xs mt-1.5 font-medium">
                       Shop now <ArrowRight className="w-3 h-3" />
                     </span>
                   </div>
@@ -275,94 +278,135 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── SECTION 4: BESTSELLERS ── */}
-      {featuredProducts.length > 0 && (
-        <section className="py-16 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-10">
-              <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#D88C9A" }}>Most Loved</p>
-              <h2 className="playfair text-3xl sm:text-4xl font-bold text-gray-900">Bestsellers</h2>
-              <p className="text-gray-500 text-sm mt-2">Affordable style for busy mums — look good without breaking the bank</p>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
-              {featuredProducts.map((product, idx) => {
-                const img = product.image_urls?.[0] || product.image_url;
-                const price = product.wholesale_price || product.retail_price;
-                const lowStock = product.stock_quantity > 0 && product.stock_quantity <= 5;
-                const badge = PRODUCT_BADGES[idx % PRODUCT_BADGES.length];
-                const added = cartAdded[product.id];
-                return (
-                  <Link key={product.id} to={createPageUrl(`ProductPage?id=${product.id}`)}
-                    className="product-card group block bg-white rounded-2xl overflow-hidden border border-gray-100 cursor-pointer">
-                    <div className="relative aspect-square overflow-hidden bg-gray-50">
-                      {img ? (
-                        <img src={img} alt={product.name}
-                          className="product-img w-full h-full object-cover transition-transform duration-500"
-                          referrerPolicy="no-referrer" />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center" style={{ background: "#fce8ee" }}>
-                          <span className="text-4xl font-bold" style={{ color: "#E8CFCF" }}>{product.name?.[0]}</span>
-                        </div>
-                      )}
-                      <div className="absolute top-2 left-2">
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full text-white"
-                          style={{ background: idx % 3 === 0 ? "#D88C9A" : idx % 3 === 1 ? "#c97889" : "#b8607a" }}>
-                          {badge}
-                        </span>
-                      </div>
-                      {lowStock && (
-                        <div className="absolute top-2 right-2">
-                          <span className="text-[10px] font-bold bg-orange-400 text-white px-2 py-0.5 rounded-full">
-                            Only {product.stock_quantity} left
+      {/* ── SECTION 4: FEATURED COLLECTIONS ── */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: ROSE }}>Collections</p>
+            <h2 className="playfair text-3xl sm:text-4xl font-bold text-gray-900">Featured Collections</h2>
+            <p className="text-gray-500 text-sm mt-2">Handpicked staples for Afro-Asian households across the UK</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+            {FEATURED.map(f => (
+              <Link key={f.label} to={createPageUrl("CustomerStore")} className="group block rounded-2xl overflow-hidden relative shadow-sm hover:shadow-lg transition-all">
+                <div className="aspect-[4/3]">
+                  <img src={f.image} alt={f.label} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 p-3">
+                  <p className="text-white font-semibold text-sm leading-tight">{f.label}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* Bestseller products grid */}
+          {featuredProducts.length > 0 && (
+            <>
+              <div className="text-center mb-8">
+                <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: ROSE }}>Most Loved</p>
+                <h3 className="playfair text-2xl font-bold text-gray-900">Bestsellers</h3>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
+                {featuredProducts.map((product, idx) => {
+                  const img = product.image_urls?.[0] || product.image_url;
+                  const price = product.wholesale_price || product.retail_price;
+                  const lowStock = product.stock_quantity > 0 && product.stock_quantity <= 5;
+                  const badge = PRODUCT_BADGES[idx % PRODUCT_BADGES.length];
+                  const added = cartAdded[product.id];
+                  return (
+                    <Link key={product.id} to={createPageUrl(`ProductPage?id=${product.id}`)}
+                      className="product-card group block bg-white rounded-2xl overflow-hidden border border-gray-100 cursor-pointer">
+                      <div className="relative aspect-square overflow-hidden bg-gray-50">
+                        {img ? (
+                          <img src={img} alt={product.name}
+                            className="product-img w-full h-full object-cover transition-transform duration-500"
+                            referrerPolicy="no-referrer" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center" style={{ background: "#fce8ee" }}>
+                            <span className="text-4xl font-bold" style={{ color: "#E8CFCF" }}>{product.name?.[0]}</span>
+                          </div>
+                        )}
+                        <div className="absolute top-2 left-2">
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full text-white" style={{ background: ROSE }}>
+                            {badge}
                           </span>
                         </div>
-                      )}
-                    </div>
-                    <div className="p-3">
-                      {product.brand && <p className="text-[10px] font-semibold uppercase tracking-wide mb-0.5" style={{ color: "#D88C9A" }}>{product.brand}</p>}
-                      <h3 className="text-xs sm:text-sm font-semibold text-gray-900 line-clamp-2 mb-2 leading-snug">{product.name}</h3>
-                      <div className="flex items-center justify-between gap-1">
-                        <span className="text-base font-bold" style={{ color: "#D88C9A" }}>£{price?.toFixed(2)}</span>
-                        <button
-                          onClick={(e) => handleAddToCart(e, product.id)}
-                          className="flex items-center gap-1 text-xs font-semibold text-white px-2.5 py-1.5 rounded-lg transition-all flex-shrink-0"
-                          style={{ background: added ? "#4ade80" : "#D88C9A" }}
-                          title="Add to cart"
-                        >
-                          {added ? <CheckCircle className="w-3.5 h-3.5" /> : <ShoppingCart className="w-3.5 h-3.5" />}
-                          <span className="hidden sm:inline">{added ? "Added!" : "Add"}</span>
-                        </button>
+                        {lowStock && (
+                          <div className="absolute top-2 right-2">
+                            <span className="text-[10px] font-bold bg-orange-400 text-white px-2 py-0.5 rounded-full">Only {product.stock_quantity} left</span>
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-            <div className="text-center mt-10">
-              <Link to={createPageUrl("CustomerStore")}>
-                <button className="rose-btn text-white px-10 py-3.5 font-semibold flex items-center gap-2 mx-auto shadow-md hover:shadow-lg transition-all">
-                  View All Products <ArrowRight className="w-4 h-4" />
-                </button>
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
+                      <div className="p-3">
+                        {product.brand && <p className="text-[10px] font-semibold uppercase tracking-wide mb-0.5" style={{ color: ROSE }}>{product.brand}</p>}
+                        <h3 className="text-xs sm:text-sm font-semibold text-gray-900 line-clamp-2 mb-2 leading-snug">{product.name}</h3>
+                        <div className="flex items-center justify-between gap-1">
+                          <span className="text-base font-bold" style={{ color: ROSE }}>£{price?.toFixed(2)}</span>
+                          <button
+                            onClick={(e) => handleAddToCart(e, product.id)}
+                            className="flex items-center gap-1 text-xs font-semibold text-white px-2.5 py-1.5 rounded-lg transition-all flex-shrink-0"
+                            style={{ background: added ? "#4ade80" : ROSE }}
+                            title="Add to cart"
+                          >
+                            {added ? <CheckCircle className="w-3.5 h-3.5" /> : <ShoppingCart className="w-3.5 h-3.5" />}
+                            <span className="hidden sm:inline">{added ? "Added!" : "Add"}</span>
+                          </button>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+              <div className="text-center mt-10">
+                <Link to={createPageUrl("CustomerStore")}>
+                  <button className="rose-btn text-white px-10 py-3.5 font-semibold flex items-center gap-2 mx-auto shadow-md hover:shadow-lg transition-all">
+                    View All Products <ArrowRight className="w-4 h-4" />
+                  </button>
+                </Link>
+              </div>
+            </>
+          )}
+        </div>
+      </section>
 
-      {/* ── SECTION 5: BRAND STORY ── */}
-      <section className="py-16" style={{ background: "linear-gradient(135deg, #fdf2f2 0%, #fce8f0 100%)" }}>
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center">
-          <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#D88C9A" }}>Our Promise</p>
-          <h2 className="playfair text-2xl sm:text-3xl font-bold text-gray-900 mb-5">About Havillah</h2>
-          <div className="w-12 h-0.5 mx-auto mb-6" style={{ background: "#D88C9A" }}></div>
-          <p className="text-gray-600 text-base leading-relaxed mb-4">
-            Havillah was built for real women — busy mums, working women, and style-conscious shoppers who want to look great without overspending.
-          </p>
-          <p className="text-gray-500 text-sm leading-relaxed">
-            We handpick every product to meet our quality standards. Because we believe great style shouldn't come with a high price tag.
-          </p>
-          <div className="mt-6 inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-full" style={{ background: "#fce8ee", color: "#D88C9A" }}>
-            <Heart className="w-4 h-4" /> "Confidence Starts Here"
+      {/* ── SECTION 5: COMMUNITY STORY ── */}
+      <section className="py-16" style={{ background: "linear-gradient(135deg, #2d1a22 0%, #4a2535 100%)" }}>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-10 items-center">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#E8CFCF" }}>Our Story</p>
+              <h2 className="playfair text-3xl sm:text-4xl font-bold text-white mb-5 leading-tight">
+                Bringing Culture<br />Closer to Home
+              </h2>
+              <div className="w-12 h-0.5 mb-6" style={{ background: ROSE }}></div>
+              <p className="text-gray-300 text-base leading-relaxed mb-4">
+                Havillah Marketplace was created to make it easier for Nigerian and Indian families in the UK to access authentic groceries, beauty, and cultural essentials — all in one trusted online store.
+              </p>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                Whether you're craving the taste of home or searching for culturally authentic beauty products, we bring it all directly to your door.
+              </p>
+              <div className="flex items-center gap-3 mt-6 p-4 rounded-2xl" style={{ background: "rgba(216,140,154,0.15)", border: "1px solid rgba(216,140,154,0.3)" }}>
+                <Users className="w-8 h-8 flex-shrink-0" style={{ color: ROSE }} />
+                <div>
+                  <p className="text-white font-semibold text-sm">Serving Afro-Asian communities</p>
+                  <p className="text-gray-400 text-xs">Across England, Scotland & Wales</p>
+                </div>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { emoji: "🍠", label: "Nigerian Yam & Root Vegetables" },
+                { emoji: "🌶", label: "Indian Spices & Masalas" },
+                { emoji: "🧴", label: "Natural African Beauty" },
+                { emoji: "🥣", label: "Authentic Grains & Pulses" },
+              ].map(item => (
+                <div key={item.label} className="rounded-2xl p-4 text-center" style={{ background: "rgba(255,255,255,0.06)" }}>
+                  <div className="text-3xl mb-2">{item.emoji}</div>
+                  <p className="text-white text-xs font-medium leading-snug">{item.label}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -371,13 +415,13 @@ export default function Home() {
       <section className="py-16 bg-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#D88C9A" }}>Reviews</p>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: ROSE }}>Community Reviews</p>
             <h2 className="playfair text-2xl sm:text-3xl font-bold text-gray-900">What Our Customers Say</h2>
           </div>
-          <div className="rounded-3xl p-8 sm:p-10 text-center border border-rose-100 shadow-sm" style={{ background: "#F8F4F1" }}>
+          <div className="rounded-3xl p-8 sm:p-10 text-center border border-rose-100 shadow-sm" style={{ background: CREAM }}>
             <div className="flex justify-center gap-1 mb-5">
               {[...Array(TESTIMONIALS[testimonialIndex].stars)].map((_, i) => (
-                <Star key={i} className="w-5 h-5 fill-current" style={{ color: "#D88C9A" }} />
+                <Star key={i} className="w-5 h-5 fill-current" style={{ color: ROSE }} />
               ))}
             </div>
             <blockquote className="playfair text-lg sm:text-xl text-gray-700 italic mb-5 leading-relaxed">
@@ -396,7 +440,7 @@ export default function Home() {
             {TESTIMONIALS.map((_, i) => (
               <button key={i} onClick={() => setTestimonialIndex(i)}
                 className="rounded-full transition-all"
-                style={{ width: i === testimonialIndex ? 24 : 8, height: 8, background: i === testimonialIndex ? "#D88C9A" : "#e8cfcf" }} />
+                style={{ width: i === testimonialIndex ? 24 : 8, height: 8, background: i === testimonialIndex ? ROSE : "#e8cfcf" }} />
             ))}
             <button onClick={() => setTestimonialIndex(i => (i + 1) % TESTIMONIALS.length)}
               className="w-8 h-8 rounded-full border border-rose-200 flex items-center justify-center hover:bg-rose-50 transition-colors">
@@ -409,13 +453,13 @@ export default function Home() {
       {/* ── SECTION 7: NEWSLETTER ── */}
       <section className="py-16" style={{ background: "linear-gradient(135deg, #D88C9A 0%, #c97889 100%)" }}>
         <div className="max-w-xl mx-auto px-4 sm:px-6 text-center">
-          <p className="text-white/80 uppercase tracking-widest text-xs font-semibold mb-3">✦ Exclusive Offer</p>
+          <p className="text-white/80 uppercase tracking-widest text-xs font-semibold mb-3">🌍 Join Our Community</p>
           <h2 className="playfair text-2xl sm:text-3xl font-bold text-white mb-3">Join the Havillah Community</h2>
-          <p className="text-white/90 text-base mb-1">Subscribe & get <span className="font-bold underline">10% off</span> your first order.</p>
-          <p className="text-white/70 text-xs mb-7">Style inspiration, new arrivals & exclusive deals in your inbox.</p>
+          <p className="text-white/90 text-base mb-1">Subscribe & get <span className="font-bold underline">10% off</span> your first grocery order.</p>
+          <p className="text-white/70 text-xs mb-7">New arrivals, cultural recipes, exclusive deals — all in your inbox.</p>
           {subscribed ? (
             <div className="bg-white/20 rounded-2xl px-6 py-4 text-white font-semibold">
-              🎉 Welcome! Your discount code: <span className="font-bold">WELCOME10</span>
+              🎉 Welcome to Havillah! Your code: <span className="font-bold">WELCOME10</span>
             </div>
           ) : (
             <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
@@ -446,13 +490,13 @@ export default function Home() {
                 alt="Havillah" className="h-9 w-auto mb-3 rounded-lg" />
               <p className="playfair text-lg font-semibold mb-2" style={{ color: "#E8CFCF" }}>Havillah Marketplace</p>
               <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
-                Affordable beauty & fashion for women and kids across the UK. Style you'll love — without the high price tag.
+                Your trusted UK-based Afro-Asian marketplace for authentic Nigerian & Indian groceries, beauty and cultural essentials.
               </p>
             </div>
             <div>
               <h5 className="font-semibold mb-4 text-xs uppercase tracking-wider" style={{ color: "#E8CFCF" }}>Shop</h5>
               <ul className="space-y-2.5 text-sm text-gray-400">
-                {["Women's Fashion","Kids' Fashion","Beauty & Skincare","Accessories"].map(cat => (
+                {["Nigerian Groceries","Indian Groceries","Natural Hair & Beauty","Cultural Fashion","Kids & Family"].map(cat => (
                   <li key={cat}><Link to={createPageUrl("CustomerStore")} className="hover:text-white transition-colors">{cat}</Link></li>
                 ))}
               </ul>
@@ -469,7 +513,7 @@ export default function Home() {
           </div>
           <div className="border-t border-gray-800 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-gray-500">
             <p>© 2026 Havillah Marketplace. All rights reserved.</p>
-            <p>Made with ♥ for women & kids across the UK</p>
+            <p>🌍 Serving Afro-Asian families across the UK</p>
           </div>
         </div>
       </footer>
@@ -478,7 +522,7 @@ export default function Home() {
       <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden">
         <Link to={createPageUrl("CustomerStore")}>
           <button className="w-full rose-btn text-white py-4 text-sm font-bold flex items-center justify-center gap-2 shadow-2xl">
-            <ShoppingBag className="w-5 h-5" /> Shop Now — Prices You'll Love
+            <ShoppingBag className="w-5 h-5" /> Shop Authentic Groceries
           </button>
         </Link>
       </div>
