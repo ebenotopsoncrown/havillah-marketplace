@@ -359,7 +359,7 @@ export default function Home() {
                         {product.brand && <p className="text-[10px] font-semibold uppercase tracking-wide mb-0.5" style={{ color: ROSE }}>{product.brand}</p>}
                         <h3 className="text-xs sm:text-sm font-semibold text-gray-900 line-clamp-2 mb-2 leading-snug">{product.name}</h3>
                         <div className="flex items-center justify-between gap-1">
-                          <span className="text-base font-bold" style={{ color: ROSE }}>£{price?.toFixed(2)}</span>
+                          <span className="text-sm font-bold" style={{ color: ROSE }}>£{price?.toFixed(2)}</span>
                           <button
                             onClick={(e) => handleAddToCart(e, product.id)}
                             className="flex items-center gap-1 text-xs font-semibold text-white px-2.5 py-1.5 rounded-lg transition-all flex-shrink-0"

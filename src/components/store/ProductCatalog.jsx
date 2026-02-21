@@ -49,7 +49,7 @@ export default function ProductCatalog({ products, onAddToCart }) {
             </h3>
             
             <div className="flex items-baseline gap-1 mb-2">
-              <span className="text-sm sm:text-base font-bold" style={{ color: "#D88C9A" }}>
+              <span className="text-xs sm:text-sm font-bold" style={{ color: "#D88C9A" }}>
                 £{price?.toFixed(2)}
               </span>
               {product.wholesale_price && (
@@ -63,7 +63,7 @@ export default function ProductCatalog({ products, onAddToCart }) {
               <button
                 onClick={(e) => { e.stopPropagation(); onAddToCart(product); }}
                 className="flex-1 text-white h-8 sm:h-9 text-xs rounded-lg font-semibold flex items-center justify-center gap-1 transition-opacity hover:opacity-90"
-                style={{ background: "#D88C9A" }}
+                style={{ background: "#3D6B4F" }}
               >
                 <ShoppingCart className="w-3 h-3" />
                 <span className="hidden sm:inline">Add</span>
