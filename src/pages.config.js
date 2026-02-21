@@ -51,6 +51,7 @@ import AccessControlGuide from './pages/AccessControlGuide';
 import AppSettings from './pages/AppSettings';
 import ArchitectureDiagram from './pages/ArchitectureDiagram';
 import BrandAssets from './pages/BrandAssets';
+import BrandBanners from './pages/BrandBanners';
 import Categories from './pages/Categories';
 import ClickAndCollect from './pages/ClickAndCollect';
 import CustomerAccount from './pages/CustomerAccount';
@@ -71,6 +72,7 @@ import Orders from './pages/Orders';
 import POS from './pages/POS';
 import PickingAndPacking from './pages/PickingAndPacking';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import ProductFeedManager from './pages/ProductFeedManager';
 import ProductPage from './pages/ProductPage';
 import Products from './pages/Products';
 import Purchases from './pages/Purchases';
@@ -87,8 +89,6 @@ import SystemDocumentation from './pages/SystemDocumentation';
 import TermsAndConditions from './pages/TermsAndConditions';
 import TestGoogleMapsAPI from './pages/TestGoogleMapsAPI';
 import appInfographic from './pages/appInfographic';
-import ProductFeedManager from './pages/ProductFeedManager';
-import BrandBanners from './pages/BrandBanners';
 import __Layout from './Layout.jsx';
 
 
@@ -97,6 +97,7 @@ export const PAGES = {
     "AppSettings": AppSettings,
     "ArchitectureDiagram": ArchitectureDiagram,
     "BrandAssets": BrandAssets,
+    "BrandBanners": BrandBanners,
     "Categories": Categories,
     "ClickAndCollect": ClickAndCollect,
     "CustomerAccount": CustomerAccount,
@@ -117,6 +118,7 @@ export const PAGES = {
     "POS": POS,
     "PickingAndPacking": PickingAndPacking,
     "PrivacyPolicy": PrivacyPolicy,
+    "ProductFeedManager": ProductFeedManager,
     "ProductPage": ProductPage,
     "Products": Products,
     "Purchases": Purchases,
@@ -133,8 +135,6 @@ export const PAGES = {
     "TermsAndConditions": TermsAndConditions,
     "TestGoogleMapsAPI": TestGoogleMapsAPI,
     "appInfographic": appInfographic,
-    "ProductFeedManager": ProductFeedManager,
-    "BrandBanners": BrandBanners,
 }
 
 export const pagesConfig = {

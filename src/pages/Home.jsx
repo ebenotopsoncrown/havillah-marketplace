@@ -140,19 +140,21 @@ export default function Home() {
       <header className="bg-white border-b border-rose-100 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-14 sm:h-16">
+            {/* Logo — larger on mobile */}
             <div className="flex items-center gap-2">
               <img
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/49e6f5db7_HavillahMarketplacelogo.jpg"
                 alt="Havillah"
-                className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl object-cover flex-shrink-0"
+                className="h-12 w-12 sm:h-12 sm:w-12 rounded-xl object-cover flex-shrink-0"
               />
               <div>
-                <span className="playfair text-sm sm:text-base font-bold text-gray-900 block leading-none">Havillah</span>
-                <p className="text-[10px] sm:text-xs tracking-widest uppercase" style={{ color: ROSE }}>Afro-Asian Marketplace</p>
+                <span className="playfair text-base sm:text-base font-bold text-gray-900 block leading-none">Havillah</span>
+                <p className="text-[12px] sm:text-xs tracking-widest uppercase" style={{ color: ROSE }}>Afro-Asian Marketplace</p>
               </div>
             </div>
-            <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
-              {["Nigerian Groceries","Indian Groceries","Beauty","Fashion"].map(cat => (
+            {/* Desktop nav — Groceries, Beauty, Fashion only */}
+            <nav className="hidden md:flex items-center gap-8 text-base font-bold text-gray-700">
+              {["Groceries","Beauty","Fashion"].map(cat => (
                 <Link key={cat} to={createPageUrl("CustomerStore")} className="hover:text-rose-500 transition-colors">{cat}</Link>
               ))}
             </nav>
@@ -170,14 +172,21 @@ export default function Home() {
             </div>
           </div>
         </div>
-        {/* Mobile category strip */}
-        <div className="md:hidden border-t border-rose-50 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
-          <div className="flex px-3 py-1.5 gap-1 min-w-max">
-            {["🛒 Nigerian","🍛 Indian","💄 Beauty","👗 Fashion"].map(cat => (
-              <Link key={cat} to={createPageUrl("CustomerStore")}
-                className="text-xs font-semibold px-3 py-1.5 rounded-full whitespace-nowrap"
-                style={{ color: ROSE }}>{cat}</Link>
-            ))}
+        {/* Mobile category strip — Groceries, Beauty, Fashion + Shop Now */}
+        <div className="md:hidden border-t border-rose-50">
+          <div className="flex items-center justify-between px-3 py-2 gap-2">
+            <div className="flex items-center gap-1">
+              {["Groceries","Beauty","Fashion"].map(cat => (
+                <Link key={cat} to={createPageUrl("CustomerStore")}
+                  className="text-sm font-extrabold px-2.5 py-1.5 whitespace-nowrap"
+                  style={{ color: ROSE }}>{cat}</Link>
+              ))}
+            </div>
+            <Link to={createPageUrl("CustomerStore")} className="flex-shrink-0">
+              <button className="rose-btn text-white px-3 py-2 text-xs font-bold flex items-center gap-1 shadow-sm">
+                <ShoppingBag className="w-3.5 h-3.5" /><span>Shop Now</span>
+              </button>
+            </Link>
           </div>
         </div>
       </header>
