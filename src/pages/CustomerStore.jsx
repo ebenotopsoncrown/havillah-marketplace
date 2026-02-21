@@ -232,13 +232,12 @@ export default function CustomerStore() {
               <img
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/49e6f5db7_HavillahMarketplacelogo.jpg"
                 alt="Havillah Marketplace"
-                className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl object-cover flex-shrink-0"
+                className="h-11 w-11 sm:h-12 sm:w-12 rounded-xl object-cover flex-shrink-0"
               />
-              <div className="hidden sm:block">
-                <span className="playfair text-base font-bold text-gray-900 block leading-none">Havillah</span>
-                <p className="text-[10px] tracking-widest uppercase" style={{ color: "#D88C9A" }}>Afro-Asian Marketplace</p>
+              <div className="flex flex-col">
+                <span className="playfair text-sm sm:text-base font-bold text-gray-900 leading-tight">Havillah</span>
+                <p className="text-[9px] sm:text-[10px] tracking-widest uppercase whitespace-nowrap" style={{ color: "#D88C9A" }}>Afro-Asian Marketplace</p>
               </div>
-              <span className="sm:hidden text-sm font-bold text-gray-900">Havillah</span>
             </Link>
 
             {/* Actions */}

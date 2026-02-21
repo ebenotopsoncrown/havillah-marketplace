@@ -56,7 +56,7 @@ export default function ProductCatalog({ products, onAddToCart }) {
             </h3>
             
             <div className="flex items-baseline gap-1 mb-2">
-              <span className="text-xs sm:text-sm font-bold" style={{ color: "#D88C9A" }}>
+              <span className="text-[10px] sm:text-xs font-bold" style={{ color: "#0e9aa7" }}>
                 £{price?.toFixed(2)}
               </span>
               {product.wholesale_price && (
@@ -69,10 +69,10 @@ export default function ProductCatalog({ products, onAddToCart }) {
             <div className="flex gap-1 sm:gap-2">
               <button
                 onClick={(e) => { e.stopPropagation(); onAddToCart(product); }}
-                className="flex-1 text-white h-8 sm:h-9 text-xs rounded-lg font-semibold flex items-center justify-center gap-1 transition-opacity hover:opacity-90"
-                style={{ background: "#3D6B4F" }}
+                className="w-8 sm:flex-1 text-white h-8 sm:h-9 text-xs rounded-lg font-semibold flex items-center justify-center gap-1 transition-opacity hover:opacity-90 px-1.5 sm:px-0"
+                style={{ background: "#0e9aa7" }}
               >
-                <ShoppingCart className="w-3 h-3" />
+                <ShoppingCart className="w-3 h-3 flex-shrink-0" />
                 <span className="hidden sm:inline">Add</span>
               </button>
               <Link
