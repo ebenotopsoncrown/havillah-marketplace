@@ -224,6 +224,69 @@ export default function ProductFeedManager() {
           </div>
         </div>
 
+        {/* Google Merchant Centre Guide */}
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-8">
+          <div className="flex items-center gap-2 mb-1">
+            <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
+            <h2 className="text-lg font-bold text-gray-900">Google Merchant Centre Setup Guide</h2>
+          </div>
+          <p className="text-sm text-gray-500 mb-6">Use this same XML feed to list your products on Google Shopping for free.</p>
+
+          {/* Steps */}
+          <div className="space-y-4 mb-6">
+            {[
+              { step: "01", title: "Create a Google Merchant Centre Account", desc: "Go to merchants.google.com and sign up with your Google account. Enter your business name, country (United Kingdom), and website URL.", link: "https://merchants.google.com", linkLabel: "Open Google Merchant Centre →" },
+              { step: "02", title: "Verify & Claim Your Website", desc: "Google needs to confirm you own havillahmarketplace.com. You can verify via Google Search Console (easiest), an HTML tag, or a DNS record. Once verified, click 'Claim' in Merchant Centre." },
+              { step: "03", title: "Enable Free Product Listings", desc: "Go to Growth → Manage Programmes → Free Product Listings and click Enable. This is what gets your products into Google Shopping at no cost." },
+              { step: "04", title: "Configure Shipping Settings", desc: "Go to Shipping & Returns and add a UK shipping rule. Example: Standard delivery £4.50, Free delivery on orders over £50. Google will reject your feed without this." },
+              { step: "05", title: "Upload Your Product Feed (XML)", desc: "Go to Products → Feeds → Add Feed. Choose United Kingdom, English, and upload the XML file you download from this page. Set it to update weekly." },
+              { step: "06", title: "Wait for Review (3–10 days)", desc: "New accounts are reviewed by Google before going live. Check Products → Diagnostics for any errors. Most common issues: missing images, price mismatch, or missing GTINs." },
+            ].map(s => (
+              <div key={s.step} className="flex gap-4 p-4 rounded-xl bg-gray-50">
+                <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xs font-bold flex-shrink-0">{s.step}</div>
+                <div>
+                  <h3 className="font-semibold text-gray-900 text-sm mb-1">{s.title}</h3>
+                  <p className="text-gray-500 text-sm leading-relaxed">{s.desc}</p>
+                  {s.link && (
+                    <a href={s.link} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 mt-2 text-sm font-semibold text-blue-600 hover:text-blue-700">
+                      {s.linkLabel} <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Troubleshooting */}
+          <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <AlertCircle className="w-4 h-4 text-orange-500" />
+              <h3 className="font-semibold text-orange-900 text-sm">Products Not Showing? Common Reasons</h3>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-2">
+              {[
+                { issue: "New account under review", fix: "Wait 3–10 business days — this is normal" },
+                { issue: "Website not verified/claimed", fix: "Go to Business Info → Website in Merchant Centre" },
+                { issue: "Free Listings not enabled", fix: "Growth → Manage Programmes → Free Product Listings" },
+                { issue: "Shipping settings missing", fix: "Add a UK shipping rule in Shipping & Returns" },
+                { issue: "Products show as Disapproved", fix: "Go to Products → Diagnostics for the exact reason" },
+                { issue: "Price mismatch", fix: "Price on feed must exactly match price on your website" },
+                { issue: "Images too small or missing", fix: "Images must be at least 100×100px (500×500px recommended)" },
+                { issue: "Missing product URLs", fix: "Each product needs a working link to your store page" },
+              ].map(row => (
+                <div key={row.issue} className="flex gap-2 text-xs">
+                  <span className="text-orange-500 font-bold flex-shrink-0">✗</span>
+                  <div>
+                    <span className="font-semibold text-orange-900">{row.issue}: </span>
+                    <span className="text-orange-700">{row.fix}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Tips */}
         <div className="bg-blue-50 border border-blue-100 rounded-2xl p-5">
           <div className="flex items-center gap-2 mb-3">
