@@ -13,19 +13,19 @@ const COLLECTIONS = [
     slot: "collection_women",
     label: "Nigerian Groceries",
     desc: "Yam, palm oil, egusi & more",
-    image: "https://images.unsplash.com/photo-1567337710282-00832b415979?w=600&h=700&fit=crop&q=90"
+    image: "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=700&fit=crop&q=90"
   },
   {
     slot: "collection_kids",
     label: "Indian Groceries",
     desc: "Spices, lentils, rice & staples",
-    image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600&h=700&fit=crop&q=90"
+    image: "https://images.unsplash.com/photo-1505253304499-671c55fb57fe?w=600&h=700&fit=crop&q=90"
   },
   {
     slot: "collection_beauty",
     label: "Natural Hair & Beauty",
     desc: "Shea butter, natural oils & care",
-    image: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&h=700&fit=crop&q=90"
+    image: "https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=600&h=700&fit=crop&q=90"
   },
   {
     slot: "collection_accessories",
