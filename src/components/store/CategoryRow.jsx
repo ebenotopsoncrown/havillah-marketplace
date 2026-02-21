@@ -50,10 +50,10 @@ export default function CategoryRow({ categories, selectedCategory, onSelect }) 
       <div className="flex gap-4 overflow-x-auto pb-2" style={{ scrollbarWidth: 'none' }}>
         <button onClick={() => onSelect('all')} className="flex flex-col items-center flex-shrink-0 gap-1.5">
           <div
-            className={`w-16 h-16 rounded-full flex items-center justify-center text-2xl transition-all shadow-sm ${selectedCategory === 'all' ? 'scale-110 ring-2 ring-offset-2' : 'bg-rose-50'}`}
-            style={selectedCategory === 'all' ? { background: "#E8CFCF", ringColor: "#D88C9A" } : {}}
+            className={`w-16 h-16 rounded-full flex items-center justify-center text-2xl transition-all shadow-sm ${selectedCategory === 'all' ? 'scale-110 ring-2 ring-offset-2' : ''}`}
+            style={selectedCategory === 'all' ? { background: "#D88C9A", ringColor: "#D88C9A" } : { background: "linear-gradient(135deg, #fce8ee 0%, #e8cfcf 100%)" }}
           >
-            ✨
+            🛍️
           </div>
           <span className="text-xs font-medium text-center w-16 leading-tight" style={{ color: selectedCategory === 'all' ? "#D88C9A" : "#6b7280" }}>All</span>
         </button>
