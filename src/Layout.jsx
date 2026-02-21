@@ -303,6 +303,15 @@ export default function Layout({ children, currentPageName }) {
                               <span>Product Feed / Shopping.com</span>
                             </Link>
                           </SidebarMenuButton>
+                          <SidebarMenuButton asChild>
+                            <Link 
+                              to={createPageUrl("BrandBanners")} 
+                              className="flex items-center gap-3 px-3 py-2 hover:bg-fuchsia-50 hover:text-fuchsia-700 transition-colors duration-200 rounded-lg text-sm"
+                            >
+                              <Image className="w-4 h-4" />
+                              <span>Brand Banners</span>
+                            </Link>
+                          </SidebarMenuButton>
                         </div>
                       </CollapsibleContent>
                     </SidebarMenuItem>
