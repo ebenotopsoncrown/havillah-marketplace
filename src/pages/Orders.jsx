@@ -38,7 +38,7 @@ import {
 export default function Orders() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-  const [selectedOrderId, setSelectedOrderId] = useState(null);
+  const [selectedOrder, setSelectedOrder] = useState(null);
   const [confirmingOrder, setConfirmingOrder] = useState(null);
   const [cancellingOrder, setCancellingOrder] = useState(null);
   const queryClient = useQueryClient();
