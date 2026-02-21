@@ -232,7 +232,7 @@ export default function CustomerStore() {
               <img
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/49e6f5db7_HavillahMarketplacelogo.jpg"
                 alt="Havillah Marketplace"
-                className="h-[52px] w-[52px] sm:h-14 sm:w-14 rounded-xl object-cover flex-shrink-0"
+                className="h-[47px] w-[47px] sm:h-14 sm:w-14 rounded-xl object-cover flex-shrink-0"
               />
               <div className="flex flex-col">
                 <span className="playfair text-base sm:text-lg font-black text-gray-900 leading-tight">Havillah</span>
