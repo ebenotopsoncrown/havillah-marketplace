@@ -56,7 +56,7 @@ const TESTIMONIALS = [
   { name: "Adaeze O.",  location: "Leicester",  text: "Havillah feels like a community. Every order is packed with care. Authentic products that remind me of home.", stars: 5 },
 ];
 
-const PRODUCT_BADGES = ["Top Product", "Best Seller", "Popular", "Favourites"];
+
 
 export default function Home() {
   const [testimonialIndex, setTestimonialIndex] = useState(0);

@@ -28,7 +28,7 @@ export default function ProductCatalog({ products, onAddToCart }) {
         return (
         <div
           key={product.id}
-          className="group bg-white rounded-2xl overflow-hidden border border-rose-50 cursor-pointer transition-all duration-300"
+          className="group bg-white rounded-2xl overflow-hidden border border-rose-50 cursor-pointer transition-all duration-300 relative"
           style={{ boxShadow: "0 2px 12px rgba(216,140,154,0.08)" }}
           onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 12px 40px rgba(216,140,154,0.2)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
           onMouseLeave={e => { e.currentTarget.style.boxShadow = "0 2px 12px rgba(216,140,154,0.08)"; e.currentTarget.style.transform = "translateY(0)"; }}
