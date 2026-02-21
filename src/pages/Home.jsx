@@ -140,33 +140,42 @@ export default function Home() {
       <header className="bg-white border-b border-rose-100 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-14 sm:h-16">
-            {/* Logo — larger on mobile */}
-            <div className="flex items-center gap-2">
+            {/* Logo */}
+            <div className="flex items-center gap-2.5">
               <img
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/49e6f5db7_HavillahMarketplacelogo.jpg"
                 alt="Havillah"
                 className="h-12 w-12 sm:h-12 sm:w-12 rounded-xl object-cover flex-shrink-0"
               />
               <div>
-                <span className="playfair text-base sm:text-base font-bold text-gray-900 block leading-none">Havillah</span>
-                <p className="text-[12px] sm:text-xs tracking-widest uppercase" style={{ color: ROSE }}>Afro-Asian Marketplace</p>
+                <span className="playfair text-base sm:text-base font-bold text-gray-900 block leading-tight">Havillah</span>
+                <p className="text-[11px] sm:text-xs tracking-widest uppercase whitespace-nowrap" style={{ color: ROSE }}>Afro-Asian Marketplace</p>
               </div>
             </div>
-            {/* Desktop nav — Groceries, Beauty, Fashion only */}
+            {/* Desktop nav — Groceries, Beauty, Fashion, Accessories */}
             <nav className="hidden md:flex items-center gap-8 text-base font-bold text-gray-700">
-              {["Groceries","Beauty","Fashion"].map(cat => (
+              {["Groceries","Beauty","Fashion","Accessories"].map(cat => (
                 <Link key={cat} to={createPageUrl("CustomerStore")} className="hover:text-rose-500 transition-colors">{cat}</Link>
               ))}
             </nav>
-            <div className="flex items-center gap-2">
+            {/* Desktop right actions */}
+            <div className="hidden md:flex items-center gap-2">
               <Link to={createPageUrl("CustomerStore")}>
-                <button className="rose-btn text-white px-3 sm:px-5 py-2 text-xs sm:text-sm font-semibold flex items-center gap-1.5">
+                <button className="rose-btn text-white px-5 py-2 text-sm font-semibold flex items-center gap-1.5">
                   <ShoppingBag className="w-4 h-4" /><span>Shop Now</span>
                 </button>
               </Link>
               <Link to={createPageUrl("StaffPortal")}>
-                <button className="border border-gray-200 text-gray-500 hover:bg-gray-50 px-2 sm:px-3 py-2 rounded-lg text-xs sm:text-sm flex items-center gap-1">
-                  <Lock className="w-3.5 h-3.5" /><span className="hidden sm:inline">Staff</span>
+                <button className="border border-gray-200 text-gray-500 hover:bg-gray-50 px-3 py-2 rounded-lg text-sm flex items-center gap-1">
+                  <Lock className="w-3.5 h-3.5" /><span>Staff</span>
+                </button>
+              </Link>
+            </div>
+            {/* Mobile — only padlock icon */}
+            <div className="flex md:hidden items-center">
+              <Link to={createPageUrl("StaffPortal")}>
+                <button className="border border-gray-200 text-gray-500 hover:bg-gray-50 p-2 rounded-lg flex items-center">
+                  <Lock className="w-4 h-4" />
                 </button>
               </Link>
             </div>
@@ -174,16 +183,16 @@ export default function Home() {
         </div>
         {/* Mobile category strip — Groceries, Beauty, Fashion + Shop Now */}
         <div className="md:hidden border-t border-rose-50">
-          <div className="flex items-center justify-between px-3 py-2 gap-2">
-            <div className="flex items-center gap-1">
+          <div className="flex items-center justify-between px-4 py-2.5 gap-3">
+            <div className="flex items-center gap-0.5">
               {["Groceries","Beauty","Fashion"].map(cat => (
                 <Link key={cat} to={createPageUrl("CustomerStore")}
-                  className="text-sm font-extrabold px-2.5 py-1.5 whitespace-nowrap"
+                  className="text-[13px] font-extrabold tracking-wide px-2 py-1 whitespace-nowrap rounded-lg hover:bg-rose-50 transition-colors"
                   style={{ color: ROSE }}>{cat}</Link>
               ))}
             </div>
             <Link to={createPageUrl("CustomerStore")} className="flex-shrink-0">
-              <button className="rose-btn text-white px-3 py-2 text-xs font-bold flex items-center gap-1 shadow-sm">
+              <button className="rose-btn text-white px-3.5 py-2 text-xs font-bold flex items-center gap-1.5 shadow-sm">
                 <ShoppingBag className="w-3.5 h-3.5" /><span>Shop Now</span>
               </button>
             </Link>
