@@ -224,9 +224,9 @@ export default function CustomerStore() {
       `}</style>
 
       {/* ── Sticky Header ── */}
-      <header className="bg-white sticky top-0 z-50 border-b border-rose-100 shadow-sm" style={{ paddingTop: "env(safe-area-inset-top)" }}>
+      <header className="bg-white sticky top-0 z-50 border-b border-rose-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-3 sm:px-6">
-          <div className="flex items-center justify-between h-14 sm:h-16">
+          <div className="pt-4 sm:pt-0 flex items-center justify-between h-auto sm:h-16 pb-2 sm:pb-0">
             {/* Logo */}
             <Link to={createPageUrl('Home')} className="flex items-center gap-2">
               <img
