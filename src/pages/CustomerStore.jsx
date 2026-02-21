@@ -264,7 +264,7 @@ export default function CustomerStore() {
           </div>
 
           {/* Search Bar */}
-          <div className="pb-3 flex items-center gap-2">
+          <div className="pb-3 pt-3 sm:pt-0 flex items-center gap-2">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: "#D88C9A" }} />
               <input
