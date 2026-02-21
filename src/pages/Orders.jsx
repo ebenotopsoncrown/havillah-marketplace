@@ -280,6 +280,10 @@ export default function Orders() {
               setSelectedOrder(null);
               setConfirmingOrder(order);
             }}
+            onCancelOrder={(order) => {
+              setSelectedOrder(null);
+              setCancellingOrder(order);
+            }}
           />
         )}
 
