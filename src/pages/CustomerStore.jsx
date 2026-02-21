@@ -217,41 +217,40 @@ export default function CustomerStore() {
 
 
   return (
-    <div className="min-h-screen" style={{ background: "#fdf9f9", fontFamily: "'Inter', 'Poppins', sans-serif" }}>
+    <div className="min-h-screen" style={{ background: "#F8F4F1", fontFamily: "'Inter', 'Poppins', sans-serif" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
         .playfair { font-family: 'Playfair Display', serif; }
       `}</style>
 
       {/* ── Sticky Header ── */}
       <header className="bg-white sticky top-0 z-50 border-b border-rose-100 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4">
-          {/* Top bar */}
-          <div className="flex items-center justify-between py-3 md:py-4">
-            {/* Logo + Name */}
-            <div className="flex items-center gap-2.5 flex-1 min-w-0">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6">
+          <div className="flex items-center justify-between h-14 sm:h-16">
+            {/* Logo */}
+            <Link to={createPageUrl('Home')} className="flex items-center gap-2">
               <img
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/49e6f5db7_HavillahMarketplacelogo.jpg"
                 alt="Havillah Marketplace"
-                className="h-10 w-10 md:h-12 md:w-12 rounded-xl object-cover flex-shrink-0"
+                className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl object-cover flex-shrink-0"
               />
               <div className="hidden sm:block">
-                <span className="playfair text-lg font-bold text-gray-900 leading-tight block">Havillah</span>
-                <p className="text-xs tracking-widest uppercase" style={{ color: "#D88C9A" }}>Beauty & Fashion</p>
+                <span className="playfair text-base font-bold text-gray-900 block leading-none">Havillah</span>
+                <p className="text-[10px] tracking-widest uppercase" style={{ color: "#D88C9A" }}>Afro-Asian Marketplace</p>
               </div>
-              <span className="sm:hidden text-base font-bold text-gray-900 truncate leading-tight">Havillah</span>
-            </div>
+              <span className="sm:hidden text-sm font-bold text-gray-900">Havillah</span>
+            </Link>
 
             {/* Actions */}
-            <div className="flex items-center gap-2.5 flex-shrink-0">
+            <div className="flex items-center gap-2 flex-shrink-0">
               <Link to={createPageUrl('CustomerAccount')}>
-                <button className="w-10 h-10 md:w-11 md:h-11 flex items-center justify-center rounded-full border border-rose-200 hover:bg-rose-50 transition-colors">
+                <button className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full border border-rose-200 hover:bg-rose-50 transition-colors">
                   <User className="w-4 h-4 text-rose-400" />
                 </button>
               </Link>
               <button
                 onClick={() => setShowCart(true)}
-                className="relative flex items-center gap-1.5 text-white text-sm font-semibold px-3 md:px-5 h-10 md:h-11 rounded-lg transition-colors"
+                className="relative flex items-center gap-1.5 text-white text-xs sm:text-sm font-semibold px-3 sm:px-4 h-9 sm:h-10 rounded-xl transition-colors"
                 style={{ background: "#D88C9A" }}
               >
                 <ShoppingCart className="w-4 h-4" />
@@ -265,46 +264,43 @@ export default function CustomerStore() {
             </div>
           </div>
 
-          {/* Search Bar with voice + image buttons */}
-          <div className="pb-3 md:pb-4 flex items-center gap-2">
-            <div className="relative flex-1 md:flex-none md:w-[64%]">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: "#D88C9A" }} />
+          {/* Search Bar */}
+          <div className="pb-3 flex items-center gap-2">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: "#D88C9A" }} />
               <input
                 type="text"
-                placeholder="Search beauty, fashion, accessories..."
+                placeholder="Search groceries, beauty, fashion..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 h-11 md:h-12 rounded-xl text-sm text-gray-800 placeholder-gray-400 outline-none border border-rose-100 focus:border-rose-300 focus:ring-2 transition-all"
+                className="w-full pl-9 pr-4 h-10 sm:h-11 rounded-xl text-sm text-gray-800 placeholder-gray-400 outline-none border border-rose-100 focus:border-rose-300 transition-all"
                 style={{ background: "#fdf2f2" }}
               />
             </div>
-            {/* Voice search */}
             <button
               onClick={handleVoiceSearch}
-              className={`flex-shrink-0 w-11 h-11 md:w-12 md:h-12 flex items-center justify-center rounded-xl transition-colors ${isListening ? 'bg-red-400 text-white animate-pulse' : 'text-white hover:opacity-90'}`}
+              className={`flex-shrink-0 w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-xl transition-colors ${isListening ? 'bg-red-400 text-white animate-pulse' : 'text-white hover:opacity-90'}`}
               style={!isListening ? { background: "#D88C9A" } : {}}
-              title="Search by voice"
+              title="Voice search"
             >
-              <Mic className="w-5 h-5" />
+              <Mic className="w-4 h-4" />
             </button>
-            {/* Image / barcode search */}
             <button
               onClick={() => setShowImageSearch(true)}
-              className="flex-shrink-0 w-11 h-11 md:w-12 md:h-12 flex items-center justify-center rounded-xl text-white hover:opacity-90 transition-colors"
+              className="flex-shrink-0 w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-xl text-white hover:opacity-90 transition-colors"
               style={{ background: "#D88C9A" }}
-              title="Search by image"
+              title="Image search"
             >
-              <ScanLine className="w-5 h-5" />
+              <ScanLine className="w-4 h-4" />
             </button>
           </div>
         </div>
       </header>
 
-      {/* ── Main scrollable content ── */}
+      {/* ── Main content ── */}
       <main className="max-w-7xl mx-auto">
-
         {/* Hero Slider */}
-        <div className="pt-4">
+        <div className="pt-3 px-3 sm:px-6">
           <HeroSlider slides={heroSlides} settings={heroSettings} />
         </div>
 
@@ -316,10 +312,10 @@ export default function CustomerStore() {
         />
 
         {/* Products Section */}
-        <div className="px-4 md:px-6 pb-16">
-          <div className="flex items-baseline justify-between mb-4">
+        <div className="px-3 sm:px-6 pb-20">
+          <div className="flex items-baseline justify-between mb-4 mt-2">
             <div>
-              <h2 className="playfair text-xl font-bold text-gray-900">
+              <h2 className="playfair text-lg sm:text-xl font-bold text-gray-900">
                 {selectedCategory === "all" ? "All Products" : categories.find(c => c.id === selectedCategory)?.name || "Products"}
               </h2>
               <p className="text-xs mt-0.5" style={{ color: "#D88C9A" }}>{filteredProducts.length} products available</p>
@@ -334,30 +330,24 @@ export default function CustomerStore() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white mt-16">
+      <footer className="bg-gray-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            {/* Brand */}
             <div>
               <p className="playfair text-lg font-semibold mb-1" style={{ color: "#E8CFCF" }}>Havillah Marketplace</p>
-              <p className="text-xs text-gray-500">Beauty & Fashion for Women & Children across the UK</p>
-              <div className="flex flex-col sm:flex-row gap-3 mt-3 text-sm text-gray-400">
+              <p className="text-xs text-gray-500 mb-3">Authentic Nigerian & Indian groceries, beauty & cultural essentials across the UK</p>
+              <div className="flex flex-col sm:flex-row gap-3 text-sm text-gray-400">
                 <a href="https://wa.me/4407389170996" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-rose-300 transition-colors">
-                  <Phone className="w-4 h-4" />
-                  +44 07389 170996
+                  <Phone className="w-4 h-4" /> +44 07389 170996
                 </a>
                 <a href="mailto:info@havillahmarketplace.com" className="flex items-center gap-2 hover:text-rose-300 transition-colors">
-                  <Mail className="w-4 h-4" />
-                  info@havillahmarketplace.com
+                  <Mail className="w-4 h-4" /> info@havillahmarketplace.com
                 </a>
                 <span className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4" />
-                  Bournemouth, UK
+                  <MapPin className="w-4 h-4" /> Bournemouth, UK
                 </span>
               </div>
             </div>
-
-            {/* Links */}
             <div className="flex flex-wrap items-center gap-4 text-xs text-gray-500">
               <Link to={createPageUrl('PrivacyPolicy')} className="hover:text-gray-300 transition-colors">Privacy Policy</Link>
               <Link to={createPageUrl('TermsAndConditions')} className="hover:text-gray-300 transition-colors">Terms</Link>
@@ -365,9 +355,8 @@ export default function CustomerStore() {
               <Link to={createPageUrl('StaffLogin')} className="hover:text-gray-300 transition-colors">Staff Login</Link>
             </div>
           </div>
-
           <div className="border-t border-gray-800 mt-8 pt-5 text-center text-xs text-gray-600">
-            &copy; {new Date().getFullYear()} Havillah Marketplace. All rights reserved. Made with ♥ for women & children across the UK.
+            &copy; 2026 Havillah Marketplace. All rights reserved. 🌍 Serving Afro-Asian families across the UK.
           </div>
         </div>
       </footer>

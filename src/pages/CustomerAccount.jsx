@@ -134,12 +134,14 @@ export default function CustomerAccount() {
     cancelled: XCircle
   };
 
+  const ROSE = "#D88C9A";
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#F8F4F1" }}>
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading your account...</p>
+          <div className="w-14 h-14 border-4 border-t-transparent rounded-full animate-spin mx-auto mb-4" style={{ borderColor: "#D88C9A", borderTopColor: "transparent" }}></div>
+          <p className="text-gray-500 text-sm">Loading your account...</p>
         </div>
       </div>
     );
@@ -147,15 +149,18 @@ export default function CustomerAccount() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-        <Card className="max-w-md w-full">
+      <div className="min-h-screen flex items-center justify-center p-4" style={{ background: "#F8F4F1" }}>
+        <Card className="max-w-md w-full border-rose-100 shadow-lg">
           <CardContent className="p-8 text-center">
-            <User className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+            <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: "#fce8ee" }}>
+              <User className="w-8 h-8" style={{ color: ROSE }} />
+            </div>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Sign In Required</h2>
-            <p className="text-gray-600 mb-6">Please sign in to view your account</p>
-            <Button 
+            <p className="text-gray-500 mb-6">Please sign in to view your account</p>
+            <Button
               onClick={() => base44.auth.redirectToLogin(createPageUrl('CustomerAccount'))}
-              className="w-full bg-indigo-600 hover:bg-indigo-700"
+              className="w-full rounded-xl"
+              style={{ background: ROSE }}
             >
               Sign In
             </Button>
@@ -166,117 +171,85 @@ export default function CustomerAccount() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-indigo-600 to-indigo-800 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between mb-6">
-            <Link to={createPageUrl('CustomerStore')}>
-              <Button variant="ghost" className="text-white hover:bg-white/10">
-                <ArrowLeft className="w-5 h-5 mr-2" />
-                Back to Store
-              </Button>
-            </Link>
-            <Button
-              onClick={handleLogout}
-              variant="ghost"
-              className="text-white hover:bg-white/10"
-            >
-              <LogOut className="w-5 h-5 mr-2" />
-              Logout
-            </Button>
-          </div>
+    <div className="min-h-screen" style={{ background: "#F8F4F1", fontFamily: "'Inter', 'Poppins', sans-serif" }}>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap'); .playfair { font-family: 'Playfair Display', serif; }`}</style>
 
+      {/* Header */}
+      <div style={{ background: "linear-gradient(135deg, #2d1a22 0%, #4a2535 100%)" }} className="text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-5">
+          <div className="flex items-center justify-between mb-5">
+            <Link to={createPageUrl('CustomerStore')}>
+              <button className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors">
+                <ArrowLeft className="w-4 h-4" /> Back to Store
+              </button>
+            </Link>
+            <button onClick={handleLogout} className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors">
+              <LogOut className="w-4 h-4" /> Logout
+            </button>
+          </div>
           <div className="flex items-center gap-4">
-            <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center">
-              <User className="w-10 h-10 text-white" />
+            <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: "rgba(216,140,154,0.3)" }}>
+              <User className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold">{user.full_name || 'Customer'}</h1>
-              <p className="text-indigo-100">{user.email}</p>
+              <h1 className="playfair text-2xl font-bold text-white">{user.full_name || 'Customer'}</h1>
+              <p className="text-sm" style={{ color: "#E8CFCF" }}>{user.email}</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
         {/* Quick Actions */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <Link to={createPageUrl('CustomerStore')}>
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-indigo-500">
-              <CardContent className="p-6 text-center">
-                <Store className="w-8 h-8 text-indigo-600 mx-auto mb-2" />
-                <p className="font-semibold text-gray-900">Continue Shopping</p>
-              </CardContent>
-            </Card>
-          </Link>
-
-          <Card 
-            onClick={() => window.open(`mailto:orders@coriander.co.uk?subject=Customer Support&body=Hi, I need help with...`)}
-            className="hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-green-500"
-          >
-            <CardContent className="p-6 text-center">
-              <Mail className="w-8 h-8 text-green-600 mx-auto mb-2" />
-              <p className="font-semibold text-gray-900">Contact Us</p>
-            </CardContent>
-          </Card>
-
-          <Card 
-            onClick={() => window.open('https://g.page/r/YOUR_GOOGLE_REVIEW_LINK/review', '_blank')}
-            className="hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-yellow-500"
-          >
-            <CardContent className="p-6 text-center">
-              <Star className="w-8 h-8 text-yellow-600 mx-auto mb-2" />
-              <p className="font-semibold text-gray-900">Rate Us</p>
-            </CardContent>
-          </Card>
-
-          <Card 
-            onClick={handleShare}
-            className="hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-blue-500"
-          >
-            <CardContent className="p-6 text-center">
-              <Share2 className="w-8 h-8 text-blue-600 mx-auto mb-2" />
-              <p className="font-semibold text-gray-900">Share App</p>
-            </CardContent>
-          </Card>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+          {[
+            { label: "Continue Shopping", icon: Store, color: ROSE, to: 'CustomerStore' },
+            { label: "Contact Us", icon: Mail, color: "#22c55e", action: () => window.open(`mailto:info@havillahmarketplace.com`) },
+            { label: "Rate Us", icon: Star, color: "#f59e0b", action: () => window.open('https://g.page/r/YOUR_GOOGLE_REVIEW_LINK/review', '_blank') },
+            { label: "Share Store", icon: Share2, color: "#3b82f6", action: handleShare },
+          ].map(({ label, icon: Icon, color, to, action }) => {
+            const inner = (
+              <Card className="hover:shadow-md transition-all cursor-pointer border border-rose-50 bg-white">
+                <CardContent className="p-4 text-center">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-2" style={{ background: `${color}18` }}>
+                    <Icon className="w-5 h-5" style={{ color }} />
+                  </div>
+                  <p className="font-semibold text-gray-900 text-xs sm:text-sm">{label}</p>
+                </CardContent>
+              </Card>
+            );
+            return to ? <Link key={label} to={createPageUrl(to)}>{inner}</Link>
+              : <div key={label} onClick={action}>{inner}</div>;
+          })}
         </div>
 
-        {/* Profile Information */}
-        <Card className="mb-8">
+        {/* Profile */}
+        <Card className="mb-6 border border-rose-50 bg-white">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <User className="w-5 h-5" />
-              Profile Information
+            <CardTitle className="flex items-center gap-2 text-base">
+              <User className="w-4 h-4" style={{ color: ROSE }} /> Profile Information
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-5">
               <div>
-                <p className="text-sm font-medium text-gray-500 mb-1">Full Name</p>
+                <p className="text-xs font-medium text-gray-500 mb-1">Full Name</p>
                 <p className="text-gray-900 font-semibold">{user.full_name || 'Not provided'}</p>
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-500 mb-1">Email Address</p>
-                <p className="text-gray-900 font-semibold flex items-center gap-2">
-                  <Mail className="w-4 h-4" />
-                  {user.email}
+                <p className="text-xs font-medium text-gray-500 mb-1">Email Address</p>
+                <p className="text-gray-900 font-semibold flex items-center gap-2 text-sm">
+                  <Mail className="w-3.5 h-3.5 text-gray-400" /> {user.email}
                 </p>
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-500 mb-1">Account Type</p>
-                <Badge variant="outline" className="bg-indigo-50 text-indigo-700 border-indigo-200">
-                  Customer
-                </Badge>
+                <p className="text-xs font-medium text-gray-500 mb-1">Account Type</p>
+                <Badge variant="outline" className="text-xs" style={{ color: ROSE, borderColor: "#fce8ee", background: "#fdf2f2" }}>Customer</Badge>
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-500 mb-1">Member Since</p>
-                <p className="text-gray-900 font-semibold">
-                  {new Date(user.created_date).toLocaleDateString('en-GB', { 
-                    day: 'numeric', 
-                    month: 'long', 
-                    year: 'numeric' 
-                  })}
+                <p className="text-xs font-medium text-gray-500 mb-1">Member Since</p>
+                <p className="text-gray-900 font-semibold text-sm">
+                  {new Date(user.created_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
                 </p>
               </div>
             </div>
@@ -284,25 +257,26 @@ export default function CustomerAccount() {
         </Card>
 
         {/* Order History */}
-        <Card>
+        <Card className="border border-rose-50 bg-white">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Package className="w-5 h-5" />
+            <CardTitle className="flex items-center gap-2 text-base">
+              <Package className="w-4 h-4" style={{ color: ROSE }} />
               Order History
-              <Badge className="ml-auto bg-indigo-600">{orders.length}</Badge>
+              <span className="ml-auto text-xs font-bold text-white px-2 py-0.5 rounded-full" style={{ background: ROSE }}>{orders.length}</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
             {orders.length === 0 ? (
-              <div className="text-center py-12">
-                <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                <p className="text-gray-500 text-lg mb-2">No orders yet</p>
-                <p className="text-gray-400 mb-6">Start shopping to see your orders here</p>
+              <div className="text-center py-10">
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4" style={{ background: "#fce8ee" }}>
+                  <Package className="w-7 h-7" style={{ color: ROSE }} />
+                </div>
+                <p className="text-gray-600 font-semibold mb-1">No orders yet</p>
+                <p className="text-gray-400 text-sm mb-5">Start shopping to see your orders here</p>
                 <Link to={createPageUrl('CustomerStore')}>
-                  <Button className="bg-indigo-600 hover:bg-indigo-700">
-                    <Store className="w-5 h-5 mr-2" />
+                  <button className="text-white px-6 py-2.5 rounded-xl text-sm font-semibold" style={{ background: ROSE }}>
                     Browse Products
-                  </Button>
+                  </button>
                 </Link>
               </div>
             ) : (
@@ -310,81 +284,55 @@ export default function CustomerAccount() {
                 {orders.map((order) => {
                   const StatusIcon = statusIcons[order.status];
                   return (
-                    <div key={order.id} className="border-2 border-gray-200 rounded-lg p-4 hover:border-indigo-300 transition-colors">
+                    <div key={order.id} className="border border-rose-100 rounded-2xl p-4 hover:border-rose-300 transition-colors bg-white">
                       <div className="flex items-start justify-between mb-3">
                         <div>
-                          <p className="font-bold text-lg text-gray-900">{order.order_number}</p>
-                          <p className="text-sm text-gray-500">
-                            {new Date(order.order_date).toLocaleDateString('en-GB', {
-                              day: 'numeric',
-                              month: 'short',
-                              year: 'numeric',
-                              hour: '2-digit',
-                              minute: '2-digit'
-                            })}
+                          <p className="font-bold text-gray-900">{order.order_number}</p>
+                          <p className="text-xs text-gray-400 mt-0.5">
+                            {new Date(order.order_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                           </p>
                         </div>
-                        <Badge className={`${statusColors[order.status]} border`}>
+                        <Badge className={`${statusColors[order.status]} border text-xs`}>
                           {StatusIcon && <StatusIcon className="w-3 h-3 mr-1" />}
                           {order.status}
                         </Badge>
                       </div>
-
                       <Separator className="my-3" />
-
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
                         <div>
-                          <p className="text-gray-500 mb-1">Total Amount</p>
-                          <p className="font-bold text-gray-900">£{order.total_amount.toFixed(2)}</p>
+                          <p className="text-gray-400 text-xs mb-0.5">Total</p>
+                          <p className="font-bold" style={{ color: ROSE }}>£{order.total_amount.toFixed(2)}</p>
                         </div>
                         <div>
-                          <p className="text-gray-500 mb-1">Delivery Type</p>
-                          <p className="font-semibold text-gray-900 capitalize">
-                            {order.delivery_type === 'click_and_collect' ? 'Click & Collect' : 'Delivery'}
+                          <p className="text-gray-400 text-xs mb-0.5">Delivery</p>
+                          <p className="font-semibold text-gray-800 text-xs">{order.delivery_type === 'click_and_collect' ? 'Click & Collect' : 'Delivery'}</p>
+                        </div>
+                        <div>
+                          <p className="text-gray-400 text-xs mb-0.5">Payment</p>
+                          <p className="font-semibold text-gray-800 text-xs capitalize flex items-center gap-1">
+                            <CreditCard className="w-3 h-3" /> {order.payment_method}
                           </p>
                         </div>
                         <div>
-                          <p className="text-gray-500 mb-1">Payment Method</p>
-                          <p className="font-semibold text-gray-900 capitalize flex items-center gap-1">
-                            <CreditCard className="w-3 h-3" />
-                            {order.payment_method}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-gray-500 mb-1">Payment Status</p>
-                          <Badge variant="outline" className={order.payment_status === 'paid' ? 'bg-green-50 text-green-700' : 'bg-yellow-50 text-yellow-700'}>
+                          <p className="text-gray-400 text-xs mb-0.5">Status</p>
+                          <Badge variant="outline" className={`text-xs ${order.payment_status === 'paid' ? 'bg-green-50 text-green-700' : 'bg-yellow-50 text-yellow-700'}`}>
                             {order.payment_status}
                           </Badge>
                         </div>
                       </div>
-
                       {order.delivery_type === 'delivery' && order.delivery_address && (
-                        <div className="mt-3 pt-3 border-t border-gray-200">
-                          <p className="text-sm text-gray-500 mb-1">Delivery Address</p>
-                          <p className="text-sm font-medium text-gray-900 flex items-start gap-2">
-                            <MapPin className="w-4 h-4 mt-0.5 text-gray-400" />
+                        <div className="mt-3 pt-3 border-t border-gray-100">
+                          <p className="text-xs text-gray-400 mb-1">Delivery Address</p>
+                          <p className="text-xs font-medium text-gray-700 flex items-start gap-1.5">
+                            <MapPin className="w-3.5 h-3.5 mt-0.5 text-gray-400 flex-shrink-0" />
                             {order.delivery_address}, {order.delivery_postcode}
                           </p>
                         </div>
                       )}
-
-                      {order.notes && (
-                        <div className="mt-3 pt-3 border-t border-gray-200">
-                          <p className="text-sm text-gray-500 mb-1">Order Notes</p>
-                          <p className="text-sm text-gray-700">{order.notes}</p>
-                        </div>
-                      )}
-
                       {!['delivered', 'cancelled', 'dispatched'].includes(order.status) && (
-                        <div className="mt-4 pt-3 border-t border-gray-200">
-                          <Button
-                            onClick={() => setCancellingOrder(order)}
-                            variant="outline"
-                            size="sm"
-                            className="border-red-300 text-red-700 hover:bg-red-50"
-                          >
-                            <XCircle className="w-4 h-4 mr-2" />
-                            Cancel Order
+                        <div className="mt-3 pt-3 border-t border-gray-100">
+                          <Button onClick={() => setCancellingOrder(order)} variant="outline" size="sm" className="border-red-200 text-red-600 hover:bg-red-50 text-xs rounded-lg">
+                            <XCircle className="w-3.5 h-3.5 mr-1.5" /> Cancel Order
                           </Button>
                         </div>
                       )}
@@ -396,37 +344,29 @@ export default function CustomerAccount() {
           </CardContent>
         </Card>
 
-        {/* Contact Information */}
-        <Card className="mt-8">
+        {/* Contact */}
+        <Card className="mt-6 border border-rose-50 bg-white">
           <CardHeader>
-            <CardTitle>Need Help?</CardTitle>
+            <CardTitle className="text-base">Need Help?</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="flex items-start gap-3">
-                <Phone className="w-5 h-5 text-indigo-600 mt-1" />
-                <div>
-                  <p className="font-semibold text-gray-900 mb-1">Call Us</p>
-                  <p className="text-sm text-gray-600">020 XXXX XXXX</p>
-                  <p className="text-xs text-gray-500 mt-1">Mon-Sat: 8AM-8PM</p>
+            <div className="grid md:grid-cols-3 gap-5">
+              {[
+                { icon: Phone, color: ROSE, label: "Call Us", info: "+44 07389 170996", sub: "Mon–Sat: 8AM–8PM" },
+                { icon: Mail, color: "#22c55e", label: "Email Us", info: "info@havillahmarketplace.com", sub: "We reply within 24 hours" },
+                { icon: MapPin, color: "#f59e0b", label: "Based In", info: "Bournemouth, UK", sub: "Nationwide delivery" },
+              ].map(({ icon: Icon, color, label, info, sub }) => (
+                <div key={label} className="flex items-start gap-3">
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${color}18` }}>
+                    <Icon className="w-4 h-4" style={{ color }} />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900 text-sm mb-0.5">{label}</p>
+                    <p className="text-xs text-gray-600">{info}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">{sub}</p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <Mail className="w-5 h-5 text-green-600 mt-1" />
-                <div>
-                  <p className="font-semibold text-gray-900 mb-1">Email Us</p>
-                  <p className="text-sm text-gray-600">orders@coriander.co.uk</p>
-                  <p className="text-xs text-gray-500 mt-1">We reply within 24 hours</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-red-600 mt-1" />
-                <div>
-                  <p className="font-semibold text-gray-900 mb-1">Visit Us</p>
-                  <p className="text-sm text-gray-600">846-848 Wimborne Rd</p>
-                  <p className="text-sm text-gray-600">Bournemouth BH9 2DS</p>
-                </div>
-              </div>
+              ))}
             </div>
           </CardContent>
         </Card>
