@@ -148,56 +148,62 @@ export default function OrderDetailsCard({ order, items, onClose, onStatusChange
           </div>
         )}
 
-        {/* Action Buttons Based on Status */}
-        {(onStatusChange || onConfirmOrder) && (
+        {/* Order Actions Dropdown */}
+        {!['delivered', 'cancelled'].includes(order.status) && (
           <div className="mt-6 pt-6 border-t">
             <h3 className="font-semibold mb-3">Order Actions</h3>
-            <div className="flex gap-3">
-              {order.status === 'pending_confirmation' && onConfirmOrder && (
-                <Button
-                  onClick={() => onConfirmOrder(order)}
-                  className="bg-blue-600 hover:bg-blue-700"
-                >
-                  <CheckCircle className="w-4 h-4 mr-2" />
-                  Confirm Order
-                </Button>
-              )}
-              {order.status === 'confirmed' && onStatusChange && (
-                <Button
-                  onClick={() => onStatusChange(order.id, 'picking')}
-                  className="bg-purple-600 hover:bg-purple-700"
-                >
-                  <Package className="w-4 h-4 mr-2" />
-                  Start Picking
-                </Button>
-              )}
-              {order.status === 'picking' && onStatusChange && (
-                <Button
-                  onClick={() => onStatusChange(order.id, 'ready')}
-                  className="bg-indigo-600 hover:bg-indigo-700"
-                >
-                  <CheckCircle className="w-4 h-4 mr-2" />
-                  Mark as Ready
-                </Button>
-              )}
-              {order.status === 'ready' && order.delivery_type === 'delivery' && onStatusChange && (
-                <Button
-                  onClick={() => onStatusChange(order.id, 'dispatched')}
-                  className="bg-orange-600 hover:bg-orange-700"
-                >
-                  <Truck className="w-4 h-4 mr-2" />
-                  Mark as Dispatched
-                </Button>
-              )}
-              {order.status === 'dispatched' && onStatusChange && (
-                <Button
-                  onClick={() => onStatusChange(order.id, 'delivered')}
-                  className="bg-green-600 hover:bg-green-700"
-                >
-                  <CheckCircle className="w-4 h-4 mr-2" />
-                  Mark as Delivered
-                </Button>
-              )}
+            <div className="flex gap-3 flex-wrap">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button className="bg-indigo-600 hover:bg-indigo-700 gap-2">
+                    Order Actions <ChevronDown className="w-4 h-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-56">
+                  {order.status === 'pending_confirmation' && onConfirmOrder && (
+                    <DropdownMenuItem onClick={() => onConfirmOrder(order)} className="gap-2 cursor-pointer">
+                      <CheckCircle className="w-4 h-4 text-blue-600" />
+                      Confirm Order
+                    </DropdownMenuItem>
+                  )}
+                  {order.status === 'confirmed' && onStatusChange && (
+                    <DropdownMenuItem onClick={() => onStatusChange(order.id, 'picking')} className="gap-2 cursor-pointer">
+                      <Package className="w-4 h-4 text-purple-600" />
+                      Start Picking
+                    </DropdownMenuItem>
+                  )}
+                  {order.status === 'picking' && onStatusChange && (
+                    <DropdownMenuItem onClick={() => onStatusChange(order.id, 'ready')} className="gap-2 cursor-pointer">
+                      <CheckCircle className="w-4 h-4 text-indigo-600" />
+                      Mark as Ready
+                    </DropdownMenuItem>
+                  )}
+                  {order.status === 'ready' && order.delivery_type === 'delivery' && onStatusChange && (
+                    <DropdownMenuItem onClick={() => onStatusChange(order.id, 'dispatched')} className="gap-2 cursor-pointer">
+                      <Truck className="w-4 h-4 text-orange-600" />
+                      Mark as Dispatched
+                    </DropdownMenuItem>
+                  )}
+                  {order.status === 'ready' && order.delivery_type === 'click_and_collect' && onStatusChange && (
+                    <DropdownMenuItem onClick={() => onStatusChange(order.id, 'delivered')} className="gap-2 cursor-pointer">
+                      <CheckCircle className="w-4 h-4 text-green-600" />
+                      Mark as Collected
+                    </DropdownMenuItem>
+                  )}
+                  {order.status === 'dispatched' && onStatusChange && (
+                    <DropdownMenuItem onClick={() => onStatusChange(order.id, 'delivered')} className="gap-2 cursor-pointer">
+                      <CheckCircle className="w-4 h-4 text-green-600" />
+                      Mark as Delivered
+                    </DropdownMenuItem>
+                  )}
+                  {onCancelOrder && (
+                    <DropdownMenuItem onClick={() => onCancelOrder(order)} className="gap-2 cursor-pointer text-red-600 focus:text-red-600">
+                      <XCircle className="w-4 h-4" />
+                      Cancel Order
+                    </DropdownMenuItem>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         )}
