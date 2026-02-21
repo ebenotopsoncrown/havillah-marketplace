@@ -350,25 +350,54 @@ export default function ProductFormModal({ open, onClose, product, categories, o
           </div>
 
           {/* Storefront Badge */}
-          <div className="space-y-2">
-            <Label htmlFor="badge">Storefront Badge <span className="text-gray-400 font-normal">(shown on product card)</span></Label>
-            <Select
-              value={formData.badge || ""}
-              onValueChange={(value) => setFormData({ ...formData, badge: value === "none" ? "" : value })}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="No badge" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="none">No badge</SelectItem>
-                <SelectItem value="Best Seller">Best Seller</SelectItem>
-                <SelectItem value="Top Product">Top Product</SelectItem>
-                <SelectItem value="Popular">Popular</SelectItem>
-                <SelectItem value="Favourites">Favourites</SelectItem>
-                <SelectItem value="New Arrival">New Arrival</SelectItem>
-                <SelectItem value="Special Offer">Special Offer</SelectItem>
-              </SelectContent>
-            </Select>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="badge">Storefront Badge <span className="text-gray-400 font-normal">(shown on product card)</span></Label>
+              <Select
+                value={formData.badge || ""}
+                onValueChange={(value) => setFormData({ ...formData, badge: value === "none" ? "" : value })}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="No badge" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">No badge</SelectItem>
+                  <SelectItem value="Best Seller">Best Seller</SelectItem>
+                  <SelectItem value="Top Product">Top Product</SelectItem>
+                  <SelectItem value="Popular">Popular</SelectItem>
+                  <SelectItem value="Favourites">Favourites</SelectItem>
+                  <SelectItem value="New Arrival">New Arrival</SelectItem>
+                  <SelectItem value="New Arrivals">New Arrivals</SelectItem>
+                  <SelectItem value="Special Offer">Special Offer</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="discount_percent">
+                Discount % <span className="text-gray-400 font-normal">(e.g. 20 = 20% off retail price)</span>
+              </Label>
+              <Input
+                id="discount_percent"
+                type="number"
+                min="0"
+                max="99"
+                step="1"
+                placeholder="0 = no discount"
+                value={formData.discount_percent}
+                onChange={(e) => setFormData({ ...formData, discount_percent: e.target.value })}
+              />
+              {formData.discount_percent > 0 && formData.retail_price > 0 && (
+                <p className="text-xs text-gray-500 mt-1">
+                  Was <span className="line-through text-red-400">£{parseFloat(formData.retail_price).toFixed(2)}</span>{" "}
+                  → Now{" "}
+                  <span className="text-green-600 font-semibold">
+                    £{(parseFloat(formData.retail_price) * (1 - parseFloat(formData.discount_percent) / 100)).toFixed(2)}
+                  </span>
+                  {" "}({formData.discount_percent}% off)
+                </p>
+              )}
+            </div>
           </div>
 
           <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
