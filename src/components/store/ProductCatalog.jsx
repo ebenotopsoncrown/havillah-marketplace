@@ -22,7 +22,9 @@ export default function ProductCatalog({ products, onAddToCart }) {
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
       {products.map(product => {
         const img = product.image_urls?.[0] || product.image_url;
-        const price = product.wholesale_price || product.retail_price;
+        const basePrice = product.wholesale_price || product.retail_price;
+        const discountPercent = product.discount_percent || 0;
+        const price = discountPercent > 0 ? basePrice * (1 - discountPercent / 100) : basePrice;
         const availableStock = product.stock_quantity - (product.reserved_quantity || 0);
         const lowStock = availableStock > 0 && availableStock <= 5;
         return (
