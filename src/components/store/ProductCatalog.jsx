@@ -57,12 +57,17 @@ export default function ProductCatalog({ products, onAddToCart }) {
               {product.name}
             </h3>
             
-            <div className="flex items-baseline gap-1 mb-2">
+            <div className="flex items-baseline gap-1 mb-2 flex-wrap">
               <span className="text-[10px] sm:text-xs font-bold" style={{ color: "#0e9aa7" }}>
                 £{price?.toFixed(2)}
               </span>
-              {product.wholesale_price && (
-                <span className="text-xs text-gray-400 line-through">£{product.retail_price?.toFixed(2)}</span>
+              {discountPercent > 0 ? (
+                <span className="text-[10px] text-red-400 line-through decoration-double">£{basePrice?.toFixed(2)}</span>
+              ) : product.wholesale_price ? (
+                <span className="text-[10px] text-gray-400 line-through">£{product.retail_price?.toFixed(2)}</span>
+              ) : null}
+              {discountPercent > 0 && (
+                <span className="text-[9px] font-bold px-1 py-0.5 rounded bg-red-100 text-red-500 leading-none">-{discountPercent}%</span>
               )}
             </div>
 
