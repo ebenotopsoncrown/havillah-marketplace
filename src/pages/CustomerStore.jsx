@@ -358,6 +358,8 @@ export default function CustomerStore() {
               </div>
             </div>
             <div className="flex flex-wrap items-center gap-4 text-xs text-gray-500">
+              <Link to={createPageUrl('ShippingPolicy')} className="hover:text-gray-300 transition-colors">Shipping Policy</Link>
+              <Link to={createPageUrl('ReturnPolicy')} className="hover:text-gray-300 transition-colors">Returns & Refunds</Link>
               <Link to={createPageUrl('PrivacyPolicy')} className="hover:text-gray-300 transition-colors">Privacy Policy</Link>
               <Link to={createPageUrl('TermsAndConditions')} className="hover:text-gray-300 transition-colors">Terms</Link>
               <Link to={createPageUrl('MyData')} className="hover:text-gray-300 transition-colors">My Data</Link>
