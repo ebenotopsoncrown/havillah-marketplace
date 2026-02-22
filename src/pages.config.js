@@ -89,6 +89,8 @@ import SystemDocumentation from './pages/SystemDocumentation';
 import TermsAndConditions from './pages/TermsAndConditions';
 import TestGoogleMapsAPI from './pages/TestGoogleMapsAPI';
 import appInfographic from './pages/appInfographic';
+import ShippingPolicy from './pages/ShippingPolicy';
+import ReturnPolicy from './pages/ReturnPolicy';
 import __Layout from './Layout.jsx';
 
 
@@ -135,6 +137,8 @@ export const PAGES = {
     "TermsAndConditions": TermsAndConditions,
     "TestGoogleMapsAPI": TestGoogleMapsAPI,
     "appInfographic": appInfographic,
+    "ShippingPolicy": ShippingPolicy,
+    "ReturnPolicy": ReturnPolicy,
 }
 
 export const pagesConfig = {
