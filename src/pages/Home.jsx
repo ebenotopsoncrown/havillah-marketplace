@@ -523,6 +523,8 @@ export default function Home() {
               <h5 className="font-semibold mb-4 text-xs uppercase tracking-wider" style={{ color: "#E8CFCF" }}>Help</h5>
               <ul className="space-y-2.5 text-sm text-gray-400">
                 <li><Link to={createPageUrl("CustomerAccount")} className="hover:text-white transition-colors">My Account</Link></li>
+                <li><Link to={createPageUrl("ShippingPolicy")} className="hover:text-white transition-colors">Shipping Policy</Link></li>
+                <li><Link to={createPageUrl("ReturnPolicy")} className="hover:text-white transition-colors">Returns & Refunds</Link></li>
                 <li><Link to={createPageUrl("TermsAndConditions")} className="hover:text-white transition-colors">Terms & Conditions</Link></li>
                 <li><Link to={createPageUrl("PrivacyPolicy")} className="hover:text-white transition-colors">Privacy Policy</Link></li>
                 <li><Link to={createPageUrl("StaffPortal")} className="hover:text-white transition-colors flex items-center gap-1"><Lock className="w-3 h-3" /> Staff Portal</Link></li>
