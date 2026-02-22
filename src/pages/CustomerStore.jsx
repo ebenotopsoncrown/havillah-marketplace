@@ -228,6 +228,11 @@ export default function CustomerStore() {
         .playfair { font-family: 'Playfair Display', serif; }
       `}</style>
 
+      {/* ── Announcement Bar ── */}
+      <div className="bg-gray-900 text-white text-center py-2 px-4 text-xs sm:text-sm font-medium">
+        🚚 <strong>FREE Delivery</strong> to any location across the UK — No minimum order! &nbsp;|&nbsp; 🌍 Serving Afro-Asian communities nationwide
+      </div>
+
       {/* ── Sticky Header ── */}
       <header className="bg-white sticky top-0 z-50 border-b border-rose-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-3 sm:px-6">
