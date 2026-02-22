@@ -136,6 +136,11 @@ export default function Home() {
         ::-webkit-scrollbar-thumb { background: #D88C9A; border-radius: 4px; }
       `}</style>
 
+      {/* ── ANNOUNCEMENT BAR ── */}
+      <div className="bg-gray-900 text-white text-center py-2 px-4 text-xs sm:text-sm font-medium">
+        🚚 <strong>FREE Delivery</strong> to any location across the UK — No minimum order! &nbsp;|&nbsp; 🌍 Serving Afro-Asian communities nationwide
+      </div>
+
       {/* ── HEADER ── */}
       <header className="bg-white border-b border-rose-100 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
