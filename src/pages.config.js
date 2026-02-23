@@ -77,9 +77,11 @@ import ProductPage from './pages/ProductPage';
 import Products from './pages/Products';
 import Purchases from './pages/Purchases';
 import Reports from './pages/Reports';
+import ReturnPolicy from './pages/ReturnPolicy';
 import Sales from './pages/Sales';
 import SecurityDashboard from './pages/SecurityDashboard';
 import ServiceBusinessArchitecture from './pages/ServiceBusinessArchitecture';
+import ShippingPolicy from './pages/ShippingPolicy';
 import StaffLogin from './pages/StaffLogin';
 import StaffPortal from './pages/StaffPortal';
 import StoreQRCode from './pages/StoreQRCode';
@@ -89,8 +91,6 @@ import SystemDocumentation from './pages/SystemDocumentation';
 import TermsAndConditions from './pages/TermsAndConditions';
 import TestGoogleMapsAPI from './pages/TestGoogleMapsAPI';
 import appInfographic from './pages/appInfographic';
-import ShippingPolicy from './pages/ShippingPolicy';
-import ReturnPolicy from './pages/ReturnPolicy';
 import __Layout from './Layout.jsx';
 
 
@@ -125,9 +125,11 @@ export const PAGES = {
     "Products": Products,
     "Purchases": Purchases,
     "Reports": Reports,
+    "ReturnPolicy": ReturnPolicy,
     "Sales": Sales,
     "SecurityDashboard": SecurityDashboard,
     "ServiceBusinessArchitecture": ServiceBusinessArchitecture,
+    "ShippingPolicy": ShippingPolicy,
     "StaffLogin": StaffLogin,
     "StaffPortal": StaffPortal,
     "StoreQRCode": StoreQRCode,
@@ -137,8 +139,6 @@ export const PAGES = {
     "TermsAndConditions": TermsAndConditions,
     "TestGoogleMapsAPI": TestGoogleMapsAPI,
     "appInfographic": appInfographic,
-    "ShippingPolicy": ShippingPolicy,
-    "ReturnPolicy": ReturnPolicy,
 }
 
 export const pagesConfig = {
