@@ -66,6 +66,17 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
       return;
     }
     
+    // Save to address book (fire-and-forget)
+    base44.functions.invoke('upsertAddressBook', {
+      customer_name: formData.customer_name,
+      customer_email: formData.customer_email,
+      customer_phone: formData.customer_phone,
+      delivery_address: formData.delivery_address,
+      delivery_postcode: formData.delivery_postcode,
+      marketing_consent: formData.marketing_consent,
+      sms_consent: formData.sms_consent,
+    }).catch(() => {});
+
     // For non-card payments, proceed normally
     await onPlaceOrder(formData);
     setCompleted(true);
@@ -80,7 +91,9 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
         delivery_postcode: "",
         delivery_slot: "",
         payment_method: "card",
-        notes: ""
+        notes: "",
+        marketing_consent: false,
+        sms_consent: false
       });
       onClose();
     }, 3000);
