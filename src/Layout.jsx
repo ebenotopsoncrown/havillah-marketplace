@@ -110,6 +110,11 @@ const navigationItems = [
     icon: TruckIcon,
   },
   {
+    title: "Address Book",
+    url: createPageUrl("AddressBookAdmin"),
+    icon: BookUser,
+  },
+  {
     title: "Reports",
     url: createPageUrl("Reports"),
     icon: BarChart3,
