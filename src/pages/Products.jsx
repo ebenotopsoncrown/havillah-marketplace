@@ -4,7 +4,7 @@ import AdminGuard from "../components/AdminGuard";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Plus, Search, AlertTriangle, Upload } from "lucide-react";
+import { Plus, Search, AlertTriangle, Upload, X } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 import ProductsTable from "../components/products/ProductsTable";

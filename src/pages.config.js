@@ -48,6 +48,7 @@
  * The mainPage value must match a key in the PAGES object exactly.
  */
 import AccessControlGuide from './pages/AccessControlGuide';
+import AddressBookAdmin from './pages/AddressBookAdmin';
 import AppSettings from './pages/AppSettings';
 import ArchitectureDiagram from './pages/ArchitectureDiagram';
 import BrandAssets from './pages/BrandAssets';
@@ -91,12 +92,12 @@ import SystemDocumentation from './pages/SystemDocumentation';
 import TermsAndConditions from './pages/TermsAndConditions';
 import TestGoogleMapsAPI from './pages/TestGoogleMapsAPI';
 import appInfographic from './pages/appInfographic';
-import AddressBookAdmin from './pages/AddressBookAdmin';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "AccessControlGuide": AccessControlGuide,
+    "AddressBookAdmin": AddressBookAdmin,
     "AppSettings": AppSettings,
     "ArchitectureDiagram": ArchitectureDiagram,
     "BrandAssets": BrandAssets,
@@ -140,7 +141,6 @@ export const PAGES = {
     "TermsAndConditions": TermsAndConditions,
     "TestGoogleMapsAPI": TestGoogleMapsAPI,
     "appInfographic": appInfographic,
-    "AddressBookAdmin": AddressBookAdmin,
 }
 
 export const pagesConfig = {
