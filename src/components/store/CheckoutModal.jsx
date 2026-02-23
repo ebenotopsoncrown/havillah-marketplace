@@ -435,6 +435,19 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
             </div>
           )}
 
+          {/* Marketing Consent */}
+          <div className="space-y-2 border rounded-lg p-4 bg-gray-50">
+            <p className="text-sm font-semibold text-gray-700">Stay in touch (optional)</p>
+            <label className="flex items-start gap-3 cursor-pointer">
+              <input type="checkbox" className="mt-0.5 w-4 h-4" checked={formData.marketing_consent} onChange={e => setFormData({ ...formData, marketing_consent: e.target.checked })} />
+              <span className="text-xs text-gray-600">I'd like to receive offers, news and promotions via email</span>
+            </label>
+            <label className="flex items-start gap-3 cursor-pointer">
+              <input type="checkbox" className="mt-0.5 w-4 h-4" checked={formData.sms_consent} onChange={e => setFormData({ ...formData, sms_consent: e.target.checked })} />
+              <span className="text-xs text-gray-600">I'd like to receive SMS updates and exclusive deals</span>
+            </label>
+          </div>
+
           {/* Order Notes */}
           <div className="space-y-2">
             <Label htmlFor="notes">Order Notes (Optional)</Label>
