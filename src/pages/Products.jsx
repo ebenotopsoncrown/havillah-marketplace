@@ -16,6 +16,9 @@ import BarcodeGenerator from "../components/products/BarcodeGenerator";
 export default function Products() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [stockFilter, setStockFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [badgeFilter, setBadgeFilter] = useState("all");
   const [showForm, setShowForm] = useState(false);
   const [showStockAdjust, setShowStockAdjust] = useState(false);
   const [showBulkImport, setShowBulkImport] = useState(false);
