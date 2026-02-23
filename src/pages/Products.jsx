@@ -78,8 +78,33 @@ export default function Products() {
       product.sku?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.barcode?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === "all" || product.category_id === selectedCategory;
-    return matchesSearch && matchesCategory;
+    const category = categories.find(c => c.id === product.category_id);
+    const minStock = category?.minimum_stock_level || product.reorder_level || 10;
+    const matchesStock = stockFilter === "all"
+      || (stockFilter === "low" && product.stock_quantity <= minStock && product.stock_quantity > 0)
+      || (stockFilter === "out" && product.stock_quantity === 0)
+      || (stockFilter === "ok" && product.stock_quantity > minStock);
+    const matchesStatus = statusFilter === "all"
+      || (statusFilter === "active" && product.is_active !== false)
+      || (statusFilter === "inactive" && product.is_active === false);
+    const matchesBadge = badgeFilter === "all" || product.badge === badgeFilter;
+    return matchesSearch && matchesCategory && matchesStock && matchesStatus && matchesBadge;
   });
+
+  const activeFiltersCount = [
+    selectedCategory !== "all",
+    stockFilter !== "all",
+    statusFilter !== "all",
+    badgeFilter !== "all",
+  ].filter(Boolean).length;
+
+  const clearFilters = () => {
+    setSelectedCategory("all");
+    setStockFilter("all");
+    setStatusFilter("all");
+    setBadgeFilter("all");
+    setSearchTerm("");
+  };
 
   const handleSaveProduct = (data) => {
     if (editingProduct) {
