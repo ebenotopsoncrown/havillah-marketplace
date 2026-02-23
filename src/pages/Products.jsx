@@ -203,7 +203,7 @@ export default function Products() {
         )}
 
         <div className="bg-white rounded-xl shadow-lg border border-gray-200">
-          <div className="p-6 border-b border-gray-200">
+          <div className="p-6 border-b border-gray-200 space-y-3">
             <div className="flex flex-col sm:flex-row gap-3">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -215,7 +215,7 @@ export default function Products() {
                 />
               </div>
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger className="w-full sm:w-56 h-12">
+                <SelectTrigger className="w-full sm:w-44 h-12">
                   <SelectValue placeholder="All Categories" />
                 </SelectTrigger>
                 <SelectContent>
@@ -225,6 +225,49 @@ export default function Products() {
                   ))}
                 </SelectContent>
               </Select>
+              <Select value={stockFilter} onValueChange={setStockFilter}>
+                <SelectTrigger className="w-full sm:w-40 h-12">
+                  <SelectValue placeholder="Stock Level" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Stock</SelectItem>
+                  <SelectItem value="ok">In Stock</SelectItem>
+                  <SelectItem value="low">Low Stock</SelectItem>
+                  <SelectItem value="out">Out of Stock</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger className="w-full sm:w-36 h-12">
+                  <SelectValue placeholder="Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Status</SelectItem>
+                  <SelectItem value="active">Active</SelectItem>
+                  <SelectItem value="inactive">Inactive</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={badgeFilter} onValueChange={setBadgeFilter}>
+                <SelectTrigger className="w-full sm:w-40 h-12">
+                  <SelectValue placeholder="Badge" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Badges</SelectItem>
+                  <SelectItem value="Best Seller">Best Seller</SelectItem>
+                  <SelectItem value="Top Product">Top Product</SelectItem>
+                  <SelectItem value="Popular">Popular</SelectItem>
+                  <SelectItem value="Favourites">Favourites</SelectItem>
+                  <SelectItem value="New Arrival">New Arrival</SelectItem>
+                  <SelectItem value="Special Offer">Special Offer</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex items-center justify-between text-sm text-gray-500">
+              <span>Showing <strong>{filteredProducts.length}</strong> of <strong>{products.length}</strong> products</span>
+              {activeFiltersCount > 0 && (
+                <button onClick={clearFilters} className="flex items-center gap-1 text-indigo-600 hover:text-indigo-800 font-medium">
+                  <X className="w-3.5 h-3.5" /> Clear filters ({activeFiltersCount})
+                </button>
+              )}
             </div>
           </div>
 
