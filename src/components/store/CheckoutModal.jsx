@@ -30,7 +30,9 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
     delivery_postcode: "",
     delivery_slot: "",
     payment_method: "card",
-    notes: ""
+    notes: "",
+    marketing_consent: false,
+    sms_consent: false
   });
 
   const handleSubmit = async (e) => {
