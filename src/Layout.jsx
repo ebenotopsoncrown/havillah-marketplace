@@ -23,7 +23,8 @@ import {
   Layers,
   SlidersHorizontal,
   Rss,
-  Image
+  Image,
+  BookUser
 } from "lucide-react";
 import {
   Sidebar,
