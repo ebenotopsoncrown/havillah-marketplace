@@ -69,12 +69,14 @@ export default function Products() {
     },
   });
 
-  const filteredProducts = products.filter(product =>
-    searchTerm === "" ||
-    product.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.sku?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.barcode?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredProducts = products.filter(product => {
+    const matchesSearch = searchTerm === "" ||
+      product.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.sku?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.barcode?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === "all" || product.category_id === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
 
   const handleSaveProduct = (data) => {
     if (editingProduct) {
