@@ -186,11 +186,11 @@ export default function Home() {
             </div>
           </div>
         </div>
-        {/* Mobile category strip — Groceries, Beauty, Fashion + Shop Now */}
+        {/* Mobile category strip — Accessories, Beauty, Fashion + Shop Now */}
         <div className="md:hidden border-t border-rose-50">
           <div className="flex items-center justify-between px-4 py-2.5 gap-3">
             <div className="flex items-center gap-0.5">
-              {["Groceries","Beauty","Fashion"].map(cat => (
+              {["Accessories","Beauty","Fashion"].map(cat => (
                 <Link key={cat} to={createPageUrl("CustomerStore")}
                   className="text-[13px] font-extrabold tracking-wide px-2 py-1 whitespace-nowrap rounded-lg hover:bg-rose-50 transition-colors"
                   style={{ color: ROSE }}>{cat}</Link>
