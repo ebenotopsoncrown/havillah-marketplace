@@ -287,20 +287,47 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
             {displayCollections.map((col) => (
               <Link key={col.label} to={createPageUrl("CustomerStore")} className="group block">
-                <div className="relative rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-white">
-                  <div className="aspect-[3/4]">
-                    <img src={col.image} alt={col.label}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
+                {col.isAccessories ? (
+                  /* ── Special Accessories Card: collage grid ── */
+                  <div className="relative rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-pink-50 to-purple-50 aspect-[3/4] flex flex-col">
+                    {/* 2x2 image collage */}
+                    <div className="flex-1 grid grid-cols-2 grid-rows-2 gap-0.5 p-0.5">
+                      {[ACC_IMAGES.flowers, ACC_IMAGES.elastics, ACC_IMAGES.bows, ACC_IMAGES.headbands].map((src, i) => (
+                        <div key={i} className="overflow-hidden rounded-sm">
+                          <img src={src} alt="accessory" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                        </div>
+                      ))}
+                    </div>
+                    {/* Overlay gradient + text */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+                    {/* Sparkle badge */}
+                    <div className="absolute top-2 right-2 bg-gradient-to-r from-pink-400 to-purple-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md">
+                      ✨ New In
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4">
+                      <h3 className="text-white font-bold text-sm sm:text-base leading-snug">Fashion Accessories</h3>
+                      <p className="text-white/75 text-xs mt-0.5 hidden sm:block">Hair clips, headbands, bows & more</p>
+                      <span className="inline-flex items-center gap-1 text-white/90 text-xs mt-1.5 font-medium">
+                        Shop now <ArrowRight className="w-3 h-3" />
+                      </span>
+                    </div>
                   </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4">
-                    <h3 className="text-white font-bold text-sm sm:text-base leading-snug">{col.label}</h3>
-                    <p className="text-white/75 text-xs mt-0.5 hidden sm:block">{col.desc}</p>
-                    <span className="inline-flex items-center gap-1 text-white/90 text-xs mt-1.5 font-medium">
-                      Shop now <ArrowRight className="w-3 h-3" />
-                    </span>
+                ) : (
+                  <div className="relative rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-white">
+                    <div className="aspect-[3/4]">
+                      <img src={col.image} alt={col.label}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4">
+                      <h3 className="text-white font-bold text-sm sm:text-base leading-snug">{col.label}</h3>
+                      <p className="text-white/75 text-xs mt-0.5 hidden sm:block">{col.desc}</p>
+                      <span className="inline-flex items-center gap-1 text-white/90 text-xs mt-1.5 font-medium">
+                        Shop now <ArrowRight className="w-3 h-3" />
+                      </span>
+                    </div>
                   </div>
-                </div>
+                )}
               </Link>
             ))}
           </div>
