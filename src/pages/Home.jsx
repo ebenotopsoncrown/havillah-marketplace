@@ -43,10 +43,10 @@ const WHY_SHOP = [
 ];
 
 const FEATURED = [
-  { label: "Women's Fashion",         image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400&h=300&fit=crop&q=85" },
-  { label: "Men's Fashion",           image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop&q=85" },
-  { label: "Beauty & Skin Care",      image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&h=300&fit=crop&q=85" },
-  { label: "Fashion Accessories",     image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=300&fit=crop&q=85" },
+  { label: "Women's Fashion",         image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/502cde3fa_WomenFashion.jpg" },
+  { label: "Men's Fashion",           image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/368f5976e_MensTraditionalFashion.jpg" },
+  { label: "Beauty & Skin Care",      image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/ef57d5fb6_Beautyandskincare.jpg" },
+  { label: "Fashion Accessories",     image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/91c5ab801_FashionAccesories2.jpg" },
 ];
 
 const TESTIMONIALS = [
