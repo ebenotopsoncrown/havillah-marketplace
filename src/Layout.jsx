@@ -124,6 +124,31 @@ const navigationItems = [
 export default function Layout({ children, currentPageName }) {
   const location = useLocation();
   const [settingsOpen, setSettingsOpen] = React.useState(false);
+
+  // Google Analytics: inject script once and track page views
+  useEffect(() => {
+    if (!window.gtag) {
+      const script1 = document.createElement("script");
+      script1.async = true;
+      script1.src = "https://www.googletagmanager.com/gtag/js?id=G-Y8SBBC8XJW";
+      document.head.appendChild(script1);
+
+      const script2 = document.createElement("script");
+      script2.innerHTML = `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-Y8SBBC8XJW');
+      `;
+      document.head.appendChild(script2);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (window.gtag) {
+      window.gtag('event', 'page_view', { page_path: location.pathname });
+    }
+  }, [location.pathname]);
   
   // Pages without sidebar (public-facing)
   const publicPages = ["CustomerStore", "Home", "StaffPortal", "CustomerAccount", "HeroManager"];
