@@ -542,7 +542,7 @@ export default function Home() {
       <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden">
         <Link to={createPageUrl("CustomerStore")}>
           <button className="w-full rose-btn text-white py-4 text-sm font-bold flex items-center justify-center gap-2 shadow-2xl">
-            <ShoppingBag className="w-5 h-5" /> Shop Authentic Groceries
+            <ShoppingBag className="w-5 h-5" /> Shop Now
           </button>
         </Link>
       </div>
