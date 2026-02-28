@@ -8,6 +8,13 @@ import {
   Flag, ChevronLeft, ChevronRight, Mail, ShoppingCart, Heart, Users, Leaf
 } from "lucide-react";
 
+const ACC_IMAGES = {
+  flowers: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/42e0698f7_FashionAccesories.jpg",
+  elastics: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/c0e31333b_FashionAccesories2.jpg",
+  bows: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/16d8261f2_FashionAccesories3.jpg",
+  headbands: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/980b485ff_FashionAccesories4.jpg",
+};
+
 const COLLECTIONS = [
   {
     slot: "collection_women",
@@ -30,8 +37,8 @@ const COLLECTIONS = [
   {
     slot: "collection_accessories",
     label: "Fashion Accessories",
-    desc: "Jewellery, bags, scarves & more",
-    image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/5e3a8b83f_FashionAccesories.jpg"
+    desc: "Hair clips, headbands, bows & more",
+    isAccessories: true,
   },
 ];
 
