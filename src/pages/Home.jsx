@@ -13,25 +13,25 @@ const COLLECTIONS = [
     slot: "collection_women",
     label: "Women's Fashion",
     desc: "Elegant styles & contemporary wear",
-    image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=700&fit=crop&q=90"
+    image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/502cde3fa_WomenFashion.jpg"
   },
   {
     slot: "collection_kids",
     label: "Men's Fashion",
     desc: "Smart casuals & traditional wear",
-    image: "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=600&h=700&fit=crop&q=90"
+    image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/368f5976e_MensTraditionalFashion.jpg"
   },
   {
     slot: "collection_beauty",
     label: "Beauty & Skin Care",
     desc: "Natural oils, shea butter & skincare",
-    image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=700&fit=crop&q=90"
+    image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/ef57d5fb6_Beautyandskincare.jpg"
   },
   {
     slot: "collection_accessories",
     label: "Fashion Accessories",
     desc: "Jewellery, bags, scarves & more",
-    image: "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=600&h=700&fit=crop&q=90"
+    image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/5e3a8b83f_FashionAccesories.jpg"
   },
 ];
 
