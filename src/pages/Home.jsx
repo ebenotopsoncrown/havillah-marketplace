@@ -13,6 +13,8 @@ const ACC_IMAGES = {
   elastics: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/c0e31333b_FashionAccesories2.jpg",
   bows: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/16d8261f2_FashionAccesories3.jpg",
   headbands: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/980b485ff_FashionAccesories4.jpg",
+  girlRed: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/89a0fb900_ChatGPTImageFeb28202609_39_21PM.png",
+  girlFlowers: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/ddb07ffe6_ChatGPTImageFeb28202609_58_05PM.png",
 };
 
 const COLLECTIONS = [
