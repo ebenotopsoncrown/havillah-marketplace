@@ -143,7 +143,7 @@ export default function Home() {
 
       {/* ── HEADER ── */}
       <header className="bg-white border-b border-rose-100 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto pl-3 pr-5 sm:pl-4 sm:pr-6 lg:pl-5 lg:pr-8">
           <div className="flex justify-between items-center h-16 sm:h-16">
             {/* Logo */}
             <div className="flex items-center gap-2.5">
