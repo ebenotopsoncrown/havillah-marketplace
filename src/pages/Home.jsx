@@ -290,17 +290,10 @@ export default function Home() {
             {displayCollections.map((col) => (
               <Link key={col.label} to={createPageUrl("CustomerStore")} className="group block">
                 {col.isAccessories ? (
-                  /* ── Special Accessories Card: collage grid ── */
-                  <div className="relative rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-pink-50 to-purple-50 aspect-[3/4] flex flex-col">
-                    {/* 2x2 image collage */}
-                    <div className="flex-1 grid grid-cols-2 grid-rows-2 gap-0.5 p-0.5">
-                      {[ACC_IMAGES.flowers, ACC_IMAGES.elastics, ACC_IMAGES.bows, ACC_IMAGES.headbands].map((src, i) => (
-                        <div key={i} className="overflow-hidden rounded-sm">
-                          <img src={src} alt="accessory" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                        </div>
-                      ))}
-                    </div>
-                    {/* Overlay gradient + text */}
+                  /* ── Special Accessories Card: girl with hair accessories ── */
+                  <div className="relative rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-pink-50 aspect-[3/4]">
+                    <img src={ACC_IMAGES.girlRed} alt="Fashion Accessories"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
                     {/* Sparkle badge */}
                     <div className="absolute top-2 right-2 bg-gradient-to-r from-pink-400 to-purple-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md">
