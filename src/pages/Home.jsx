@@ -43,10 +43,10 @@ const WHY_SHOP = [
 ];
 
 const FEATURED = [
-  { label: "West African Staples",    image: "https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=400&h=300&fit=crop&q=85" },
-  { label: "Indian Spices & Grains",  image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&h=300&fit=crop&q=85" },
-  { label: "Natural Hair Care",       image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&h=300&fit=crop&q=85" },
-  { label: "Shea Butter & Skincare",  image: "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=400&h=300&fit=crop&q=85" },
+  { label: "Women's Fashion",         image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400&h=300&fit=crop&q=85" },
+  { label: "Men's Fashion",           image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop&q=85" },
+  { label: "Beauty & Skin Care",      image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&h=300&fit=crop&q=85" },
+  { label: "Fashion Accessories",     image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=300&fit=crop&q=85" },
 ];
 
 const TESTIMONIALS = [
