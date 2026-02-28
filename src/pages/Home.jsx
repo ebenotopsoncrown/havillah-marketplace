@@ -221,7 +221,7 @@ export default function Home() {
                 🌍 Nigerian · Indian · Cultural Essentials
               </div>
               <h1 className="playfair text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4">
-                Authentic Afro-Asian Groceries<br />
+                Authentic Afro-Asian Collections<br />
                 <span style={{ color: "#fce8ee" }}>Delivered Across the UK</span>
               </h1>
               <p className="text-white/85 text-base sm:text-lg mb-8 leading-relaxed max-w-lg">
