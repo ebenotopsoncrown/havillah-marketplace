@@ -157,9 +157,9 @@ export default function Home() {
                 <p className="text-[11px] sm:text-xs tracking-widest uppercase font-black whitespace-nowrap" style={{ color: ROSE }}>Afro-Asian Marketplace</p>
               </div>
             </div>
-            {/* Desktop nav — Groceries, Beauty, Fashion, Accessories */}
+            {/* Desktop nav — Fashion, Beauty, Accessories */}
             <nav className="hidden md:flex items-center gap-8 text-base font-bold text-gray-700">
-              {["Groceries","Beauty","Fashion","Accessories"].map(cat => (
+              {["Fashion","Beauty","Accessories"].map(cat => (
                 <Link key={cat} to={createPageUrl("CustomerStore")} className="hover:text-rose-500 transition-colors">{cat}</Link>
               ))}
             </nav>
