@@ -230,7 +230,7 @@ export default function Home() {
               <div className="flex flex-row gap-3">
                 <Link to={createPageUrl("CustomerStore")}>
                   <button className="rose-btn text-white px-5 sm:px-7 py-3 sm:py-3.5 text-sm sm:text-base font-semibold flex items-center gap-2 justify-center shadow-lg whitespace-nowrap">
-                    <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" /> Shop Groceries <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" /> Shop Fashion <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </button>
                 </Link>
                 <Link to={createPageUrl("CustomerStore")}>
