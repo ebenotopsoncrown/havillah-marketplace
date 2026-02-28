@@ -11,27 +11,27 @@ import {
 const COLLECTIONS = [
   {
     slot: "collection_women",
-    label: "Nigerian Groceries",
-    desc: "Yam, palm oil, egusi & more",
-    image: "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=700&fit=crop&q=90"
+    label: "Women's Fashion",
+    desc: "Elegant styles & contemporary wear",
+    image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=700&fit=crop&q=90"
   },
   {
     slot: "collection_kids",
-    label: "Indian Groceries",
-    desc: "Spices, lentils, rice & staples",
-    image: "https://images.unsplash.com/photo-1505253304499-671c55fb57fe?w=600&h=700&fit=crop&q=90"
+    label: "Men's Fashion",
+    desc: "Smart casuals & traditional wear",
+    image: "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=600&h=700&fit=crop&q=90"
   },
   {
     slot: "collection_beauty",
-    label: "Natural Hair & Beauty",
-    desc: "Shea butter, natural oils & care",
-    image: "https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=600&h=700&fit=crop&q=90"
+    label: "Beauty & Skin Care",
+    desc: "Natural oils, shea butter & skincare",
+    image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=700&fit=crop&q=90"
   },
   {
     slot: "collection_accessories",
-    label: "Cultural Fashion",
-    desc: "Traditional & modern wear",
-    image: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&h=700&fit=crop&q=90"
+    label: "Fashion Accessories",
+    desc: "Jewellery, bags, scarves & more",
+    image: "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=600&h=700&fit=crop&q=90"
   },
 ];
 
