@@ -514,7 +514,7 @@ export default function Home() {
             <div>
               <h5 className="font-semibold mb-4 text-xs uppercase tracking-wider" style={{ color: "#E8CFCF" }}>Shop</h5>
               <ul className="space-y-2.5 text-sm text-gray-400">
-                {["Nigerian Groceries","Indian Groceries","Natural Hair & Beauty","Cultural Fashion","Kids & Family"].map(cat => (
+                {["Women's Fashion","Men's Fashion","Beauty & Skin Care","Fashion Accessories"].map(cat => (
                   <li key={cat}><Link to={createPageUrl("CustomerStore")} className="hover:text-white transition-colors">{cat}</Link></li>
                 ))}
               </ul>
