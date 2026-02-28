@@ -345,13 +345,43 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
             {FEATURED.map(f => (
               <Link key={f.label} to={createPageUrl("CustomerStore")} className="group block rounded-2xl overflow-hidden relative shadow-sm hover:shadow-lg transition-all">
-                <div className="aspect-[4/3]">
-                  <img src={f.image} alt={f.label} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 p-3">
-                  <p className="text-white font-semibold text-sm leading-tight">{f.label}</p>
-                </div>
+                {f.isAccessories ? (
+                  /* ── Featured Accessories: horizontal strip collage ── */
+                  <div className="aspect-[4/3] relative bg-gradient-to-br from-fuchsia-50 to-pink-100 flex flex-col">
+                    {/* 3-across mini strip */}
+                    <div className="flex-1 grid grid-cols-2 grid-rows-2 gap-0.5 p-0.5">
+                      <div className="overflow-hidden rounded-sm">
+                        <img src={ACC_IMAGES.flowers} alt="flowers" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                      </div>
+                      <div className="overflow-hidden rounded-sm">
+                        <img src={ACC_IMAGES.headbands} alt="headbands" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                      </div>
+                      <div className="overflow-hidden rounded-sm">
+                        <img src={ACC_IMAGES.bows} alt="bows" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                      </div>
+                      <div className="overflow-hidden rounded-sm">
+                        <img src={ACC_IMAGES.elastics} alt="elastics" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                      </div>
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/65 to-transparent" />
+                    {/* Cart badge */}
+                    <div className="absolute top-2 left-2 bg-white/90 rounded-full px-2 py-0.5 flex items-center gap-1 shadow-sm">
+                      <ShoppingCart className="w-3 h-3 text-pink-500" />
+                      <span className="text-[10px] font-bold text-pink-600">Shop</span>
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 p-3">
+                      <p className="text-white font-semibold text-sm leading-tight">Fashion Accessories</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="aspect-[4/3]">
+                    <img src={f.image} alt={f.label} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-3">
+                      <p className="text-white font-semibold text-sm leading-tight">{f.label}</p>
+                    </div>
+                  </div>
+                )}
               </Link>
             ))}
           </div>
