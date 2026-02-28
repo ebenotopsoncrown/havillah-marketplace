@@ -9,10 +9,10 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Pencil, TrendingDown, Barcode, AlertCircle } from "lucide-react";
+import { Pencil, TrendingDown, Barcode, AlertCircle, ToggleLeft, ToggleRight } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function ProductsTable({ products, isLoading, onEdit, onAdjustStock, onGenerateBarcode, categories }) {
+export default function ProductsTable({ products, isLoading, onEdit, onAdjustStock, onGenerateBarcode, onToggleActive, categories }) {
   const getCategoryName = (categoryId) => {
     const category = categories.find(c => c.id === categoryId);
     return category?.name || 'Uncategorized';
@@ -148,8 +148,21 @@ export default function ProductsTable({ products, isLoading, onEdit, onAdjustSto
                     size="sm"
                     onClick={() => onEdit(product)}
                     className="hover:bg-indigo-50 hover:text-indigo-700"
+                    title="Edit"
                   >
                     <Pencil className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => onToggleActive(product)}
+                    className={product.is_active !== false ? "hover:bg-red-50 hover:text-red-600" : "hover:bg-green-50 hover:text-green-600"}
+                    title={product.is_active !== false ? "Deactivate product" : "Reactivate product"}
+                  >
+                    {product.is_active !== false
+                      ? <ToggleRight className="w-5 h-5 text-green-500" />
+                      : <ToggleLeft className="w-5 h-5 text-gray-400" />
+                    }
                   </Button>
                 </div>
               </TableCell>
