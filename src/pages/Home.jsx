@@ -52,8 +52,8 @@ const WHY_SHOP = [
 ];
 
 const FEATURED = [
-  { label: "Women's Fashion",         image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/502cde3fa_WomenFashion.jpg" },
-  { label: "Men's Fashion",           image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/368f5976e_MensTraditionalFashion.jpg" },
+  { label: "Women's Fashion",         image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/b2b308f92_ElegantAfricanfabric.png" },
+  { label: "Men's Fashion",           image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/b0b936a42_MenDesign2.jpg" },
   { label: "Beauty & Skin Care",      image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/ef57d5fb6_Beautyandskincare.jpg" },
   { label: "Fashion Accessories",     isAccessories: true },
 ];
