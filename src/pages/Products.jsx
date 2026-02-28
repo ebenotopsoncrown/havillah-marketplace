@@ -124,6 +124,10 @@ export default function Products() {
     setShowStockAdjust(true);
   };
 
+  const handleToggleActive = (product) => {
+    updateProductMutation.mutate({ id: product.id, data: { is_active: product.is_active === false ? true : false } });
+  };
+
   const handleGenerateBarcode = (product) => {
     setBarcodeProduct(product);
     setShowBarcodeGen(true);
@@ -277,6 +281,7 @@ export default function Products() {
             onEdit={handleEdit}
             onAdjustStock={handleAdjustStock}
             onGenerateBarcode={handleGenerateBarcode}
+            onToggleActive={handleToggleActive}
             categories={categories}
           />
         </div>
