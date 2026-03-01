@@ -208,9 +208,7 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
               </div>
               <div>
                 <p className="opacity-75">Delivery</p>
-                <p className="font-semibold">
-                  {calculatingFee ? 'Calculating...' : `£${deliveryCharge.toFixed(2)}`}
-                </p>
+                <p className="font-semibold">FREE</p>
               </div>
             </div>
           </div>
