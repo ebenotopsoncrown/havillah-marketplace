@@ -71,10 +71,6 @@ export default function ShoppingCartDrawer({ open, onClose, cart, updateQuantity
                 <span className="font-medium">£{subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">VAT</span>
-                <span className="font-medium">£{vatAmount.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between">
                 <span className="text-gray-600">Delivery</span>
                 <span className="font-medium text-green-600 font-semibold">FREE</span>
               </div>
