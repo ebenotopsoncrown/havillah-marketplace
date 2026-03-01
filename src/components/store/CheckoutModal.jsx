@@ -142,9 +142,7 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
 
   const subtotal = cart.reduce((sum, item) => sum + (item.unit_price * item.quantity), 0);
   const vat = cart.reduce((sum, item) => sum + (item.unit_price * item.quantity * item.vat_rate / 100), 0);
-  const deliveryCharge = formData.delivery_type === "delivery" 
-    ? (deliveryFeeData?.fee !== null && deliveryFeeData?.fee !== undefined ? deliveryFeeData.fee : 4.5)
-    : 0;
+  const deliveryCharge = 0;
   const total = subtotal + vat + deliveryCharge;
   
   const MINIMUM_ORDER_FOR_DELIVERY = 15;
