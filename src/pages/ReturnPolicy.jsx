@@ -83,7 +83,7 @@ export default function ReturnPolicy() {
               <h2 className="text-xl font-bold text-gray-900 mb-3">How to Return an Item</h2>
               <ol className="space-y-3">
                 {[
-                  { step: "1", text: "Contact us within 14 days of receiving your order at info@havillahmarketplace.com or via WhatsApp +44 07389 170996." },
+                  { step: "1", text: "Contact us within 14 days of receiving your order at info@havillahmarketplace.com or via WhatsApp +44 7389 170496." },
                   { step: "2", text: "Include your order number, the item(s) you wish to return and the reason for return." },
                   { step: "3", text: "We will confirm the return and provide you with a return address and instructions." },
                   { step: "4", text: "Pack the item securely in its original packaging if possible and send it to us." },

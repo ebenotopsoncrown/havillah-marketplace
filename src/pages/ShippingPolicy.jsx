@@ -114,7 +114,7 @@ export default function ShippingPolicy() {
               </p>
               <ul className="space-y-1 text-sm text-gray-600">
                 <li>📧 <a href="mailto:info@havillahmarketplace.com" className="text-rose-500 hover:underline">info@havillahmarketplace.com</a></li>
-                <li>📞 <a href="https://wa.me/4407389170996" className="text-rose-500 hover:underline">+44 07389 170996 (WhatsApp)</a></li>
+                <li>📞 <a href="https://wa.me/447389170496" className="text-rose-500 hover:underline">+44 7389 170496 (WhatsApp)</a></li>
               </ul>
               <p className="text-xs text-gray-400 mt-3">Please include your order number when contacting us so we can resolve the issue quickly.</p>
             </section>
