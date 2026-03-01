@@ -370,6 +370,7 @@ export default function ProductFormModal({ open, onClose, product, categories, o
                   <SelectItem value="New Arrival">New Arrival</SelectItem>
                   <SelectItem value="New Arrivals">New Arrivals</SelectItem>
                   <SelectItem value="Special Offer">Special Offer</SelectItem>
+                  <SelectItem value="Free Delivery">Free Delivery</SelectItem>
                 </SelectContent>
               </Select>
             </div>
