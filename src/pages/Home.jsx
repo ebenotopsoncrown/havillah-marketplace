@@ -88,7 +88,7 @@ export default function Home() {
     return found ? found.image_url : fallback;
   };
 
-  const heroImage = getImage("hero_main", "https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=1400&h=800&fit=crop&q=95");
+  const heroImage = getImage("hero_main", "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6978a8de9be83b8a34f67a8d/ebd9ad8e1_ChatGPTImageMar1202606_38_11AM.png");
 
   const displayCollections = COLLECTIONS.map(col => ({
     ...col,
