@@ -134,7 +134,7 @@ export default function ReturnPolicy() {
               <p className="text-sm text-gray-600 mb-2">For any returns or refund enquiries:</p>
               <ul className="space-y-1 text-sm text-gray-600">
                 <li>📧 <a href="mailto:info@havillahmarketplace.com" className="text-rose-500 hover:underline">info@havillahmarketplace.com</a></li>
-                <li>📞 <a href="https://wa.me/4407389170996" className="text-rose-500 hover:underline">+44 07389 170996 (WhatsApp)</a></li>
+                <li>📞 <a href="https://wa.me/447389170496" className="text-rose-500 hover:underline">+44 7389 170496 (WhatsApp)</a></li>
               </ul>
             </section>
 
