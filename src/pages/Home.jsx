@@ -147,7 +147,7 @@ export default function Home() {
 
       {/* ── ANNOUNCEMENT BAR ── */}
       <div className="bg-gray-900 text-white text-center py-2 px-4 text-xs sm:text-sm font-medium">
-        🚚 <strong>FREE Delivery</strong> to any location across the UK — No minimum order! &nbsp;|&nbsp; 🌍 Serving Afro-Asian communities nationwide
+        🚚 <strong>FREE Delivery</strong> to any location across the UK — No minimum order!<span className="hidden sm:inline"> &nbsp;|&nbsp; 🌍 Serving Afro-Asian communities nationwide</span>
       </div>
 
       {/* ── HEADER ── */}
