@@ -278,8 +278,8 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
                     <p className="font-semibold text-gray-900">Home Delivery</p>
                     <p className="text-sm text-gray-600">Delivered to your address</p>
                   </div>
-                  <Badge className="bg-indigo-100 text-indigo-700 border-indigo-200">
-                    {calculatingFee ? 'Calculating...' : deliveryFeeData?.fee !== null && deliveryFeeData?.fee !== undefined ? `£${deliveryFeeData.fee.toFixed(2)}` : 'From £4.50'}
+                  <Badge className="bg-green-100 text-green-700 border-green-200">
+                    FREE
                   </Badge>
                 </Label>
               </div>
