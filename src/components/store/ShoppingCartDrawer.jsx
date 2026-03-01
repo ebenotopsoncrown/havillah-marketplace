@@ -11,9 +11,7 @@ import { ShoppingCart, Trash2, Plus, Minus } from "lucide-react";
 
 export default function ShoppingCartDrawer({ open, onClose, cart, updateQuantity, onCheckout }) {
   const subtotal = cart.reduce((sum, item) => sum + (item.unit_price * item.quantity), 0);
-  const vatAmount = cart.reduce((sum, item) => sum + (item.unit_price * item.quantity * item.vat_rate / 100), 0);
-  const deliveryCharge = 0;
-  const total = subtotal + vatAmount + deliveryCharge;
+  const total = subtotal;
 
   return (
     <Sheet open={open} onOpenChange={onClose}>
