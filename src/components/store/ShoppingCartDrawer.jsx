@@ -78,7 +78,7 @@ export default function ShoppingCartDrawer({ open, onClose, cart, updateQuantity
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Delivery</span>
-                <span className="font-medium">£{deliveryCharge.toFixed(2)}</span>
+                <span className="font-medium text-green-600 font-semibold">FREE</span>
               </div>
               <div className="flex justify-between text-xl font-bold pt-2 border-t">
                 <span>Total</span>
