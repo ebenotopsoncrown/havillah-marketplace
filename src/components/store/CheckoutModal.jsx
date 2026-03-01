@@ -196,14 +196,10 @@ export default function CheckoutModal({ open, onClose, cart, onPlaceOrder, proce
           <div className="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white rounded-lg p-6">
             <p className="text-sm opacity-90 mb-1">Order Total</p>
             <p className="text-4xl font-bold mb-4">£{total.toFixed(2)}</p>
-            <div className="grid grid-cols-3 gap-4 text-sm">
+            <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <p className="opacity-75">Subtotal</p>
                 <p className="font-semibold">£{subtotal.toFixed(2)}</p>
-              </div>
-              <div>
-                <p className="opacity-75">VAT (20%)</p>
-                <p className="font-semibold">£{vat.toFixed(2)}</p>
               </div>
               <div>
                 <p className="opacity-75">Delivery</p>
