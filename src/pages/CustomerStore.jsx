@@ -346,8 +346,8 @@ export default function CustomerStore() {
               <p className="playfair text-lg font-semibold mb-1" style={{ color: "#E8CFCF" }}>Havillah Marketplace</p>
               <p className="text-xs text-gray-500 mb-3">Authentic Nigerian & Indian groceries, beauty & cultural essentials across the UK</p>
               <div className="flex flex-col sm:flex-row gap-3 text-sm text-gray-400">
-                <a href="https://wa.me/4407389170996" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-rose-300 transition-colors">
-                  <Phone className="w-4 h-4" /> +44 07389 170996
+                <a href="https://wa.me/447389170496" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-rose-300 transition-colors">
+                  <Phone className="w-4 h-4" /> +44 7389 170496
                 </a>
                 <a href="mailto:info@havillahmarketplace.com" className="flex items-center gap-2 hover:text-rose-300 transition-colors">
                   <Mail className="w-4 h-4" /> info@havillahmarketplace.com
