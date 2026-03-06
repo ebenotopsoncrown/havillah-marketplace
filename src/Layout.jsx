@@ -39,7 +39,7 @@ import {
   SidebarFooter,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebarMenu";
+} from "@/components/ui/AppSidebar";
 import {
   Collapsible,
   CollapsibleContent,
