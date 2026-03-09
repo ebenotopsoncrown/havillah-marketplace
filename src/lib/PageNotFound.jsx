@@ -1,11 +1,24 @@
 import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 
+// Old URLs that should redirect to the store homepage
+const REDIRECT_TO_STORE = [
+  '/beauty.html', '/fashion.html', '/home-kitchen.html', '/groceries.html',
+  '/beauty', '/fashion', '/home-kitchen', '/groceries',
+  '/index.html',
+];
 
 export default function PageNotFound({}) {
     const location = useLocation();
     const pageName = location.pathname.substring(1);
+
+    useEffect(() => {
+        if (REDIRECT_TO_STORE.includes(location.pathname)) {
+            window.location.replace('/');
+        }
+    }, [location.pathname]);
 
     const { data: authData, isFetched } = useQuery({
         queryKey: ['user'],
