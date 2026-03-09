@@ -125,6 +125,18 @@ export default function Layout({ children, currentPageName }) {
   const location = useLocation();
   const [settingsOpen, setSettingsOpen] = React.useState(false);
 
+  // Canonical tag management
+  useEffect(() => {
+    const canonical = 'https://havillahmarketplace.com' + location.pathname;
+    let link = document.querySelector("link[rel='canonical']");
+    if (!link) {
+      link = document.createElement('link');
+      link.setAttribute('rel', 'canonical');
+      document.head.appendChild(link);
+    }
+    link.setAttribute('href', canonical);
+  }, [location.pathname]);
+
   // Google Analytics: inject script once and track page views
   useEffect(() => {
     if (!window.gtag) {
