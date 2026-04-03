@@ -89,12 +89,8 @@ Deno.serve(async (req) => {
                 <td style="padding:4px 0;text-align:right;font-size:13px;">£${order.subtotal?.toFixed(2)}</td>
               </tr>
               <tr>
-                <td style="padding:4px 0;color:#777;font-size:13px;">VAT</td>
-                <td style="padding:4px 0;text-align:right;font-size:13px;">£${order.vat_amount?.toFixed(2)}</td>
-              </tr>
-              <tr>
                 <td style="padding:4px 0;color:#777;font-size:13px;">Delivery</td>
-                <td style="padding:4px 0;text-align:right;font-size:13px;">£${order.delivery_charge?.toFixed(2)}</td>
+                <td style="padding:4px 0;text-align:right;font-size:13px;color:#16a34a;">FREE</td>
               </tr>
               <tr>
                 <td style="padding:8px 0 4px;font-weight:700;font-size:16px;color:#333;border-top:2px solid #f0e8e8;">Total Paid</td>

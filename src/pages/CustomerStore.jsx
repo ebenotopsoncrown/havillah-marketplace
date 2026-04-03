@@ -118,8 +118,8 @@ export default function CustomerStore() {
         sku: product.sku,
         quantity: quantity,
         unit_price: price,
-        vat_rate: product.vat_rate || 20,
-        line_total: price * quantity * (1 + (product.vat_rate || 20) / 100)
+        vat_rate: 0,
+        line_total: price * quantity
       }]);
     }
   };
@@ -130,11 +130,7 @@ export default function CustomerStore() {
     } else {
       setCart(cart.map(item => {
         if (item.product_id === productId) {
-          return {
-            ...item,
-            quantity,
-            line_total: item.unit_price * quantity * (1 + item.vat_rate / 100)
-          };
+          return { ...item, quantity, line_total: item.unit_price * quantity };
         }
         return item;
       }));
@@ -143,25 +139,9 @@ export default function CustomerStore() {
 
   const handlePlaceOrder = async (customerData, returnOrderId = false) => {
     const subtotal = cart.reduce((sum, item) => sum + (item.unit_price * item.quantity), 0);
-    const vatAmount = cart.reduce((sum, item) => sum + (item.unit_price * item.quantity * item.vat_rate / 100), 0);
-    
-    // Calculate delivery fee if delivery
-    let deliveryCharge = 0;
-    if (customerData.delivery_type === "delivery" && customerData.delivery_postcode) {
-      try {
-        const feeResponse = await base44.functions.invoke('calculateDeliveryFee', {
-          cart,
-          deliveryPostcode: customerData.delivery_postcode,
-          orderTotal: subtotal
-        });
-        deliveryCharge = feeResponse.data.fee || 4.5;
-      } catch (error) {
-        console.error('Failed to calculate delivery fee:', error);
-        deliveryCharge = 4.5; // Fallback to base fee
-      }
-    }
-    
-    const total = subtotal + vatAmount + deliveryCharge;
+    const vatAmount = 0;
+    const deliveryCharge = 0;
+    const total = subtotal;
 
     const orderNumber = `ORD-${Date.now()}`;
 
