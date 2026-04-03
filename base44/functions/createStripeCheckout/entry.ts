@@ -13,12 +13,7 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Cart is empty' }, { status: 400 });
     }
 
-    // Calculate totals
-    const subtotal = cart.reduce((sum, item) => sum + (item.unit_price * item.quantity), 0);
-    const vat = cart.reduce((sum, item) => sum + (item.unit_price * item.quantity * (item.vat_rate || 20) / 100), 0);
-    const deliveryCharge = formData.delivery_type === "delivery" ? 500 : 0; // in pence
-    
-    // Create line items for Stripe
+    // Create line items for Stripe — no VAT, no delivery charge
     const lineItems = cart.map(item => ({
       price_data: {
         currency: 'gbp',
@@ -26,25 +21,10 @@ Deno.serve(async (req) => {
           name: item.product_name,
           description: `SKU: ${item.sku || 'N/A'}`,
         },
-        unit_amount: Math.round(item.unit_price * 100 * (1 + (item.vat_rate || 20) / 100)), // price in pence including VAT
+        unit_amount: Math.round(item.unit_price * 100), // exact price in pence, no VAT
       },
       quantity: item.quantity,
     }));
-
-    // Add delivery charge if applicable
-    if (deliveryCharge > 0) {
-      lineItems.push({
-        price_data: {
-          currency: 'gbp',
-          product_data: {
-            name: 'Delivery Charge',
-            description: 'Home delivery service',
-          },
-          unit_amount: deliveryCharge,
-        },
-        quantity: 1,
-      });
-    }
 
     // Get the app URL for redirects
     const origin = req.headers.get('origin') || 'https://app.base44.com';
