@@ -1,0 +1,351 @@
+import React, { useState } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { base44 } from "@/api/base44Client";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Package, MapPin, Loader2, Navigation, CheckCircle } from "lucide-react";
+
+export default function LoadOrdersModal({ open, onClose, readyOrders, driver }) {
+  const [selectedOrders, setSelectedOrders] = useState([]);
+  const [optimizing, setOptimizing] = useState(false);
+  const [optimizedRoute, setOptimizedRoute] = useState(null);
+  const [optimizationFailed, setOptimizationFailed] = useState(false);
+  const queryClient = useQueryClient();
+
+  const createRunMutation = useMutation({
+    mutationFn: async (runData) => {
+      const run = await base44.entities.DeliveryRun.create(runData);
+      
+      // Update orders status to dispatched and assign driver
+      for (const orderId of runData.order_ids) {
+        await base44.entities.Order.update(orderId, {
+          status: 'dispatched',
+          driver_id: driver.id
+        });
+      }
+      
+      return run;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['driver-runs'] });
+      queryClient.invalidateQueries({ queryKey: ['ready-orders'] });
+      setSelectedOrders([]);
+      setOptimizedRoute(null);
+      onClose();
+    },
+  });
+
+  const toggleOrder = (orderId) => {
+    setSelectedOrders(prev => 
+      prev.includes(orderId) 
+        ? prev.filter(id => id !== orderId)
+        : [...prev, orderId]
+    );
+    setOptimizedRoute(null); // Clear route when selection changes
+  };
+
+  const handleOptimizeRoute = async () => {
+    setOptimizing(true);
+    setOptimizationFailed(false);
+    try {
+      const response = await base44.functions.invoke('optimizeDeliveryRoute', {
+        orderIds: selectedOrders
+      });
+      
+      console.log('Optimization response:', response.data);
+      
+      if (response.data.error || response.data.ok === false) {
+        const errorDetails = [
+          `Error: ${response.data.error || response.data.code}`,
+          response.data.message ? `Message: ${response.data.message}` : '',
+          response.data.google_error ? `Google: ${response.data.google_error}` : '',
+          response.data.status ? `Status: ${response.data.status}` : '',
+          response.data.details ? `Details: ${response.data.details}` : '',
+          response.data.api_key_preview ? `Backend Key: ${response.data.api_key_preview}` : '',
+          response.data.upstreamStatus ? `HTTP: ${response.data.upstreamStatus}` : ''
+        ].filter(Boolean).join('\n');
+        
+        console.error('Full error response:', response.data);
+        alert(errorDetails + '\n\nYou can proceed without optimization.');
+        setOptimizationFailed(true);
+      } else {
+        setOptimizedRoute(response.data);
+        setOptimizationFailed(false);
+      }
+    } catch (error) {
+      console.error('Route optimization failed:', error);
+      console.error('Error response:', error.response?.data);
+      
+      const errorMsg = error.response?.data ? 
+        JSON.stringify(error.response.data, null, 2) : 
+        error.message;
+      
+      alert(`Failed to optimize route:\n${errorMsg}\n\nYou can proceed without optimization.`);
+      setOptimizationFailed(true);
+    }
+    setOptimizing(false);
+  };
+
+  const handleStartRunWithoutOptimization = async () => {
+    const runNumber = `RUN-${Date.now()}`;
+    const selectedOrderDetails = readyOrders.filter(order => 
+      selectedOrders.includes(order.id)
+    );
+    
+    const runData = {
+      run_number: runNumber,
+      driver_id: driver.id,
+      driver_name: driver.full_name,
+      status: 'in_progress',
+      order_ids: selectedOrders,
+      optimized_route: null,
+      start_time: new Date().toISOString(),
+      delivery_stops: selectedOrderDetails.map((order, index) => ({
+        order_id: order.id,
+        address: `${order.delivery_address}, ${order.delivery_postcode}`,
+        customer_name: order.customer_name,
+        sequence: index + 1
+      }))
+    };
+
+    await createRunMutation.mutateAsync(runData);
+  };
+
+  const handleStartRun = async () => {
+    const runNumber = `RUN-${Date.now()}`;
+    
+    const runData = {
+      run_number: runNumber,
+      driver_id: driver.id,
+      driver_name: driver.full_name,
+      status: 'in_progress',
+      order_ids: selectedOrders,
+      optimized_route: optimizedRoute,
+      start_time: new Date().toISOString(),
+      total_distance_miles: parseFloat(optimizedRoute.total_distance_miles),
+      delivery_stops: optimizedRoute.optimized_stops.map(stop => ({
+        order_id: stop.order_id,
+        address: stop.address,
+        customer_name: stop.customer_name,
+        sequence: stop.sequence,
+        estimated_duration: stop.duration_minutes
+      }))
+    };
+
+    await createRunMutation.mutateAsync(runData);
+  };
+
+  const selectedOrderDetails = readyOrders.filter(order => 
+    selectedOrders.includes(order.id)
+  );
+
+  return (
+    <Dialog open={open} onOpenChange={onClose}>
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="text-2xl flex items-center gap-2">
+            <Package className="w-6 h-6" />
+            Load Orders for Delivery
+          </DialogTitle>
+        </DialogHeader>
+
+        {!optimizedRoute ? (
+          <>
+            {/* Order Selection */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-gray-600">
+                  Select orders to include in this delivery run
+                </p>
+                <Badge>{selectedOrders.length} selected</Badge>
+              </div>
+
+              <div className="space-y-3 max-h-[400px] overflow-y-auto">
+                {readyOrders.map(order => (
+                  <div 
+                    key={order.id}
+                    className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
+                      selectedOrders.includes(order.id)
+                        ? 'border-indigo-500 bg-indigo-50'
+                        : 'border-gray-200 hover:border-gray-300'
+                    }`}
+                    onClick={() => toggleOrder(order.id)}
+                  >
+                    <div className="flex items-start gap-3">
+                    <Checkbox
+                      checked={selectedOrders.includes(order.id)}
+                      onCheckedChange={() => toggleOrder(order.id)}
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between mb-2">
+                        <p className="font-bold text-gray-900">{order.order_number}</p>
+                        <p className="font-bold text-indigo-600">£{order.total_amount.toFixed(2)}</p>
+                      </div>
+                      <p className="text-sm text-gray-600 mb-2">{order.customer_name}</p>
+                      {order.delivery_slot && (
+                        <Badge variant="outline" className="mb-2 bg-blue-50 text-blue-700 border-blue-200">
+                          {order.delivery_slot}
+                        </Badge>
+                      )}
+                      <p className="text-sm text-gray-500 flex items-start gap-2">
+                        <MapPin className="w-4 h-4 mt-0.5" />
+                        {order.delivery_address}, {order.delivery_postcode}
+                      </p>
+                    </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex gap-3 pt-4 border-t">
+                <Button variant="outline" onClick={onClose} className="flex-1">
+                  Cancel
+                </Button>
+                {optimizationFailed && (
+                  <Button
+                    onClick={handleStartRunWithoutOptimization}
+                    disabled={createRunMutation.isPending}
+                    className="flex-1 bg-orange-600 hover:bg-orange-700"
+                  >
+                    {createRunMutation.isPending ? (
+                      <>
+                        <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                        Starting...
+                      </>
+                    ) : (
+                      <>
+                        <CheckCircle className="w-5 h-5 mr-2" />
+                        Proceed Without Route Optimization
+                      </>
+                    )}
+                  </Button>
+                )}
+                {!optimizationFailed && (
+                  <Button
+                    onClick={handleOptimizeRoute}
+                    disabled={selectedOrders.length === 0 || optimizing}
+                    className="flex-1 bg-indigo-600 hover:bg-indigo-700"
+                  >
+                    {optimizing ? (
+                      <>
+                        <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                        Optimizing Route...
+                      </>
+                    ) : (
+                      <>
+                        <Navigation className="w-5 h-5 mr-2" />
+                        Optimize Route ({selectedOrders.length})
+                      </>
+                    )}
+                  </Button>
+                )}
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            {/* Optimized Route Preview */}
+            <div className="space-y-4">
+              <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                  <p className="font-semibold text-green-900">Route Optimized!</p>
+                </div>
+                <div className="grid grid-cols-3 gap-4 text-sm">
+                  <div>
+                    <p className="text-gray-600">Total Distance</p>
+                    <p className="font-bold text-gray-900">{optimizedRoute.total_distance_miles} miles</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600">Est. Duration</p>
+                    <p className="font-bold text-gray-900">{optimizedRoute.estimated_duration_minutes} mins</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600">Stops</p>
+                    <p className="font-bold text-gray-900">{optimizedRoute.optimized_stops.length}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <p className="font-semibold text-gray-900">Delivery Sequence:</p>
+                
+                {/* Store Start */}
+                <div className="flex items-start gap-3 pl-4">
+                  <div className="flex flex-col items-center">
+                    <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold">
+                      S
+                    </div>
+                    <div className="w-0.5 h-8 bg-indigo-300"></div>
+                  </div>
+                  <div className="flex-1 pt-1">
+                    <p className="font-semibold text-gray-900">Coriander Store</p>
+                    <p className="text-sm text-gray-500">846-848 Wimborne Rd, Bournemouth</p>
+                  </div>
+                </div>
+
+                {optimizedRoute.optimized_stops.map((stop, index) => (
+                  <div key={stop.order_id} className="flex items-start gap-3 pl-4">
+                    <div className="flex flex-col items-center">
+                      <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                        {index + 1}
+                      </div>
+                      {index < optimizedRoute.optimized_stops.length - 1 && (
+                        <div className="w-0.5 h-8 bg-gray-300"></div>
+                      )}
+                    </div>
+                    <div className="flex-1 pt-1 pb-3">
+                      <div className="flex items-center justify-between mb-1">
+                        <p className="font-semibold text-gray-900">{stop.order_number}</p>
+                        <Badge variant="outline">{stop.duration_minutes} mins</Badge>
+                      </div>
+                      <p className="text-sm text-gray-600 mb-1">{stop.customer_name}</p>
+                      {stop.delivery_slot && (
+                        <Badge className="bg-blue-100 text-blue-700 text-xs mb-1">
+                          {stop.delivery_slot}
+                        </Badge>
+                      )}
+                      <p className="text-sm text-gray-500">{stop.address}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <Separator />
+
+              <div className="flex gap-3">
+                <Button 
+                  variant="outline" 
+                  onClick={() => setOptimizedRoute(null)}
+                  className="flex-1"
+                >
+                  Change Selection
+                </Button>
+                <Button
+                  onClick={handleStartRun}
+                  disabled={createRunMutation.isPending}
+                  className="flex-1 bg-green-600 hover:bg-green-700"
+                >
+                  {createRunMutation.isPending ? (
+                    <>
+                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                      Starting...
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle className="w-5 h-5 mr-2" />
+                      Confirm & Start Delivery Run
+                    </>
+                  )}
+                </Button>
+              </div>
+            </div>
+          </>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+}
