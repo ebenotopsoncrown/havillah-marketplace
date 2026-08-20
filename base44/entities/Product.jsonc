@@ -1,0 +1,134 @@
+{
+  "name": "Product",
+  "type": "object",
+  "properties": {
+    "sku": {
+      "type": "string",
+      "description": "Stock Keeping Unit - unique product code"
+    },
+    "barcode": {
+      "type": "string",
+      "description": "Product barcode for scanning"
+    },
+    "name": {
+      "type": "string",
+      "description": "Product name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Product description"
+    },
+    "category_id": {
+      "type": "string",
+      "description": "Category reference"
+    },
+    "brand": {
+      "type": "string",
+      "description": "Brand name"
+    },
+    "retail_price": {
+      "type": "number",
+      "description": "Retail selling price"
+    },
+    "wholesale_price": {
+      "type": "number",
+      "description": "Wholesale price for B2B customers"
+    },
+    "cost_price": {
+      "type": "number",
+      "description": "Purchase cost price"
+    },
+    "vat_rate": {
+      "type": "number",
+      "enum": [
+        0,
+        5,
+        20
+      ],
+      "default": 20,
+      "description": "UK VAT rate percentage"
+    },
+    "discount_percent": {
+      "type": "number",
+      "default": 0,
+      "description": "Discount percentage off the retail price (e.g. 20 = 20% off). When set, storefront shows original price struck-through and discounted price."
+    },
+    "stock_quantity": {
+      "type": "number",
+      "default": 0,
+      "description": "Current stock quantity"
+    },
+    "reserved_quantity": {
+      "type": "number",
+      "default": 0,
+      "description": "Quantity reserved for orders"
+    },
+    "reorder_level": {
+      "type": "number",
+      "description": "Minimum stock level before reorder alert"
+    },
+    "unit_type": {
+      "type": "string",
+      "enum": [
+        "piece",
+        "kg",
+        "litre",
+        "pack",
+        "carton",
+        "box"
+      ],
+      "default": "piece",
+      "description": "Unit of measurement"
+    },
+    "weight_kg": {
+      "type": "number",
+      "default": 0.5,
+      "description": "Product weight in kilograms"
+    },
+    "units_per_carton": {
+      "type": "number",
+      "description": "Number of units in a carton"
+    },
+    "expiry_tracking": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to track expiry dates"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Product active status"
+    },
+    "image_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Array of product image URLs"
+    },
+    "location": {
+      "type": "string",
+      "description": "Warehouse location code"
+    },
+    "badge": {
+      "type": "string",
+      "enum": [
+        "",
+        "Best Seller",
+        "Top Product",
+        "Popular",
+        "Favourites",
+        "New Arrival",
+        "Special Offer",
+        "Free Delivery"
+      ],
+      "default": "",
+      "description": "Promotional badge shown on product card in the storefront"
+    }
+  },
+  "required": [
+    "sku",
+    "name",
+    "retail_price"
+  ]
+}

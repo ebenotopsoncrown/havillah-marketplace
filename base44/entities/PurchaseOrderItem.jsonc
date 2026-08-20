@@ -1,0 +1,46 @@
+{
+  "name": "PurchaseOrderItem",
+  "type": "object",
+  "properties": {
+    "po_id": {
+      "type": "string",
+      "description": "Purchase order reference"
+    },
+    "product_id": {
+      "type": "string",
+      "description": "Product reference"
+    },
+    "product_name": {
+      "type": "string",
+      "description": "Product name"
+    },
+    "sku": {
+      "type": "string",
+      "description": "Product SKU"
+    },
+    "quantity_ordered": {
+      "type": "number",
+      "description": "Quantity ordered"
+    },
+    "quantity_received": {
+      "type": "number",
+      "default": 0,
+      "description": "Quantity received"
+    },
+    "unit_cost": {
+      "type": "number",
+      "description": "Cost per unit"
+    },
+    "line_total": {
+      "type": "number",
+      "description": "Line total"
+    }
+  },
+  "required": [
+    "po_id",
+    "product_id",
+    "quantity_ordered",
+    "unit_cost",
+    "line_total"
+  ]
+}

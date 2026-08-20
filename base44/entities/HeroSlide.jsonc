@@ -1,0 +1,44 @@
+{
+  "name": "HeroSlide",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Slide headline text"
+    },
+    "subtitle": {
+      "type": "string",
+      "description": "Slide subtitle / description"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Background image URL"
+    },
+    "cta_text": {
+      "type": "string",
+      "description": "Call-to-action button text"
+    },
+    "cta_link": {
+      "type": "string",
+      "description": "CTA button link (URL or page name)"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this slide is shown"
+    },
+    "display_order": {
+      "type": "number",
+      "default": 0,
+      "description": "Sort order for slides"
+    },
+    "overlay_opacity": {
+      "type": "number",
+      "default": 0.35,
+      "description": "Image overlay darkness (0.0 - 0.6)"
+    }
+  },
+  "required": [
+    "image_url"
+  ]
+}

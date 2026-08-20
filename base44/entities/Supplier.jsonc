@@ -1,0 +1,56 @@
+{
+  "name": "Supplier",
+  "type": "object",
+  "properties": {
+    "supplier_code": {
+      "type": "string",
+      "description": "Unique supplier code"
+    },
+    "company_name": {
+      "type": "string",
+      "description": "Supplier company name"
+    },
+    "contact_name": {
+      "type": "string",
+      "description": "Contact person name"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number"
+    },
+    "address": {
+      "type": "string",
+      "description": "Full address"
+    },
+    "postcode": {
+      "type": "string",
+      "description": "Postcode"
+    },
+    "payment_terms": {
+      "type": "string",
+      "description": "Payment terms (e.g., Net 30, Net 60)"
+    },
+    "vat_number": {
+      "type": "string",
+      "description": "VAT registration number"
+    },
+    "account_balance": {
+      "type": "number",
+      "default": 0,
+      "description": "Current amount owed to supplier"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Supplier active status"
+    }
+  },
+  "required": [
+    "company_name"
+  ]
+}

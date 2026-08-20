@@ -1,0 +1,80 @@
+{
+  "name": "Expense",
+  "type": "object",
+  "properties": {
+    "expense_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of expense"
+    },
+    "expense_number": {
+      "type": "string",
+      "description": "Unique expense reference number"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "rent",
+        "utilities",
+        "salaries",
+        "transport",
+        "marketing",
+        "supplies",
+        "maintenance",
+        "insurance",
+        "tax",
+        "other"
+      ],
+      "description": "Expense category"
+    },
+    "description": {
+      "type": "string",
+      "description": "Expense description"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Expense amount"
+    },
+    "vat_amount": {
+      "type": "number",
+      "default": 0,
+      "description": "VAT on expense (if applicable)"
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "cash",
+        "bank_transfer",
+        "card",
+        "cheque"
+      ],
+      "description": "Payment method used"
+    },
+    "paid_to": {
+      "type": "string",
+      "description": "Payee name"
+    },
+    "reference": {
+      "type": "string",
+      "description": "Invoice/receipt reference"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "paid"
+      ],
+      "default": "pending",
+      "description": "Payment status"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes"
+    }
+  },
+  "required": [
+    "expense_date",
+    "category",
+    "amount"
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "name": "Customer",
+  "type": "object",
+  "properties": {
+    "customer_code": {
+      "type": "string",
+      "description": "Unique customer code"
+    },
+    "business_name": {
+      "type": "string",
+      "description": "Business/company name for B2B customers"
+    },
+    "contact_name": {
+      "type": "string",
+      "description": "Primary contact person name"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number"
+    },
+    "customer_type": {
+      "type": "string",
+      "enum": [
+        "retail",
+        "wholesale",
+        "restaurant",
+        "shop"
+      ],
+      "default": "retail",
+      "description": "Type of customer"
+    },
+    "pricing_tier": {
+      "type": "string",
+      "enum": [
+        "retail",
+        "wholesale",
+        "vip"
+      ],
+      "default": "retail",
+      "description": "Pricing tier for customer"
+    },
+    "credit_limit": {
+      "type": "number",
+      "default": 0,
+      "description": "Maximum credit allowed"
+    },
+    "credit_balance": {
+      "type": "number",
+      "default": 0,
+      "description": "Current outstanding balance"
+    },
+    "address_line1": {
+      "type": "string",
+      "description": "Address line 1"
+    },
+    "address_line2": {
+      "type": "string",
+      "description": "Address line 2"
+    },
+    "city": {
+      "type": "string",
+      "description": "City"
+    },
+    "postcode": {
+      "type": "string",
+      "description": "UK Postcode"
+    },
+    "vat_number": {
+      "type": "string",
+      "description": "VAT registration number"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Customer active status"
+    }
+  },
+  "required": [
+    "contact_name"
+  ]
+}

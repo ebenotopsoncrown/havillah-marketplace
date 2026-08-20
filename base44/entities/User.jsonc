@@ -1,0 +1,32 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "department": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "inventory_manager",
+        "picking_and_sorting",
+        "dispatcher",
+        "driver",
+        "store_attendant",
+        "cashier"
+      ],
+      "description": "Staff department/role assignment"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Contact phone number"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Account active status"
+    }
+  },
+  "required": [
+    "department",
+    "phone"
+  ]
+}

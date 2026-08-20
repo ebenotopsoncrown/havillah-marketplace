@@ -1,0 +1,60 @@
+{
+  "name": "AuditLog",
+  "type": "object",
+  "properties": {
+    "action": {
+      "type": "string",
+      "description": "Type of action performed (e.g., login, order_created, payment_processed)"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Email of user who performed action"
+    },
+    "user_id": {
+      "type": "string",
+      "description": "User ID who performed action"
+    },
+    "ip_address": {
+      "type": "string",
+      "description": "IP address of request"
+    },
+    "entity_type": {
+      "type": "string",
+      "description": "Entity affected (e.g., Order, Product, Customer)"
+    },
+    "entity_id": {
+      "type": "string",
+      "description": "ID of affected entity"
+    },
+    "old_value": {
+      "type": "object",
+      "description": "Previous value (for updates)"
+    },
+    "new_value": {
+      "type": "object",
+      "description": "New value (for updates)"
+    },
+    "details": {
+      "type": "string",
+      "description": "Additional details about the action"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When action occurred"
+    },
+    "success": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether action succeeded"
+    },
+    "error_message": {
+      "type": "string",
+      "description": "Error message if action failed"
+    }
+  },
+  "required": [
+    "action",
+    "timestamp"
+  ]
+}

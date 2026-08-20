@@ -1,0 +1,90 @@
+{
+  "name": "AddressBook",
+  "type": "object",
+  "properties": {
+    "full_name": {
+      "type": "string",
+      "description": "Contact full name"
+    },
+    "email": {
+      "type": "string",
+      "description": "Email address"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number (used for SMS)"
+    },
+    "address": {
+      "type": "string",
+      "description": "Full delivery address"
+    },
+    "postcode": {
+      "type": "string",
+      "description": "UK postcode"
+    },
+    "city": {
+      "type": "string",
+      "description": "City"
+    },
+    "contact_type": {
+      "type": "string",
+      "enum": [
+        "customer",
+        "vendor",
+        "partner",
+        "other"
+      ],
+      "default": "customer",
+      "description": "Type of contact"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "checkout",
+        "manual",
+        "import"
+      ],
+      "default": "manual",
+      "description": "How this contact was added"
+    },
+    "marketing_consent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether contact has opted in to marketing"
+    },
+    "sms_consent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether contact has opted in to SMS marketing"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Custom tags for filtering"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Internal notes about this contact"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this contact is active"
+    },
+    "last_order_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date of last order (auto-updated)"
+    },
+    "total_orders": {
+      "type": "number",
+      "default": 0,
+      "description": "Total number of orders placed"
+    }
+  },
+  "required": [
+    "full_name"
+  ]
+}

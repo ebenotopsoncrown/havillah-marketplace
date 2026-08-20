@@ -1,0 +1,169 @@
+{
+  "name": "Order",
+  "type": "object",
+  "properties": {
+    "order_number": {
+      "type": "string",
+      "description": "Unique order number"
+    },
+    "order_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Order date and time"
+    },
+    "customer_id": {
+      "type": "string",
+      "description": "Customer reference"
+    },
+    "customer_name": {
+      "type": "string",
+      "description": "Customer name"
+    },
+    "customer_email": {
+      "type": "string",
+      "description": "Customer email"
+    },
+    "customer_phone": {
+      "type": "string",
+      "description": "Customer phone"
+    },
+    "delivery_address": {
+      "type": "string",
+      "description": "Full delivery address"
+    },
+    "delivery_postcode": {
+      "type": "string",
+      "description": "Delivery postcode"
+    },
+    "delivery_type": {
+      "type": "string",
+      "enum": [
+        "delivery",
+        "click_and_collect"
+      ],
+      "default": "delivery",
+      "description": "Delivery or collection"
+    },
+    "delivery_slot": {
+      "type": "string",
+      "description": "Preferred delivery time slot"
+    },
+    "subtotal": {
+      "type": "number",
+      "description": "Order subtotal"
+    },
+    "vat_amount": {
+      "type": "number",
+      "description": "Total VAT"
+    },
+    "delivery_charge": {
+      "type": "number",
+      "default": 0,
+      "description": "Delivery fee"
+    },
+    "total_amount": {
+      "type": "number",
+      "description": "Total order amount"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending_confirmation",
+        "confirmed",
+        "picking",
+        "ready",
+        "dispatched",
+        "delivered",
+        "cancelled"
+      ],
+      "default": "pending_confirmation",
+      "description": "Order status"
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "card",
+        "cash_on_delivery",
+        "account"
+      ],
+      "description": "Payment method"
+    },
+    "payment_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "paid",
+        "failed"
+      ],
+      "default": "pending",
+      "description": "Payment status"
+    },
+    "stripe_payment_intent_id": {
+      "type": "string",
+      "description": "Stripe payment intent ID"
+    },
+    "confirmed_by": {
+      "type": "string",
+      "description": "User who confirmed the order"
+    },
+    "confirmed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When order was confirmed"
+    },
+    "picked_by": {
+      "type": "string",
+      "description": "User who picked the order"
+    },
+    "picked_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When order was picked"
+    },
+    "driver_id": {
+      "type": "string",
+      "description": "Assigned driver reference"
+    },
+    "cancelled_by": {
+      "type": "string",
+      "description": "Who cancelled the order"
+    },
+    "cancelled_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When order was cancelled"
+    },
+    "cancellation_reason": {
+      "type": "string",
+      "description": "Reason for cancellation"
+    },
+    "refund_amount": {
+      "type": "number",
+      "default": 0,
+      "description": "Total refund amount"
+    },
+    "refund_id": {
+      "type": "string",
+      "description": "Stripe refund ID"
+    },
+    "refund_status": {
+      "type": "string",
+      "enum": [
+        "not_applicable",
+        "pending",
+        "processed",
+        "failed"
+      ],
+      "description": "Refund status"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Order notes"
+    }
+  },
+  "required": [
+    "order_number",
+    "customer_name",
+    "total_amount"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "name": "StorefrontImage",
+  "type": "object",
+  "properties": {
+    "slot": {
+      "type": "string",
+      "enum": [
+        "hero_main",
+        "collection_women",
+        "collection_men",
+        "collection_kids",
+        "collection_beauty",
+        "collection_accessories"
+      ],
+      "description": "Which image slot this belongs to"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "URL of the image"
+    },
+    "label": {
+      "type": "string",
+      "description": "Display label for admin reference"
+    }
+  },
+  "required": [
+    "slot",
+    "image_url"
+  ]
+}

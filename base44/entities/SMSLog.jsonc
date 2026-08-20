@@ -1,0 +1,59 @@
+{
+  "name": "SMSLog",
+  "type": "object",
+  "properties": {
+    "campaign_name": {
+      "type": "string",
+      "description": "Name of the SMS campaign"
+    },
+    "message": {
+      "type": "string",
+      "description": "SMS message content"
+    },
+    "recipient_count": {
+      "type": "number",
+      "description": "Number of recipients"
+    },
+    "sent_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number successfully sent"
+    },
+    "failed_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number that failed"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "sending",
+        "completed",
+        "failed"
+      ],
+      "default": "pending",
+      "description": "Campaign status"
+    },
+    "recipient_filter": {
+      "type": "string",
+      "description": "Filter used to select recipients (e.g. all, customers, vendors)"
+    },
+    "sent_by": {
+      "type": "string",
+      "description": "Email of admin who sent"
+    },
+    "sent_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the campaign was sent"
+    },
+    "error_details": {
+      "type": "string",
+      "description": "Error details if any failures"
+    }
+  },
+  "required": [
+    "message"
+  ]
+}

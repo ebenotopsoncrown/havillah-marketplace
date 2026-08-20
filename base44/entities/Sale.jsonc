@@ -1,0 +1,89 @@
+{
+  "name": "Sale",
+  "type": "object",
+  "properties": {
+    "sale_number": {
+      "type": "string",
+      "description": "Unique sale/receipt number"
+    },
+    "sale_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time of sale"
+    },
+    "customer_id": {
+      "type": "string",
+      "description": "Customer reference (if account customer)"
+    },
+    "customer_name": {
+      "type": "string",
+      "description": "Customer name for walk-in customers"
+    },
+    "subtotal": {
+      "type": "number",
+      "description": "Subtotal before VAT"
+    },
+    "vat_amount": {
+      "type": "number",
+      "description": "Total VAT amount"
+    },
+    "discount_amount": {
+      "type": "number",
+      "default": 0,
+      "description": "Total discount given"
+    },
+    "total_amount": {
+      "type": "number",
+      "description": "Final total amount"
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "cash",
+        "card",
+        "account",
+        "mixed"
+      ],
+      "description": "Payment method used"
+    },
+    "cash_paid": {
+      "type": "number",
+      "description": "Cash amount paid"
+    },
+    "card_paid": {
+      "type": "number",
+      "description": "Card amount paid"
+    },
+    "change_given": {
+      "type": "number",
+      "description": "Change returned to customer"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "completed",
+        "returned",
+        "voided"
+      ],
+      "default": "completed",
+      "description": "Sale status"
+    },
+    "cashier_name": {
+      "type": "string",
+      "description": "Name of cashier who processed sale"
+    },
+    "terminal_id": {
+      "type": "string",
+      "description": "POS terminal identifier"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes"
+    }
+  },
+  "required": [
+    "sale_number",
+    "total_amount",
+    "payment_method"
+  ]
+}

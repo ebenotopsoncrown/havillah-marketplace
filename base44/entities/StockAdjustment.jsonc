@@ -1,0 +1,60 @@
+{
+  "name": "StockAdjustment",
+  "type": "object",
+  "properties": {
+    "adjustment_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time of adjustment"
+    },
+    "product_id": {
+      "type": "string",
+      "description": "Product reference"
+    },
+    "product_name": {
+      "type": "string",
+      "description": "Product name"
+    },
+    "sku": {
+      "type": "string",
+      "description": "Product SKU"
+    },
+    "adjustment_type": {
+      "type": "string",
+      "enum": [
+        "damage",
+        "shrinkage",
+        "wastage",
+        "correction",
+        "stock_take",
+        "return"
+      ],
+      "description": "Type of adjustment"
+    },
+    "quantity_change": {
+      "type": "number",
+      "description": "Quantity change (positive for increase, negative for decrease)"
+    },
+    "old_quantity": {
+      "type": "number",
+      "description": "Stock before adjustment"
+    },
+    "new_quantity": {
+      "type": "number",
+      "description": "Stock after adjustment"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Reason for adjustment"
+    },
+    "adjusted_by": {
+      "type": "string",
+      "description": "User who made adjustment"
+    }
+  },
+  "required": [
+    "product_id",
+    "adjustment_type",
+    "quantity_change"
+  ]
+}

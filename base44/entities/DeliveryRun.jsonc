@@ -1,0 +1,93 @@
+{
+  "name": "DeliveryRun",
+  "type": "object",
+  "properties": {
+    "run_number": {
+      "type": "string",
+      "description": "Unique delivery run reference"
+    },
+    "driver_id": {
+      "type": "string",
+      "description": "Driver assigned to this run"
+    },
+    "driver_name": {
+      "type": "string",
+      "description": "Driver name (cached)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "preparing",
+        "in_progress",
+        "completed",
+        "cancelled"
+      ],
+      "default": "preparing",
+      "description": "Current status of delivery run"
+    },
+    "order_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of order IDs in this run"
+    },
+    "optimized_route": {
+      "type": "object",
+      "description": "Google Maps optimized route data"
+    },
+    "start_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When delivery run started"
+    },
+    "end_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When delivery run completed"
+    },
+    "total_duration_minutes": {
+      "type": "number",
+      "description": "Total run time in minutes"
+    },
+    "total_distance_miles": {
+      "type": "number",
+      "description": "Total distance covered"
+    },
+    "delivery_stops": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "order_id": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "arrival_time": {
+            "type": "string"
+          },
+          "completion_time": {
+            "type": "string"
+          },
+          "duration_minutes": {
+            "type": "number"
+          },
+          "customer_signature": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Individual delivery stop details"
+    }
+  },
+  "required": [
+    "run_number",
+    "driver_id",
+    "driver_name"
+  ]
+}

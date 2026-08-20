@@ -1,0 +1,46 @@
+{
+  "name": "HeroSettings",
+  "type": "object",
+  "properties": {
+    "animation_type": {
+      "type": "string",
+      "enum": [
+        "fade",
+        "slide"
+      ],
+      "default": "fade",
+      "description": "Transition animation type"
+    },
+    "autoplay": {
+      "type": "boolean",
+      "default": true,
+      "description": "Auto advance slides"
+    },
+    "autoplay_interval": {
+      "type": "number",
+      "default": 5000,
+      "description": "Autoplay interval in milliseconds"
+    },
+    "transition_speed": {
+      "type": "number",
+      "default": 500,
+      "description": "Transition duration in milliseconds"
+    },
+    "show_arrows": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show prev/next arrows"
+    },
+    "show_dots": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show pagination dots"
+    },
+    "default_overlay_opacity": {
+      "type": "number",
+      "default": 0.35,
+      "description": "Default overlay opacity for slides (0.2 - 0.6)"
+    }
+  },
+  "required": []
+}
